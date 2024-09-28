@@ -1,8 +1,8 @@
 import React from 'react'
-import dr1 from './d1.png'
-import dr2 from './d2.png'
-import dr3 from './d3.png'
-import dr4 from './d4.png'
+import dr1 from '../../assets/images/d1.png';
+import dr2 from '../../assets/images/d2.png'
+import dr3 from '../../assets/images/d3.png'
+import dr4 from '../../assets/images/d4.png'
 // import StarRating from './Rating'
 
 export default function Doctors() {
