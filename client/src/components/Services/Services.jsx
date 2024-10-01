@@ -27,7 +27,7 @@ export default function Services() {
   return (
     <>
 
-    <div className='bg-red-50 py-10'>
+
     <div>
     <h1 className='font-semibold text-3xl text-center mb-3'>Our Medical Services</h1>
     <p className='text-center text-gray-500 '>We are dedicated to serve you <br/> best medical services</p> 
@@ -47,7 +47,6 @@ export default function Services() {
         }
       )
     }
-    </div>
     </div>
    
     </>

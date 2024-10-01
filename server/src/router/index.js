@@ -1,5 +1,10 @@
-const express = require('express');
-const AuthRoutes = require('../routes/auth.routes');
+import express from 'express';
+import AuthRoutes from '../routes/auth.routes.js';  // Add .js extension for local file import
+
 const AllRoutes = express();
-AllRoutes.use('/login',AuthRoutes);
-module.exports = AllRoutes; 
+
+// Define the route
+AllRoutes.use('/auth', AuthRoutes);
+
+// Export the router
+export default AllRoutes;

@@ -1,20 +1,34 @@
-import React  from 'react'
-import './index.css'
+import React, { useEffect, useState } from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
 
-// import Home from "./components/Home";
-import Services from './components/Services/Services';
-import Doctors from './components/Doctors/Doctors';
-
+import Home from "./pages/homePage";
 
 function App() {
+  const [user, setUser] = useState(null);
+  const [subdomain, setSubdomain] = useState(null);
+  useEffect( () => {
+    Subdomain();
+  }, []);
+  const Subdomain = () => {
+    const hostname = window.location.hostname;
+    const parts = hostname.split('.');
+    if (parts.length > 1) {
+      setSubdomain(parts[0])   // This will return the subdomain (e.g., 'hospitalA')
+    }
+  };
   
-
   return (
-    <>
-     <Services/>
-     <Doctors/>
-    </>
-  )
+    <Router>
+      <Routes>
+      <Route path="/" element={subdomain !== null ? <Login  setUser={setUser} /> : <Home />} />
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;

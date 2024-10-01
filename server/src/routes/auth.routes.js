@@ -1,5 +1,10 @@
-const { login } = require("../controller/auth.controller");
-const express = require('express');
+import { login } from '../controller/auth.controller.js'; // Add .js extension for local file import
+import express from 'express';
+
 const AuthRoutes = express.Router();
-AuthRoutes.get('/login',login);
-module.exports = AuthRoutes;
+
+// Define the route
+AuthRoutes.get('/login', login);
+
+// Export the router
+export default AuthRoutes;

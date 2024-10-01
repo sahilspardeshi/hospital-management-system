@@ -1,18 +1,14 @@
-const express = require('express');
-const cors = require('cors'); 
-const app = express();
-const dotenv = require('dotenv');
-const App = require('./app');
-const cluster = require('cluster'); // Correct import
-const os = require('os');
-const DatabaseConnect = require('./db');
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import App from './app.js'; // Explicitly specify the file extension
+import cluster from 'cluster'; // Correct import
+import os from 'os';
 
 dotenv.config({
   path: './.env'
 })
-
 const totalCPUs = os.cpus().length;
-DatabaseConnect
 if (cluster.isPrimary || cluster.isMaster) {  // For compatibility with older versions
   console.log(`Primary ${process.pid} is running`); 
 
@@ -26,7 +22,7 @@ if (cluster.isPrimary || cluster.isMaster) {  // For compatibility with older ve
   });
 } else {
   const allowedOrigins = ['http://localhost:3000'];
-
+  const app = express();
   app.use(cors({
     origin: function (origin, callback) {
       if (!origin) return callback(null, true); // Allow requests with no origin
