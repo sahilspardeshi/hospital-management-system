@@ -1,8 +1,8 @@
 import React from 'react'
-import lab from './lab.png'
-import ambulance from './ambulance.png'
-import appointment from './appointment.png'
-import call from './call.png'
+import lab from '../../assets/images/lab.png'
+import ambulance from '../../assets/images/ambulance.png'
+import appointment from '../../assets/images/appointment.png'
+import call from '../../assets/images/call.png'
 
 export default function Services() {
   const servicedata = [
