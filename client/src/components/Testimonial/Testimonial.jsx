@@ -57,14 +57,14 @@ export default function Testimonial() {
         <>
             <div className=' py-10 '>
                 <div>
-                    <h1 className='font-semibold text-3xl text-center mb-3'>Patients Testimonial</h1>
+                    <h1 className='font-semibold text-4xl text-center mb-3'>Patients Testimonial</h1>
                     <p className='text-center text-gray-500'>Let's see what our happy patients say</p>
                 </div>
-                <div className='flex border flex-wrap justify-evenly m-auto my-5'>
+                <div className='flex  flex-wrap justify-evenly m-auto my-5'>
 
                     <button
                         onClick={handlePrevious}
-                        className="p-3 text-yellow-400 text-2xl font-bold hover:scale-110 transition-all duration-300"
+                        className="p-3 text-yellow-400 text-2xl font-bold hover:scale-110  duration-300"
                     >
                        <div className='h-9 w-9 rounded-full text-white bg-yellow-300'> {"<"}</div>
                     </button>
