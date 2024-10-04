@@ -4,6 +4,8 @@ import Services from "../components/Services/Services";
 import UserFriendly from "../components/UserFriendly/UserFriendly";
 import Testimonial from "../components/Testimonial/Testimonial";
 import Portfolio from "../components/Portfolio/Portfolio";
+import Footer from "../components/Footer/Footer";
+import Saisignup from "../components/Saisignup/Saisignup.jsx";
 
 const Home = () => {
   return (
@@ -13,8 +15,11 @@ const Home = () => {
       <UserFriendly/>
       <Portfolio/>
       <Testimonial/>
+      <Footer/>
+      
       {/* <Services/> */}
-        {/* <Doctors /> */}
+      {/* <Doctors /> */}
+       
       </div>
     </div>
   );
