@@ -1,0 +1,146 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+// Define Enums for constrained fields
+enum Role {
+  user
+  admin
+}
+
+// Define the User model
+model User {
+  id           BigInt     @id @default(autoincrement())
+  name         String     @db.VarChar(255)
+  username     String     @db.VarChar(255)
+  password     String     @db.VarChar(255)
+  email        String?    @db.VarChar(255) @unique
+  phoneNumber  BigInt     @db.BigInt @unique
+  role         Role       @default(admin)
+  createdAt    DateTime   @default(now()) @db.Timestamp(0)
+
+  // Relations
+}
+
+// Define the UserCredentials model
+model UserCredentials {
+  id         BigInt     @id @default(autoincrement())
+  username   String     @db.VarChar(255)
+  password   String     @db.VarChar(255)
+  phone      BigInt     @db.BigInt @unique
+  role       Role       @default(admin)
+  createdAt  DateTime   @default(now()) @db.Timestamp(0)
+
+  // Relations
+  client     Client[]   @relation("UserCredentialClients")
+}
+
+// Define the PaymentMethod model
+model PaymentMethod {
+  id          BigInt             @id @default(autoincrement())
+  methodName  String             @db.VarChar(50)
+  paymentId   String             @db.VarChar(255)
+  createdAt   DateTime           @default(now()) @db.Timestamp(0)
+
+  // Relations
+  clientSubscriptions ClientSubscription[]
+}
+
+// Define the Review model
+model Review {
+  id          BigInt    @id @default(autoincrement())
+  image       String?   @db.VarChar(255)
+  rating      Int
+  reviewText  String    @db.VarChar(255)
+  createdAt   DateTime  @default(now()) @db.Timestamp(0)
+}
+
+// Define the Client model
+model Client {
+  id                BigInt             @id @default(autoincrement())
+  name              String             @db.VarChar(100)
+  phone             String             @db.VarChar(15) @unique
+  email             String?            @db.VarChar(100) @unique
+  password          String             @db.VarChar(255)
+  address           String             @db.Text
+  dob               DateTime           @db.Date
+  hospital          String             @db.VarChar(255)
+  userCredentialId  BigInt
+  settingId         BigInt
+  createdAt         DateTime           @default(now()) @db.Timestamp(0)
+  updatedAt         DateTime           @default(now()) @db.Timestamp(0)
+
+  // Relations
+  userCredential    UserCredentials    @relation("UserCredentialClients", fields: [userCredentialId], references: [id], onDelete: Cascade)
+  setting           Setting            @relation(fields: [settingId], references: [id], onDelete: Cascade)
+  clientSubscriptions ClientSubscription[]
+}
+
+// Define the Marketing model
+model Marketing {
+  id          BigInt    @id @default(autoincrement())
+  name        String    @db.VarChar(255)
+  phone       String    @db.VarChar(15) @unique
+  email       String?   @db.VarChar(255) @unique
+  password    String    @db.VarChar(255)
+  address     String    @db.Text
+  dob         DateTime  @db.Date
+  hospital    String    @db.VarChar(255)
+  createdAt   DateTime  @default(now()) @db.Timestamp(0)
+}
+
+// Define the ClientSubscription model
+model ClientSubscription {
+  id                  BigInt             @id @default(autoincrement())
+  clientId            BigInt?
+  planId              BigInt?
+  startDate           DateTime           @db.Date
+  endDate             DateTime           @db.Date
+  paymentMethodId     BigInt?
+  paymentStatus       String?            @default("Pending") @db.VarChar(20)
+  subscriptionStatus  String?            @default("Active") @db.VarChar(20)
+  createdAt           DateTime           @default(now()) @db.Timestamp(0)
+
+  // Relations
+  client              Client?            @relation(fields: [clientId], references: [id], onDelete: SetNull)
+  plan                SubscriptionPlan?  @relation(fields: [planId], references: [id], onDelete: SetNull)
+  paymentMethod       PaymentMethod?     @relation(fields: [paymentMethodId], references: [id], onDelete: SetNull)
+}
+
+// Define the SubscriptionPlan model
+model SubscriptionPlan {
+  id          BigInt    @id @default(autoincrement())
+  planName    String    @db.VarChar(50)
+  price       Decimal   @db.Decimal(10, 2)
+  duration    Int
+  features    String?   @db.Text
+  createdAt   DateTime  @default(now()) @db.Timestamp(0)
+
+  // Relations
+  clientSubscriptions ClientSubscription[]
+}
+
+// Define the Setting model
+model Setting {
+  id          BigInt    @id @default(autoincrement())
+  imageUrl    String    @db.Text
+  hospital    String    @db.VarChar(255)
+  domain      String    @db.VarChar(255)
+  createdAt   DateTime  @default(now()) @db.Timestamp(0)
+
+  // Relations
+  client      Client[]
+}
+
+// Define the Advertisement model
+model Advertisement {
+  id          BigInt    @id @default(autoincrement())
+  title       String    @db.VarChar(100)
+  description String?   @db.Text
+  imageUrl   String     @db.Text
+  createdAt   DateTime  @default(now()) @db.Timestamp(0)
+}
