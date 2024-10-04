@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 
 import Home from "./pages/homePage";
+import Login from "./pages/Login";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -26,6 +27,7 @@ function App() {
     <Router>
       <Routes>
       <Route path="/" element={subdomain !== null ? <Login  setUser={setUser} /> : <Home />} />
+      <Route path="/login" element={<Login/>}/>
       </Routes>
     </Router>
   );
