@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Eye, EyeOff } from 'lucide-react';
 
 
-const Saisignup = () => {
+const Profileupdate = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [file, setFile] = useState(null);
@@ -81,4 +81,4 @@ const Saisignup = () => {
   );
 };
 
-export default Saisignup;
+export default Profileupdate;

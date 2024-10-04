@@ -5,7 +5,7 @@ import UserFriendly from "../components/UserFriendly/UserFriendly";
 import Testimonial from "../components/Testimonial/Testimonial";
 import Portfolio from "../components/Portfolio/Portfolio";
 import Footer from "../components/Footer/Footer";
-import Saisignup from "../components/Saisignup/Saisignup.jsx";
+import Profileupdate from "../components/ProfileUpdate/Profileupdate.jsx";
 
 const Home = () => {
   return (
@@ -16,7 +16,7 @@ const Home = () => {
       <Portfolio/>
       <Testimonial/>
       <Footer/>
-      
+
       {/* <Services/> */}
       {/* <Doctors /> */}
        
