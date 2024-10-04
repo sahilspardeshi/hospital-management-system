@@ -44,7 +44,7 @@ export default function Doctors() {
           <h1 className='font-semibold text-3xl text-center mb-3'>Meet Our Doctors</h1>
           <p className='text-center text-gray-500 '>Well qualified doctors are ready to serve you </p>
         </div>
-
+        <div className='flex flex-wrap justify-evenly w-1/2 m-auto my-5 '>
           {
             doctordata.map(
               (data) => {
@@ -89,6 +89,7 @@ export default function Doctors() {
               }
             )
           }
+          </div>
          
         <div className='border w-28 m-auto'>
         <button className='border items-center rounded-lg py-2 px-5 bg-green-500 text-white'>See More</button>
