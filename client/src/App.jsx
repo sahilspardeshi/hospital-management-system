@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
+import Home from "./pages/Homepage";
+import Saisignup from './components/ProfileUpdate/Profileupdate'
 import {
   BrowserRouter as Router,
   Route,
   Routes,
   Navigate,
 } from "react-router-dom";
+import Profileupdate from "./components/ProfileUpdate/Profileupdate";
 
-import Home from "./pages/homePage";
+
 
 function App() {
   const [user, setUser] = useState(null);
@@ -26,6 +29,7 @@ function App() {
     <Router>
       <Routes>
       <Route path="/" element={subdomain !== null ? <Login  setUser={setUser} /> : <Home />} />
+      <Route path="/Profileupdate" element={ <Profileupdate />} />
       </Routes>
     </Router>
   );
