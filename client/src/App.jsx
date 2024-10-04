@@ -11,6 +11,10 @@ import Profileupdate from "./components/ProfileUpdate/Profileupdate";
 
 
 
+import Home from "./pages/homePage";
+import Login from "./pages/Login";
+
+
 function App() {
   const [user, setUser] = useState(null);
   const [subdomain, setSubdomain] = useState(null);
