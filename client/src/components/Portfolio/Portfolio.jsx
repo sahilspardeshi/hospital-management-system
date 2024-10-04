@@ -25,31 +25,35 @@ export default function Portfolio() {
         <>
             <div className=' py-10 '>
                 <div>
-                    <h1 className='font-semibold text-5xl text-center mb-3'>Our Portfolio</h1>
+                    <h1 className='font-semibold lg:text-4xl text-2xl text-center mb-3'>Our Portfolio</h1>
                 </div>
                 <div>
-                    <ol className='flex tracking-wide mt-16 m-auto w-3/4 justify-evenly'>
-                        <li className='font-semibold text-xl'>All</li>
-                        <li className='font-semibold text-xl'>Website Design</li>
-                        <li className='font-semibold text-xl'>Mobile App</li>
-                        <li className='font-semibold text-xl'>Design Branding</li>
-                        <li className='font-semibold text-xl'>UI/UX</li>
+                    <ol className='flex tracking-wide mt-12 m-auto lg:w-3/4 justify-evenly '>
+                        <li className='mx-2 font-semibold text-sm lg:text-xl'>All</li>
+                        <li className='mx-2 font-semibold text-sm lg:text-xl'>Website Design</li>
+                        <li className='mx-2 font-semibold text-sm lg:text-xl'>Mobile App</li>
+                        <li className='mx-2 font-semibold text-sm lg:text-xl'>Design Branding</li>
+                        <li className='mx-2 font-semibold text-sm lg:text-xl'>UI/UX</li>
                     </ol>
                 </div>
-                <div className=' flex flex-wrap mt-12 w-3/4 m-auto'>
+                <div className='w-11/12 flex flex-wrap mt-12 lg:max-w-screen-2xl m-auto'>
                    {
                     portfoliodata.map(
                         (data)=>{
                             return(
                                 <>
-                                <img src={data.pimg} className='h-52 w-80 m-4 rounded-lg shadow-xl'/>
+                                <img src={data.pimg} className='h-60 lg:w-96 w-72 m-auto my-6 rounded-lg shadow-xl'/>
                                 </>
                             )
                             
                         }
                     )
                    }
+                   
                 </div>
+                <div className=' w-36 m-auto'>
+        <button className=' items-center rounded-lg py-2 px-8 mt-7 bg-green-500 text-white'>View More</button>
+        </div>
             </div>
         </>
     )
