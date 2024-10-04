@@ -27,7 +27,6 @@ function App() {
     <Router>
       <Routes>
       <Route path="/" element={subdomain !== null ? <Login  setUser={setUser} /> : <Home />} />
-      <Route path="/login" element={<Login/>}/>
       </Routes>
     </Router>
   );
