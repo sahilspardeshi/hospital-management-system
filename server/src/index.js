@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import App from './app.js'; // Explicitly specify the file extension
 import cluster from 'cluster'; // Correct import
 import os from 'os';
+import SoftwareApp from './software/app.js';
 
 dotenv.config({
   path: './.env'
@@ -43,8 +44,21 @@ if (cluster.isPrimary || cluster.isMaster) {  // For compatibility with older ve
     res.setTimeout(5000); // Timeout in milliseconds (5000 ms = 5 seconds)
     next();
   });
+  const subdomainRoutingMiddleware = (req, res, next) => {
+    const host = req.headers.host; // Get the host from the request headers
+    const subdomains = host.split('.'); // Split the host into parts
 
-  app.use('/', App);
+    // Check if there is any subdomain
+    if (subdomains.length > 2) { // More than 2 parts indicate a subdomain exists
+        console.log('Routing to SoftwareApp');
+        return SoftwareApp(req, res, next); // Use SoftwareApp routes
+    } else {
+        console.log('Routing to App');
+        return App(req, res, next); // Use App routes
+    }
+};
+app.use(subdomainRoutingMiddleware);
+  app.use('/', App,SoftwareApp);
 
   app.listen(4000, () => {
     console.log('listening on *:4000');
