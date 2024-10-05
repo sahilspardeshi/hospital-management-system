@@ -1,5 +1,5 @@
 import React from 'react';
-import Logo from './IMAGE/ArohiLogo.png'; 
+import  Logo from '../../assets/images/MainArohi_img.png';
 
 
 const CustomNavbar = () => {

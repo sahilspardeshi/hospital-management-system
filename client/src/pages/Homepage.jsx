@@ -1,11 +1,10 @@
 import React from "react";
-import Doctors from "../components/Doctors/Doctors";
-import Services from "../components/Services/Services";
+import Navbar from "../components/Navbar/Navbar.jsx"
+import Herosection from "../components/Mainsection/Herosection.jsx"
 import UserFriendly from "../components/UserFriendly/UserFriendly";
 import Testimonial from "../components/Testimonial/Testimonial";
 import Portfolio from "../components/Portfolio/Portfolio";
 import Footer from "../components/Footer/Footer";
-import Profileupdate from "../components/ProfileUpdate/Profileupdate.jsx";
 
 const Home = () => {
   return (
