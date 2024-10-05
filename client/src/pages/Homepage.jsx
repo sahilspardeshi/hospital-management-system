@@ -16,10 +16,6 @@ const Home = () => {
       <Portfolio/>
       <Testimonial/>
       <Footer/>
-
-      {/* <Services/> */}
-      {/* <Doctors /> */}
-       
       </div>
     </div>
   );
