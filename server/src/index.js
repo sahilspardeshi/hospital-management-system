@@ -3,9 +3,8 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import cluster from 'cluster'; // Correct import
 import os from 'os';
-import SoftwareApp from './software/app.js';
-import App from './website/app.js';
-
+import WebApp from './website/app.js';
+import SoftwareApp from './App/app.js'
 dotenv.config({
   path: './.env'
 })
@@ -55,7 +54,7 @@ if (cluster.isPrimary || cluster.isMaster) {  // For compatibility with older ve
       return SoftwareApp; // Use SoftwareApp routes
     } else {
       console.log('Routing to App');
-      return App; // Use App routes
+      return WebApp; // Use App routes
     }
   };
   
