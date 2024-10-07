@@ -6,7 +6,6 @@ import video from '../../assets/images/Videologo.png';
 
 const HealthCareSection = () => {
   return (
-    <div className="bg-gradient-to-r from-purple-100 to-pink-50 min-h-screen flex flex-col justify-center font-poppins w-full">
       <div className="flex flex-col lg:flex-row items-center justify-between w-full max-w-screen-2xl mx-auto px-8 pt-0 pb-16">
         
         {/* ----------------------- Left Section  ------------------*/}
@@ -52,7 +51,6 @@ const HealthCareSection = () => {
           />
         </div>
       </div>
-    </div>
   );
 };
 
