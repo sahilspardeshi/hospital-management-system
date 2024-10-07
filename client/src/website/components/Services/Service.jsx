@@ -6,7 +6,7 @@ import dashboard from '../../assets/images/Dashboard.png';
 const DynamicTalentHub = () => {
   return (
     <>
-      <div className="bg-gradient-to-r from-purple-100 to-pink-50 flex flex-col items-center justify-center h-full">
+      <div className="bg-gradient-to-r from-purple-100 to-pink-50 flex flex-col items-center justify-center  h-full w-full">
         <h2 className="text-3xl font-bold text-center">
           Our Product Services
         </h2>
@@ -65,7 +65,7 @@ const DynamicTalentHub = () => {
         </div>
       </section>
       
-      <div className="bg-gradient-to-r from-purple-100 to-pink-50 flex flex-col items-center justify-center h-full">
+      <div className=" from-purple-100 to-pink-50 flex flex-col items-center justify-center h-full">
         <button className="mt-4 px-6 py-2 bg-green-500 text-white font-semibold rounded-lg m-10 hover:bg-green-600">
           See More
         </button>
