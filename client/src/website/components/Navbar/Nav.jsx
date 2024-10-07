@@ -5,7 +5,7 @@ import Logo from '../../assets/images/AarohiLogo.png';
 
 const CustomNavbar = () => {
   return (
-    <nav className="bg-gradient-to-r from-purple-100 to-pink-50 shadow-md pt-10 font-poppins pb-5">
+    <nav className="bg-gradient-to-r from-purple-100 to-pink-50 shadow-md pt-10 font-poppins pb-5 w-full">
       <div className="container mx-auto flex justify-between items-center">
         <a href="#home" className="flex items-center">
           <img src={Logo} alt="Hospital Logo" className="h-20 w-20" />
@@ -23,7 +23,7 @@ const CustomNavbar = () => {
         </button>
 
         {/* Menu Items */}
-        <div className="hidden lg:flex lg:items-center lg:space-x-6" id="menu">
+        <div className="hidden lg:flex lg:items-center lg:space-x-10" id="menu">
           <a href="#home" className="text-green-600 hover:text-green-700 no-underline text-xl font-bold">Home</a>
           <div className="relative group">
             <button className="text-gray-700 hover:text-gray-900 flex items-center font-bold text-xl">
