@@ -6,6 +6,9 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        jaini: ['Jaini', 'sans-serif'], // You can replace 'sans-serif' with a fallback font if needed
+      },
       colors: {
         gradientStart: '#D8D2FC',
         gradientMiddle: '#FDE2E0',
