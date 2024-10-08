@@ -76,7 +76,7 @@ const DynamicTalentHub = () => {
 
 const ServiceCard = ({ title, description, icon }) => {
   return (
-    <div className="flex items-center space-x-4 p-10 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 border border-gray-600">
+    <div className="flex items-center space-x-4 p-10 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 border border-gray-600">
       <div className="text-4xl">{icon}</div>
       <div>
         <h4 className="text-xl font-bold">{title}</h4>
