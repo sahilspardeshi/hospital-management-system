@@ -60,11 +60,12 @@ if (cluster.isPrimary || cluster.isMaster) {  // For compatibility with older ve
   
   
   // Use the function to dynamically determine the route:
-  app.use('/', (req, res, next) => {
-    const routeHandler = subdomainRoutingFunction(req); // Determine the route
-    routeHandler(req, res, next); // Pass the request to the correct handler
-  });
-  
+  // app.use('/', (req, res, next) => {
+  //   const routeHandler = subdomainRoutingFunction(req); // Determine the route
+  //   routeHandler(req, res, next); // Pass the request to the correct handler
+  // });
+  app.use('/web',WebApp);
+  app.use('/software',SoftwareApp);
   // Start the server
   app.listen(4000, () => {
     console.log('listening on *:4000');
