@@ -32,7 +32,7 @@ const DynamicTalentHub = () => {
             />
             <ServiceCard
               title="Workforce Management"
-              description="Ceipal’s Workforce Management helps organizations effectively oversee talent."
+              description="Ceipal’s Workforce Management flexible helps organizations effectively oversee talent."
               icon="💼"
             />
             <ServiceCard
@@ -53,10 +53,10 @@ const DynamicTalentHub = () => {
                 className="w-full h-auto rounded-lg shadow-md mb-4 border border-gray-600"
               />
             </div>
-            <h1 className="font-bold text-center mb-4">
+            <h1 className="font-bold lg:text-4xl text-2xl text-center mb-4">
               Dynamic Talent Hub
             </h1>
-            <p className="text-sm text-center text-gray-600 mb-6">
+            <p className="text-[20px] text-center text-gray-600 mb-6">
               Welcome to our dynamic talent hub, where innovation and expertise
               converge to create a powerful ecosystem for connecting top-tier
               talent with unparalleled opportunities.
@@ -76,11 +76,11 @@ const DynamicTalentHub = () => {
 
 const ServiceCard = ({ title, description, icon }) => {
   return (
-    <div className="flex items-center space-x-4 p-10 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 border border-gray-600">
+    <div className="flex bg-purple-50 items-center space-x-4 px-10 py-4 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 border-2 border-gray-400">
       <div className="text-4xl">{icon}</div>
       <div>
-        <h4 className="text-xl font-bold">{title}</h4>
-        <p className="text-sm text-gray-600">{description}</p>
+        <h4 className="text-xl  font-bold">{title}</h4>
+        <p className="text-[16px] text-gray-600">{description}</p>
       </div>
     </div>
   );

@@ -22,7 +22,7 @@ export default function PayOption() {
           <hr className=" border-gray-300 border-2" />
           {/* use ternary operator for upi suggestions */}
           <div className='p-5 hover:bg-blue-100 '>
-          <input  type="radio" value="UPI" className="mx-6  border-2 border-black"/><span className='text-xl font-semibold'>UPI</span><br /> 
+          <input  type="radio" value="UPI" name="payoption" className="mx-6   border-2 border-black"/><span className='text-xl font-semibold'>UPI</span><br /> 
            <div className='flex mt-2 flex-col lg:flex-row'>
               <span className='flex mt-2'><input type="radio" name="upi" value="paypal"  checked={selectedOption === "paypal"} onChange={handleOptionChange} className="ml-8 h-2 mt-1" /><img src={paypal} className='h-4 ' /></span>
               <span className='flex mt-2'><input type="radio" name="upi" value="gpay" checked={selectedOption === "gpay"} onChange={handleOptionChange} className="ml-8 h-2 mt-1" /><img src={gpay} className='h-4 ' /></span>

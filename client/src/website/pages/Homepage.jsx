@@ -6,6 +6,7 @@ import Footer from "../components/Footer/Footer";
 import Nav from "../components/Navbar/Nav.jsx";
 import Healthcare from "../components/HealthcareNav/Healthcare.jsx";
 import Service from "../components/Services/Service.jsx";
+import PayOption from "../components/Payment/PayOption.jsx";
 
 const Home = () => {
   return (
@@ -13,6 +14,7 @@ const Home = () => {
       {/* Main container with fixed width and height and vertical scrolling */}
       <div className="bg-[#F8F7F7] bg-opacity-70 shadow-lg rounded-xl border border-gray-200 w-full  max-w-full max-h-full overflow-y-auto flex flex-col justify-start items-center mx-5 my-5 px-5 py-5">
       <Nav/>
+      <PayOption/>
       <Healthcare/>
       <Service/>      
       <UserFriendly/>
