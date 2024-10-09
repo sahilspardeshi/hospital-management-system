@@ -1,8 +1,8 @@
+// PaymentModal.jsx
 import React, { useState } from "react";
-import back from "../assets/back.jpg";
-import tick from "../assets/tick.png";
-
-const PaymentPage = () => {
+import back from "../../assets/images/back.jpg";
+import tick from "../../assets/images/tick.png";
+const PaymentModal = ({isOpen, closeModal, OnSuccess }) => {
   const [isMonthly, setIsMonthly] = useState(true);
 
   const handleMonthlyClick = () => setIsMonthly(true);
@@ -21,14 +21,15 @@ const PaymentPage = () => {
       ];
 
   return (
-    <div className="relative flex justify-center items-center min-h-screen w-screen bg-white overflow-y-auto">
-      {/* Background Image */}
-      <div className="absolute inset-0">
-        <img src={back} alt="Background" className="w-full h-full object-cover opacity-40" />
-      </div>
+    <>
+        {
+      !isOpen? null : <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
+      <div className="relative w-[95%] sm:w-[90%] md:w-[75%] lg:w-[60%] xl:w-[50%] mx-auto border-2 p-4 md:p-6 bg-white rounded-xl shadow-lg">
+        {/* Close Button */}
+        <button className="absolute top-2 right-2 text-gray-500" onClick={closeModal}>
+          &times;
+        </button>
 
-      {/* Content */}
-      <div className="relative w-[95%] sm:w-[90%] md:w-[75%] lg:w-[60%] xl:w-[50%] mx-auto border-2 p-4 md:p-6 z-50 rounded-xl bg-white shadow-lg mb-8">
         <h2 className="text-center text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold mb-4 leading-tight">
           We offer great <span className="text-green-400">price</span> plans for the 
           <br className="pt-2" /> application
@@ -38,17 +39,13 @@ const PaymentPage = () => {
         <div className="flex justify-center items-center mb-4">
           <div className="flex justify-center items-center w-28 p-1 shadow-md rounded-full">
             <button
-              className={`rounded-full w-14 py-1 text-xs sm:text-sm transition-colors duration-300 ${
-                isMonthly ? "bg-green-600 text-white" : "bg-gray-200 text-black"
-              }`}
+              className={`rounded-full w-14 py-1 text-xs sm:text-sm transition-colors duration-300 ${isMonthly ? "bg-green-600 text-white" : "bg-gray-200 text-black"}`}
               onClick={handleMonthlyClick}
             >
               Monthly
             </button>
             <button
-              className={`rounded-full w-14 py-1 text-xs sm:text-sm transition-colors duration-300 ${
-                !isMonthly ? "bg-green-600 text-white" : "bg-gray-200 text-black"
-              }`}
+              className={`rounded-full w-14 py-1 text-xs sm:text-sm transition-colors duration-300 ${!isMonthly ? "bg-green-600 text-white" : "bg-gray-200 text-black"}`}
               onClick={handleYearlyClick}
             >
               Yearly
@@ -78,16 +75,18 @@ const PaymentPage = () => {
                   </li>
                 ))}
               </ul>
-              <button className="border-2 bg-blue-100 border-blue-500 text-blue-500 py-1 px-2 sm:py-2 sm:px-3 md:py-2 md:px-4 rounded hover:bg-blue-500 hover:text-white w-full transition-colors duration-300 text-xs sm:text-sm">
+              <button className="border-2 bg-blue-100 border-blue-500 text-blue-500 py-1 px-2 sm:py-2 sm:px-3 md:py-2 md:px-4 rounded hover:bg-blue-500 hover:text-white w-full transition-colors duration-300 text-xs sm:text-sm" onClick={OnSuccess}>
                 Get started
               </button>
-
             </div>
           ))}
         </div>
       </div>
     </div>
+    }</>
+
+   
   );
 };
 
-export default PaymentPage;
+export default PaymentModal;
