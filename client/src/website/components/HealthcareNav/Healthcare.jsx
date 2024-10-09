@@ -39,7 +39,7 @@ const HealthCareSection = () => {
           
           {/* ----------------------- Left Section ------------------*/}
           <div className="w-full lg:text-left pr-5">
-            <div className="font-bold text-5xl md:text-6xl lg:text-7xl mb-6">
+            <div className="font-bold text-3xl md:text-4xl lg:text-5xl mb-6">
               <h1>
                 <span className="text-green-600">We care</span> <br />
                 about your health
@@ -79,29 +79,29 @@ const HealthCareSection = () => {
           </div>
 
           {/* ----------------Right Section - Doctors ------------*/}
-          <div className="w-full p-5 relative flex justify-center items-center bg-red-100 rounded-full">
-            <div className="w-full p-5 relative flex justify-center items-center bg-red-50 rounded-full">
+          <div className=" p-5 mt-16 relative flex justify-center items-center bg-red-100 rounded-full">
+            <div className=" p-5 relative flex justify-center items-center bg-red-50 rounded-full">
               <div className="w-full lg:w-72 relative flex justify-center items-center bg-red-200 rounded-full">
                 <img
                   src={Dr} // Main Dr Img 
                   alt="Doctors"
-                  className="w-72 h-72"
+                  className="lg:w-72 lg:h-72"
                 />
-                <div className="absolute top-10 -left-40 bg-white p-2 rounded-2xl shadow-lg flex items-center space-x-2">
+                <div className="absolute lg:top-10 lg:-left-40 -top-16 -left-20 bg-white p-2 rounded-2xl shadow-lg flex items-center space-x-2">
                   <span role="img" aria-label="doctor" className="text-yellow-500">🔍</span>
                   <div>
                     <p className="font-semibold">Well Qualified Doctors</p>
                     <p className="text-xs text-gray-500">Treat with care</p>
                   </div>
                 </div>
-                <div className="absolute bottom-10 -left-40 bg-white px-6 p-2 rounded-2xl shadow-lg flex items-center space-x-2">
+                <div className="absolute lg:bottom-10 lg:-left-40 -bottom-7 -left-28 bg-white px-6 p-2 rounded-2xl shadow-lg flex items-center space-x-2">
                   <span role="img" aria-label="email" className="text-yellow-500">📧</span>
                   <div>
                     <p className="font-semibold">Email</p>
                     <p className="text-xs text-gray-500">www.arohisoftwares.com</p>
                   </div>
                 </div> 
-                <div className="absolute bottom-6 -right-16 bg-white p-2 rounded-2xl shadow-lg flex items-center space-x-2">
+                <div className="absolute lg:bottom-6 lg:-right-16 -bottom-2 -right-28 bg-white p-2 rounded-2xl shadow-lg flex items-center space-x-2">
                   <div>
                     <p className="font-semibold text-black">Contact No</p>
                     <p className="text-xs text-black">+91 8149191332</p>

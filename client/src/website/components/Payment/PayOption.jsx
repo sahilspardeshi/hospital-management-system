@@ -16,7 +16,7 @@ export default function PayOption() {
   return (
     <>
       <div className='border flex-col lg:flex-row flex justify-between h-auto w-[68vw] bg-white rounded-2xl'>
-        <div className='w-[650px]'>
+        <div className='lg:w-[650px]'>
           <h1 className='text-2xl font-extrabold mb-3 m-5'>PAYMENT OPTION </h1>
           <p className='text-sm ml-5 mb-3'>Complete payment in 00:14:35</p>
           <hr className=" border-gray-300 border-2" />
@@ -72,12 +72,12 @@ export default function PayOption() {
             <input type="radio" value="other" name="payoption" className="mx-6  border-2 border-black" /><span className='text-xl font-semibold'>Other</span><br />
           </div>
         </div>
-        <div className='bg-red-300 h-auto w-[25vw] rounded-r-xl'>
-          <div className='flex  h-24 items-center w-40 m-auto'>
-            <h1 className='text-white text-xl font-semibold '>Most popular </h1>&nbsp; <img src={sparkler} className='h-6 m-' />
+        <div className='bg-red-300 p-3 h-auto lg:w-[25vw] rounded-r-xl'>
+          <div className='flex  h-24 items-center lg:w-40 m-auto'>
+            <h1 className='text-white text-xl font-semibold flex m-auto'>Most popular&nbsp; <img src={sparkler} className='h-6 m-' /> </h1>
           </div>
-          <div className='bg-purple-50 h-[62vh] w-[300px] m-auto rounded-lg'>
-            <div className='bg-white h-36 text-center '>
+          <div className='bg-purple-50 p-3 lg:h-[62vh] w-[300px] m-auto rounded-lg'>
+            <div className='bg-white lg:h-36 text-center '>
             <h2 className="text-2xl font-bold p-5">Essential</h2>
           <p className="text-5xl font-bold">$599 <span className="text-xl font-semibold">/Year</span></p>
           
