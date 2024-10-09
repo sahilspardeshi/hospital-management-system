@@ -24,7 +24,7 @@ const HealthCareSection = () => {
            <button className="bg-red-400 px-4 h-[53px] rounded-lg text-white mt-3 font-bold text-lg">Book an appointment →</button>
             <button className="flex items-center justify-center px-6 py-3 rounded-10 text-lg lg:text-xl">
               <span className="mr-3 border rounded-full border-gray-400 ">
-                <img src={video} alt="Hospital Logo" className="h-9 w-auto m-[6px] hover:translate-x-1"/>
+                <img src={video} alt="Hospital Logo" className="h-9 w-auto m-[6px] hover:translate-y-1"/>
               </span> 
              <span className="font-semibold"> Watch videos</span>
             </button>
