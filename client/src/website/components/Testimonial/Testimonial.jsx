@@ -57,7 +57,7 @@ export default function Testimonial() {
         <>
             <div className=' py-10 '>
                 <div>
-                    <h1 className='font-semibold text-4xl text-center mb-3'>Patients Testimonial</h1>
+                    <h1 className='font-semibold lg:text-4xl text-2xl text-center mb-3'>Patients Testimonial</h1>
                     <p className='text-center text-gray-500'>Let's see what our happy patients say</p>
                 </div>
                 <div className='flex  flex-wrap justify-evenly m-auto my-5'>
@@ -70,13 +70,13 @@ export default function Testimonial() {
                     </button>
 
                     {itemsToDisplay.map((data, index) => (
-                        <div key={index} className='flex h-44 w-80 bg-white rounded-lg shadow-lg m-2'>
+                        <div key={index} className='flex h-44 lg:w-80 w-64 bg-white rounded-lg shadow-lg m-2'>
                             <div className='h-20 w-20'>
-                                <div className='h-16 w-16 bg-yellow-300 rounded-full relative m-4'>
-                                    <img className='h-16 w-16 rounded-full absolute left-2' src={data.patient_img} alt={data.patient_name} />
+                                <div className='lg:h-16 lg:w-16 w-12 h-12 bg-yellow-300 rounded-full relative m-4'>
+                                    <img className='lg:h-16 lg:w-16 w-12 h-12 rounded-full absolute left-2' src={data.patient_img} alt={data.patient_name} />
                                 </div>
                             </div>
-                            <div className='h-32 w-52 m-auto p-2'>
+                            <div className='h-32 w-52  m-auto pl-2'>
                                 <h2 className='font-semibold'>{data.patient_name}</h2>
                                 <p className='text-xs text-gray-500'>{data.patient_category}</p>
                                 <img className='mt-[-22px] ml-[-30px] h-20' src={star} alt="Rating" />
