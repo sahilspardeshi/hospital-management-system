@@ -22,6 +22,7 @@ const CreateAccount = ({ close, isOpen,onSuccess }) => { // Removed unused onSub
         close();
       }
     };
+    
     if (isOpen) {
       window.addEventListener("keydown", handleEsc);
       // Disable background scrolling
@@ -122,11 +123,11 @@ const CreateAccount = ({ close, isOpen,onSuccess }) => { // Removed unused onSub
               />
             </div>
             <div className="text-sm text-center mt-4">
-  <span className="text-gray-600">Already have an account?</span>
-  <a href="/login" className="text-blue-500 w-1/2 pt-3  hover:text-blue-700 font-semibold ml-1">
-    Login 
-  </a>
-</div>
+              <span className="text-gray-600">Already have an account?</span>
+               <a href="/login" className="text-blue-500 w-1/2 pt-3  hover:text-blue-700 font-semibold ml-1">
+                    Login 
+                </a>
+            </div>
             <div className="flex justify-end">
               <button
              
