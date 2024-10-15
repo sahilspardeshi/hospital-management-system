@@ -30,28 +30,28 @@ const PaymentModal = ({isOpen, closeModal, OnSuccess }) => {
           &times;
         </button>
 
-        <h2 className="text-center text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold mb-4 leading-tight">
+        <h2 className="text-center text-lg sm:text-xl md:text-2xl lg:text-3xl font-semi-bold mb-4 font-poppins leading-tight">
           We offer great <span className="text-green-400">price</span> plans for the 
-          <br className="pt-2" /> application
+          <br className="pt-2 py-3" /> application 
         </h2>
 
         {/* Toggle Button */}
-        <div className="flex justify-center items-center mb-4">
-          <div className="flex justify-center items-center w-28 p-1 shadow-md rounded-full">
+        <div className="flex justify-center items-center mb-10">
+          <div className="flex px-2  bg-white w-45 h-7 p-1 shadow-lg rounded-full">
             <button
-              className={`rounded-full w-14 py-1 text-xs sm:text-sm transition-colors duration-300 ${isMonthly ? "bg-green-600 text-white" : "bg-gray-200 text-black"}`}
+              className={`rounded-full flex items-center justify-center w-20 py-1 h-5 text-xs sm:text-sm transition-colors duration-300 ${isMonthly ? "bg-green-600 text-white" : "bg-gray-200 text-black"}`}
               onClick={handleMonthlyClick}
             >
               Monthly
             </button>
             <button
-              className={`rounded-full w-14 py-1 text-xs sm:text-sm transition-colors duration-300 ${!isMonthly ? "bg-green-600 text-white" : "bg-gray-200 text-black"}`}
+              className={`rounded-full flex items-center justify-center w-20 h-5 py-1 text-xs sm:text-sm transition-colors duration-300 ${!isMonthly ? "bg-green-600 text-white" : "bg-gray-200 text-black"}`}
               onClick={handleYearlyClick}
             >
               Yearly
             </button>
           </div>
-          <span className="ml-2 text-purple-600 text-xs sm:text-sm">Save up to 30%</span>
+          <span className="ml-2 text-purple-600 text-[10px] ">Save up to 30%</span>
         </div>
 
         {/* Pricing Plans */}
@@ -59,7 +59,7 @@ const PaymentModal = ({isOpen, closeModal, OnSuccess }) => {
           {pricingPlans.map((plan, index) => (
             <div
               key={index}
-              className={`bg-white shadow-md rounded-lg p-3 sm:p-4 lg:p-6 text-center transition-transform duration-300 hover:border-blue-700 hover:border-2 hover:scale-105`}
+              className={`bg-white shadow-md rounded-lg p-3 sm:p-4 lg:p-6 text-center transition-transform duration-300 hover:border-blue-700 hover:border-4 hover:scale-110`}
             >
               {plan.popular && <p className="text-xs text-yellow-600 font-semibold mb-2">Most Popular</p>}
               <h3 className="text-md sm:text-lg md:text-xl font-semibold mb-2">{plan.name}</h3>

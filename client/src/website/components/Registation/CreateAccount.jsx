@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import back from "../../assets/images/back.jpg";
 import logo from "../../assets/images/logo.png";
-import facebook from "../../assets/images/facebook.png";
+
 import google from "../../assets/images/google.png";
 
 const CreateAccount = ({ close, isOpen,onSuccess }) => { // Removed unused onSubmit prop
@@ -22,6 +22,7 @@ const CreateAccount = ({ close, isOpen,onSuccess }) => { // Removed unused onSub
         close();
       }
     };
+    
     if (isOpen) {
       window.addEventListener("keydown", handleEsc);
       // Disable background scrolling
@@ -57,22 +58,19 @@ const CreateAccount = ({ close, isOpen,onSuccess }) => { // Removed unused onSub
 
         {/* Right side */}
         <div className="relative w-full lg:w-4/6 flex bg-white flex-col justify-between p-6">
-          <div className="m-3 text-2xl font-bold text-center">
+          <div className="m-3 pb-4 text-2xl font-bold text-center">
             Create Account
           </div>
           <div className="button flex flex-col lg:flex-row w-full mb-4 gap-2">
-            <button className="flex bg-white active:scale-95 active:bg-gray-400 h-12 lg:h-10 w-full lg:w-auto justify-center items-center border border-gray-300 rounded-lg">
+            <button className="px-3 py-3  hover:brightness-110 flex bg-white active:scale-95 active:bg-gray-400 h-10 lg:h-10 w-full lg:w-auto justify-center items-center border border-gray-300 rounded-lg">
               <img
                 src={google}
                 alt="Google"
-                className="w-5 h-5 lg:w-6 lg:h-6 mr-2"
+                className="w-auto h-5 lg:h-6 mr-2 object-contain"
               />
               Continue with Google
             </button>
-            <button className="flex bg-white active:scale-95 active:bg-gray-400 h-12 lg:h-10 w-full lg:w-auto justify-center items-center border border-gray-300 rounded-lg">
-              <img src={facebook} alt="Facebook" className="w-6 h-6 mr-2" />
-              Continue with Facebook
-            </button>
+            
           </div>
           <div className="flex items-center justify-center my-2">
             <span className="text-gray-500">- OR -</span>
@@ -124,11 +122,17 @@ const CreateAccount = ({ close, isOpen,onSuccess }) => { // Removed unused onSub
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500"
               />
             </div>
+            <div className="text-sm text-center mt-4">
+              <span className="text-gray-600">Already have an account?</span>
+               <a href="/login" className="text-blue-500 w-1/2 pt-3  hover:text-blue-700 font-semibold ml-1">
+                    Login 
+                </a>
+            </div>
             <div className="flex justify-end">
               <button
              
                 type="submit"
-                className="w-full lg:w-1/4 bg-green-600 text-white py-2 rounded-lg text-base hover:bg-green-700 transition duration-200"
+                className="w-full lg:w-1/4 bg-green-600 text-white py-2 rounded-lg text-base hover:bg-green-400 transition duration-200 "
               >
                 Next
               </button>
