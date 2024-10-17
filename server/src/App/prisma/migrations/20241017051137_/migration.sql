@@ -1,6 +1,6 @@
 -- CreateTable
 CREATE TABLE "Appointments_OPD" (
-    "id" BIGINT NOT NULL,
+    "id" BIGSERIAL NOT NULL,
     "patient_id" BIGINT,
     "report_id" BIGINT NOT NULL,
     "doctor_id" INTEGER,
@@ -16,7 +16,7 @@ CREATE TABLE "Appointments_OPD" (
 
 -- CreateTable
 CREATE TABLE "Billing" (
-    "id" BIGINT NOT NULL,
+    "id" BIGSERIAL NOT NULL,
     "patient_id" BIGINT,
     "treatment_id" BIGINT NOT NULL,
     "type" VARCHAR(255) NOT NULL DEFAULT 'OPD',
@@ -31,7 +31,7 @@ CREATE TABLE "Billing" (
 
 -- CreateTable
 CREATE TABLE "DailyItemsList" (
-    "id" BIGINT NOT NULL,
+    "id" BIGSERIAL NOT NULL,
     "ipd_admission_id" BIGINT NOT NULL,
     "item_id" BIGINT NOT NULL,
     "record_date" DATE NOT NULL,
@@ -49,7 +49,7 @@ CREATE TABLE "DailyItemsList" (
 
 -- CreateTable
 CREATE TABLE "DayItem" (
-    "id" BIGINT NOT NULL,
+    "id" BIGSERIAL NOT NULL,
     "ipd_admission_id" BIGINT NOT NULL,
     "treatment_id" BIGINT NOT NULL,
     "created_at" TIMESTAMP(0) NOT NULL,
@@ -59,7 +59,7 @@ CREATE TABLE "DayItem" (
 
 -- CreateTable
 CREATE TABLE "IPDAdmissions" (
-    "id" BIGINT NOT NULL,
+    "id" BIGSERIAL NOT NULL,
     "patient_id" BIGINT,
     "report_id" BIGINT NOT NULL,
     "discharge_date" DATE,
@@ -73,10 +73,9 @@ CREATE TABLE "IPDAdmissions" (
 
 -- CreateTable
 CREATE TABLE "IPDTreatments" (
-    "id" BIGINT NOT NULL,
+    "id" BIGSERIAL NOT NULL,
     "petient_id" BIGINT NOT NULL,
     "ipd_admission_id" BIGINT,
-    "medication_id" BIGINT NOT NULL,
     "treatment_date" DATE NOT NULL,
     "treatment_details" TEXT,
     "created_at" TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP,
@@ -86,10 +85,20 @@ CREATE TABLE "IPDTreatments" (
 );
 
 -- CreateTable
-CREATE TABLE "IntakeOutput" (
-    "id" BIGINT NOT NULL,
+CREATE TABLE "MainIntakeOutput" (
+    "id" BIGSERIAL NOT NULL,
     "ipd_admission_id" BIGINT,
     "treatment_id" BIGINT NOT NULL,
+    "record_date" DATE NOT NULL,
+    "created_at" TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "MainIntakeOutput_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "IntakeOutput" (
+    "id" BIGSERIAL NOT NULL,
     "record_date" DATE NOT NULL,
     "intake_time" INTEGER,
     "intake_nature" INTEGER,
@@ -106,14 +115,28 @@ CREATE TABLE "IntakeOutput" (
 );
 
 -- CreateTable
+CREATE TABLE "MainLabReports" (
+    "id" BIGSERIAL NOT NULL,
+    "ODPtreatment_id" BIGINT,
+    "IPDtreatment_id" BIGINT,
+    "ANCtreatment_id" BIGINT,
+    "status" VARCHAR(20),
+    "type" VARCHAR(255) NOT NULL DEFAULT 'OPD',
+    "description" VARCHAR(255),
+    "start_date" DATE,
+    "end_date" DATE,
+
+    CONSTRAINT "MainLabReports_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "LabReports" (
-    "id" BIGINT NOT NULL,
+    "id" BIGSERIAL NOT NULL,
     "patient_id" BIGINT,
-    "treatment_id" BIGINT NOT NULL,
     "doctor_id" BIGINT,
+    "MainLabReports_id" BIGINT NOT NULL,
     "test_name" VARCHAR(255),
     "test_date" DATE,
-    "type" VARCHAR(255) NOT NULL DEFAULT 'OPD',
     "test_result" TEXT,
     "test_file" TEXT,
     "lab_technician" VARCHAR(255),
@@ -122,17 +145,6 @@ CREATE TABLE "LabReports" (
     "updated_at" TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "LabReports_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "PetientLabReports" (
-    "id" BIGINT NOT NULL,
-    "patient_id" BIGINT,
-    "status" VARCHAR(20),
-    "created_at" TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP,
-
-    CONSTRAINT "PetientLabReports_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -149,10 +161,25 @@ CREATE TABLE "LabTestDetails" (
 );
 
 -- CreateTable
+CREATE TABLE "MainMedicalReports" (
+    "id" BIGSERIAL NOT NULL,
+    "ODPtreatment_id" BIGINT,
+    "IPDtreatment_id" BIGINT,
+    "ANCtreatment_id" BIGINT,
+    "status" VARCHAR(20),
+    "type" VARCHAR(255) NOT NULL DEFAULT 'OPD',
+    "description" VARCHAR(255),
+    "start_date" DATE,
+    "end_date" DATE,
+
+    CONSTRAINT "MainMedicalReports_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "MedicalReports" (
-    "report_id" BIGINT NOT NULL,
+    "report_id" BIGSERIAL NOT NULL,
     "doctor_id" BIGINT,
-    "treatment_id" BIGINT,
+    "MainReports_id" BIGINT,
     "report_type" VARCHAR(255),
     "report_description" TEXT,
     "report_date" DATE,
@@ -166,7 +193,7 @@ CREATE TABLE "MedicalReports" (
 
 -- CreateTable
 CREATE TABLE "Medications" (
-    "id" BIGINT NOT NULL,
+    "id" BIGSERIAL NOT NULL,
     "treatment_id" BIGINT NOT NULL,
     "medicine_id" BIGINT NOT NULL,
     "medication_name" VARCHAR(100) NOT NULL,
@@ -183,8 +210,9 @@ CREATE TABLE "Medications" (
 
 -- CreateTable
 CREATE TABLE "MainMedication" (
-    "id" BIGINT NOT NULL,
+    "id" BIGSERIAL NOT NULL,
     "PatientMedication_id" BIGINT NOT NULL,
+    "SurgeryRecords_id" BIGINT,
     "treatment_type" VARCHAR(10) NOT NULL,
     "doctor_id" BIGINT,
     "type" VARCHAR(255) NOT NULL DEFAULT 'OPD',
@@ -201,12 +229,13 @@ CREATE TABLE "MainMedication" (
 
 -- CreateTable
 CREATE TABLE "PatientMedication" (
-    "id" BIGINT NOT NULL,
-    "treatment_type" VARCHAR(10) NOT NULL,
+    "id" BIGSERIAL NOT NULL,
+    "ODPtreatment_id" BIGINT,
+    "IPDtreatment_id" BIGINT,
+    "ANCtreatment_id" BIGINT,
     "doctor_id" BIGINT,
     "type" VARCHAR(255) NOT NULL DEFAULT 'OPD',
     "description" VARCHAR(255),
-    "test_file" TEXT,
     "start_date" DATE,
     "end_date" DATE,
 
@@ -215,11 +244,10 @@ CREATE TABLE "PatientMedication" (
 
 -- CreateTable
 CREATE TABLE "OPDTreatments" (
-    "id" BIGINT NOT NULL,
+    "id" BIGSERIAL NOT NULL,
     "appointment_id" BIGINT,
     "patient_id" BIGINT,
     "doctor_id" BIGINT,
-    "medication_id" BIGINT NOT NULL,
     "diagnosis" TEXT,
     "treatment_plan" TEXT,
     "report_file" TEXT,
@@ -232,7 +260,7 @@ CREATE TABLE "OPDTreatments" (
 
 -- CreateTable
 CREATE TABLE "Patients" (
-    "id" BIGINT NOT NULL,
+    "id" BIGSERIAL NOT NULL,
     "full_name" VARCHAR(100) NOT NULL,
     "date_of_birth" DATE NOT NULL,
     "gender" VARCHAR(10) NOT NULL,
@@ -248,7 +276,7 @@ CREATE TABLE "Patients" (
 
 -- CreateTable
 CREATE TABLE "ReportResults" (
-    "result_id" BIGINT NOT NULL,
+    "result_id" BIGSERIAL NOT NULL,
     "report_id" BIGINT,
     "observation_name" VARCHAR(255),
     "observation_value" TEXT,
@@ -260,7 +288,7 @@ CREATE TABLE "ReportResults" (
 
 -- CreateTable
 CREATE TABLE "Setting" (
-    "id" BIGINT NOT NULL,
+    "id" BIGSERIAL NOT NULL,
     "domain" VARCHAR(500),
     "icon" VARCHAR(500),
     "hospital" VARCHAR(500),
@@ -274,7 +302,7 @@ CREATE TABLE "Setting" (
 
 -- CreateTable
 CREATE TABLE "Staff" (
-    "Staff_id" BIGINT NOT NULL,
+    "Staff_id" BIGSERIAL NOT NULL,
     "full_name" VARCHAR(100) NOT NULL,
     "specialization" VARCHAR(100),
     "user" VARCHAR(200),
@@ -292,7 +320,7 @@ CREATE TABLE "Staff" (
 
 -- CreateTable
 CREATE TABLE "SurgeryRecords" (
-    "surgery_id" BIGINT NOT NULL,
+    "surgery_id" BIGSERIAL NOT NULL,
     "patient_id" BIGINT,
     "treatment_id" BIGINT NOT NULL,
     "ipd_admission_id" BIGINT NOT NULL,
@@ -309,7 +337,6 @@ CREATE TABLE "SurgeryRecords" (
     "procedure_description" TEXT,
     "surgery_outcome" VARCHAR(100),
     "complications" TEXT,
-    "medication_id" BIGINT NOT NULL,
     "medications_administered" TEXT,
     "blood_loss" VARCHAR(50),
     "implants_used" TEXT,
@@ -322,7 +349,7 @@ CREATE TABLE "SurgeryRecords" (
 
 -- CreateTable
 CREATE TABLE "TechnicianReports" (
-    "technician_report_id" BIGINT NOT NULL,
+    "technician_report_id" BIGSERIAL NOT NULL,
     "report_id" BIGINT,
     "technician_id" BIGINT,
     "technician_notes" TEXT,
@@ -333,10 +360,21 @@ CREATE TABLE "TechnicianReports" (
 );
 
 -- CreateTable
-CREATE TABLE "VitalSigns" (
-    "record_id" BIGINT NOT NULL,
+CREATE TABLE "MainVitalSigns" (
+    "id" BIGSERIAL NOT NULL,
     "ipd_admission_id" BIGINT,
     "treatment_id" BIGINT NOT NULL,
+    "record_date" DATE NOT NULL,
+    "created_at" TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "MainVitalSigns_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "VitalSigns" (
+    "id" BIGSERIAL NOT NULL,
+    "MainVitalSigns_id" BIGINT NOT NULL,
     "record_date" DATE NOT NULL,
     "spo2" INTEGER,
     "temperature" INTEGER,
@@ -346,12 +384,12 @@ CREATE TABLE "VitalSigns" (
     "created_at" TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP,
 
-    CONSTRAINT "VitalSigns_pkey" PRIMARY KEY ("record_id")
+    CONSTRAINT "VitalSigns_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "Ward" (
-    "id" BIGINT NOT NULL,
+    "id" BIGSERIAL NOT NULL,
     "dayitem_id" BIGINT NOT NULL,
     "treatment_id" BIGINT NOT NULL,
     "ipd_admission_id" BIGINT NOT NULL,
@@ -370,7 +408,7 @@ CREATE TABLE "Ward" (
 
 -- CreateTable
 CREATE TABLE "dailybill" (
-    "id" BIGINT NOT NULL,
+    "id" BIGSERIAL NOT NULL,
     "day" DATE NOT NULL,
     "cost" BIGINT NOT NULL,
     "finalbill_id" BIGINT NOT NULL,
@@ -383,7 +421,7 @@ CREATE TABLE "dailybill" (
 
 -- CreateTable
 CREATE TABLE "item" (
-    "id" BIGINT NOT NULL,
+    "id" BIGSERIAL NOT NULL,
     "name" VARCHAR(255) NOT NULL,
     "category" VARCHAR(255) NOT NULL,
     "description" TEXT NOT NULL,
@@ -395,7 +433,7 @@ CREATE TABLE "item" (
 
 -- CreateTable
 CREATE TABLE "medication_list" (
-    "id" BIGINT NOT NULL,
+    "id" BIGSERIAL NOT NULL,
     "name" VARCHAR(255) NOT NULL,
     "type" VARCHAR(255) NOT NULL,
 
@@ -404,7 +442,7 @@ CREATE TABLE "medication_list" (
 
 -- CreateTable
 CREATE TABLE "notes" (
-    "id" BIGINT NOT NULL,
+    "id" BIGSERIAL NOT NULL,
     "user_id" BIGINT NOT NULL,
     "type" VARCHAR(255) NOT NULL DEFAULT 'doctor',
     "notes" TEXT NOT NULL,
@@ -416,7 +454,7 @@ CREATE TABLE "notes" (
 
 -- CreateTable
 CREATE TABLE "report" (
-    "id" BIGINT NOT NULL,
+    "id" BIGSERIAL NOT NULL,
     "title" TEXT NOT NULL,
     "department" TEXT NOT NULL,
     "petient_id" BIGINT NOT NULL,
@@ -426,10 +464,31 @@ CREATE TABLE "report" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "IPDTreatments_medication_id_key" ON "IPDTreatments"("medication_id");
+CREATE UNIQUE INDEX "MainLabReports_ODPtreatment_id_key" ON "MainLabReports"("ODPtreatment_id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "OPDTreatments_medication_id_key" ON "OPDTreatments"("medication_id");
+CREATE UNIQUE INDEX "MainLabReports_IPDtreatment_id_key" ON "MainLabReports"("IPDtreatment_id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "MainLabReports_ANCtreatment_id_key" ON "MainLabReports"("ANCtreatment_id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "MainMedicalReports_ODPtreatment_id_key" ON "MainMedicalReports"("ODPtreatment_id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "MainMedicalReports_IPDtreatment_id_key" ON "MainMedicalReports"("IPDtreatment_id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "MainMedicalReports_ANCtreatment_id_key" ON "MainMedicalReports"("ANCtreatment_id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "PatientMedication_ODPtreatment_id_key" ON "PatientMedication"("ODPtreatment_id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "PatientMedication_IPDtreatment_id_key" ON "PatientMedication"("IPDtreatment_id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "PatientMedication_ANCtreatment_id_key" ON "PatientMedication"("ANCtreatment_id");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Patients_mobile_number_key" ON "Patients"("mobile_number");
@@ -442,6 +501,9 @@ CREATE UNIQUE INDEX "Staff_contact_number_key" ON "Staff"("contact_number");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Staff_email_key" ON "Staff"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Ward_treatment_id_key" ON "Ward"("treatment_id");
 
 -- AddForeignKey
 ALTER TABLE "Appointments_OPD" ADD CONSTRAINT "appointments_opd_patient_id_foreign" FOREIGN KEY ("patient_id") REFERENCES "Patients"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
@@ -483,16 +545,22 @@ ALTER TABLE "IPDTreatments" ADD CONSTRAINT "ipdtreatments_ipd_admission_id_forei
 ALTER TABLE "IPDTreatments" ADD CONSTRAINT "ipdtreatments_petient_id_foreign" FOREIGN KEY ("petient_id") REFERENCES "Patients"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- AddForeignKey
-ALTER TABLE "IPDTreatments" ADD CONSTRAINT "IPDTreatments_medication_id_fkey" FOREIGN KEY ("medication_id") REFERENCES "PatientMedication"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE "MainIntakeOutput" ADD CONSTRAINT "MainIntakeOutput_ipd_admission_id_foreign" FOREIGN KEY ("ipd_admission_id") REFERENCES "IPDAdmissions"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- AddForeignKey
-ALTER TABLE "IntakeOutput" ADD CONSTRAINT "intakeoutput_ipd_admission_id_foreign" FOREIGN KEY ("ipd_admission_id") REFERENCES "IPDAdmissions"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE "MainIntakeOutput" ADD CONSTRAINT "MainIntakeOutput_treatment_id_foreign" FOREIGN KEY ("treatment_id") REFERENCES "IPDTreatments"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- AddForeignKey
-ALTER TABLE "IntakeOutput" ADD CONSTRAINT "intakeoutput_treatment_id_foreign" FOREIGN KEY ("treatment_id") REFERENCES "IPDTreatments"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE "MainLabReports" ADD CONSTRAINT "MainLabReports_ODPtreatment_id_fkey" FOREIGN KEY ("ODPtreatment_id") REFERENCES "OPDTreatments"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- AddForeignKey
+ALTER TABLE "MainLabReports" ADD CONSTRAINT "MainLabReports_IPDtreatment_id_fkey" FOREIGN KEY ("IPDtreatment_id") REFERENCES "IPDTreatments"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- AddForeignKey
 ALTER TABLE "LabReports" ADD CONSTRAINT "labreports_doctor_id_foreign" FOREIGN KEY ("doctor_id") REFERENCES "Staff"("Staff_id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- AddForeignKey
+ALTER TABLE "LabReports" ADD CONSTRAINT "labreports_MainLabReports_id_foreign" FOREIGN KEY ("MainLabReports_id") REFERENCES "MainLabReports"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- AddForeignKey
 ALTER TABLE "LabReports" ADD CONSTRAINT "labreports_patient_id_foreign" FOREIGN KEY ("patient_id") REFERENCES "Patients"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
@@ -501,10 +569,16 @@ ALTER TABLE "LabReports" ADD CONSTRAINT "labreports_patient_id_foreign" FOREIGN 
 ALTER TABLE "LabTestDetails" ADD CONSTRAINT "labtestdetails_report_id_foreign" FOREIGN KEY ("report_id") REFERENCES "LabReports"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- AddForeignKey
+ALTER TABLE "MainMedicalReports" ADD CONSTRAINT "MainMedicalReports_ODPtreatment_id_fkey" FOREIGN KEY ("ODPtreatment_id") REFERENCES "OPDTreatments"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- AddForeignKey
+ALTER TABLE "MainMedicalReports" ADD CONSTRAINT "MainMedicalReports_IPDtreatment_id_fkey" FOREIGN KEY ("IPDtreatment_id") REFERENCES "IPDTreatments"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- AddForeignKey
 ALTER TABLE "MedicalReports" ADD CONSTRAINT "medicalreports_doctor_id_foreign" FOREIGN KEY ("doctor_id") REFERENCES "Staff"("Staff_id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- AddForeignKey
-ALTER TABLE "MedicalReports" ADD CONSTRAINT "medicalreports_treatment_id_foreign" FOREIGN KEY ("treatment_id") REFERENCES "IPDTreatments"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE "MedicalReports" ADD CONSTRAINT "medicalreports_MainMedicalReports_id_foreign" FOREIGN KEY ("MainReports_id") REFERENCES "MainMedicalReports"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- AddForeignKey
 ALTER TABLE "Medications" ADD CONSTRAINT "medications_medicine_id_foreign" FOREIGN KEY ("medicine_id") REFERENCES "medication_list"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
@@ -513,13 +587,19 @@ ALTER TABLE "Medications" ADD CONSTRAINT "medications_medicine_id_foreign" FOREI
 ALTER TABLE "Medications" ADD CONSTRAINT "medications_treatment_id_foreign" FOREIGN KEY ("treatment_id") REFERENCES "MainMedication"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- AddForeignKey
+ALTER TABLE "MainMedication" ADD CONSTRAINT "MainMedication_SurgeryRecords_id_foreign" FOREIGN KEY ("SurgeryRecords_id") REFERENCES "SurgeryRecords"("surgery_id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- AddForeignKey
 ALTER TABLE "MainMedication" ADD CONSTRAINT "MainMedication_doctor_id_foreign" FOREIGN KEY ("doctor_id") REFERENCES "Staff"("Staff_id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- AddForeignKey
 ALTER TABLE "MainMedication" ADD CONSTRAINT "MainMedication_PatientMedication_id_foreign" FOREIGN KEY ("PatientMedication_id") REFERENCES "PatientMedication"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- AddForeignKey
-ALTER TABLE "OPDTreatments" ADD CONSTRAINT "OPDTreatments_medication_id_fkey" FOREIGN KEY ("medication_id") REFERENCES "PatientMedication"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE "PatientMedication" ADD CONSTRAINT "PatientMedication_ODPtreatment_id_fkey" FOREIGN KEY ("ODPtreatment_id") REFERENCES "OPDTreatments"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- AddForeignKey
+ALTER TABLE "PatientMedication" ADD CONSTRAINT "PatientMedication_IPDtreatment_id_fkey" FOREIGN KEY ("IPDtreatment_id") REFERENCES "IPDTreatments"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- AddForeignKey
 ALTER TABLE "OPDTreatments" ADD CONSTRAINT "opdtreatments_appointment_id_foreign" FOREIGN KEY ("appointment_id") REFERENCES "Appointments_OPD"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
@@ -540,9 +620,6 @@ ALTER TABLE "SurgeryRecords" ADD CONSTRAINT "surgeryrecords_doctor_id_foreign" F
 ALTER TABLE "SurgeryRecords" ADD CONSTRAINT "surgeryrecords_ipd_admission_id_foreign" FOREIGN KEY ("ipd_admission_id") REFERENCES "IPDAdmissions"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- AddForeignKey
-ALTER TABLE "SurgeryRecords" ADD CONSTRAINT "surgeryrecords_medication_id_foreign" FOREIGN KEY ("medication_id") REFERENCES "PatientMedication"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
-
--- AddForeignKey
 ALTER TABLE "SurgeryRecords" ADD CONSTRAINT "surgeryrecords_patient_id_foreign" FOREIGN KEY ("patient_id") REFERENCES "Patients"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- AddForeignKey
@@ -552,10 +629,13 @@ ALTER TABLE "SurgeryRecords" ADD CONSTRAINT "surgeryrecords_treatment_id_foreign
 ALTER TABLE "TechnicianReports" ADD CONSTRAINT "technicianreports_report_id_foreign" FOREIGN KEY ("report_id") REFERENCES "LabReports"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- AddForeignKey
-ALTER TABLE "VitalSigns" ADD CONSTRAINT "vitalsigns_ipd_admission_id_foreign" FOREIGN KEY ("ipd_admission_id") REFERENCES "IPDAdmissions"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE "MainVitalSigns" ADD CONSTRAINT "MainVitalSigns_ipd_admission_id_foreign" FOREIGN KEY ("ipd_admission_id") REFERENCES "IPDAdmissions"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- AddForeignKey
-ALTER TABLE "VitalSigns" ADD CONSTRAINT "vitalsigns_treatment_id_foreign" FOREIGN KEY ("treatment_id") REFERENCES "IPDTreatments"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE "MainVitalSigns" ADD CONSTRAINT "MainVitalSigns_treatment_id_foreign" FOREIGN KEY ("treatment_id") REFERENCES "IPDTreatments"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- AddForeignKey
+ALTER TABLE "VitalSigns" ADD CONSTRAINT "VitalSigns_MainVitalSigns_id_foreign" FOREIGN KEY ("MainVitalSigns_id") REFERENCES "MainVitalSigns"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- AddForeignKey
 ALTER TABLE "Ward" ADD CONSTRAINT "ward_dailycost_id_foreign" FOREIGN KEY ("dayitem_id") REFERENCES "DayItem"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
@@ -564,7 +644,7 @@ ALTER TABLE "Ward" ADD CONSTRAINT "ward_dailycost_id_foreign" FOREIGN KEY ("dayi
 ALTER TABLE "Ward" ADD CONSTRAINT "ward_ipd_admission_id_foreign" FOREIGN KEY ("ipd_admission_id") REFERENCES "IPDAdmissions"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- AddForeignKey
-ALTER TABLE "Ward" ADD CONSTRAINT "ward_treatment_id_foreign" FOREIGN KEY ("treatment_id") REFERENCES "IPDTreatments"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE "Ward" ADD CONSTRAINT "Ward_treatment_id_fkey" FOREIGN KEY ("treatment_id") REFERENCES "IPDTreatments"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- AddForeignKey
 ALTER TABLE "dailybill" ADD CONSTRAINT "dailybill_dailycost_id_foreign" FOREIGN KEY ("dailyCost_id") REFERENCES "DayItem"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
