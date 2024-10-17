@@ -6,7 +6,7 @@ import Doctor from '../IMAGE/dr.png';
 
 const Header = () => {
   return (
-    <header className="flex w-full bg-gray-50">
+    <header className="flex w-full ">
       <div className="w-full flex justify-between items-center p-4">
       <div className="w-1/8"></div>
       <h1 className="text-xl font-bold "> 
@@ -19,10 +19,10 @@ const Header = () => {
           
           {/* OPD and IPD section */}
           <ul className="flex justify-center items-center space-x-4">
-            <li className="p-2 hover:bg-gray-100 cursor-pointer rounded-full bg-gray-200 text-sm">
+            <li className="pl-5 pr-5 p-3 hover:bg-green-500 cursor-pointer rounded-full bg-green-200 text-sm">
               OPD
             </li>
-            <li className="p-2 hover:bg-gray-100 cursor-pointer rounded-full bg-gray-200 text-sm">
+            <li className="pl-5 pr-5 p-3 hover:bg-green-500 cursor-pointer rounded-full bg-gray-300 text-sm">
               IPD
             </li>
           </ul>
