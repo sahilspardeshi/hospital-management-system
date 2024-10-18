@@ -69,7 +69,7 @@ export const createUser = async (req, res) => {
 };
 
 
-
+//Login
 
 export const loginUser = async (req, res) => {
     try {
@@ -102,12 +102,11 @@ export const loginUser = async (req, res) => {
             { expiresIn: '1h' }
         );
 
-        //serialize user id before sending the response//
-
+      
+ // Convert bigint to string
         const responseUser  = {
             ...user,
-            id: user.id.toString(),phoneNumber:user.phoneNumber.toString() // Ensure id is a string
-            // Add any other fields that may be BigInt and convert them if necessary
+            id: user.id.toString(),phoneNumber:user.phoneNumber.toString() 
         };
 
         console.log(responseUser);
