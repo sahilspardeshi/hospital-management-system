@@ -1,3 +1,0 @@
--- AlterTable
-ALTER TABLE "DayItem" ADD COLUMN     "cost" DOUBLE PRECISION NOT NULL DEFAULT 0.0,
-ADD COLUMN     "quantity" VARCHAR(50);

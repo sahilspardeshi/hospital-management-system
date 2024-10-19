@@ -14,11 +14,13 @@ model Appointments_OPD {
   doctor_id        Int?
   appointment_date DateTime        @db.Date
   appointment_time DateTime        @db.Time(0)
+  PetientReportData_id BigInt
   appointment_type String?         @db.VarChar(10)
   status           String?         @db.VarChar(20)
   created_at       DateTime?       @default(now()) @db.Timestamp(0)
   updated_at       DateTime?       @default(now()) @db.Timestamp(0)
-  Patients         Patients?       @relation(fields: [patient_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "appointments_opd_patient_id_foreign")
+  PetientReportData PetientReportData  @relation(fields: [PetientReportData_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "appointments_PetientReportData_id_foreign")
+  Petients         Petients?       @relation(fields: [patient_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "appointments_opd_patient_id_foreign")
   OPDTreatments    OPDTreatments[]
 }
 
@@ -51,7 +53,7 @@ model Billing {
   created_at     DateTime? @default(now()) @db.Timestamp(0)
   updated_at     DateTime? @default(now()) @db.Timestamp(0)
   IPDAdmissions IPDAdmissions? @relation(fields: [IPDAdmissions_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  Patients       Patients? @relation(fields: [patient_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "billing_patient_id_foreign")
+  Petients       Petients? @relation(fields: [patient_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "billing_patient_id_foreign")
   OPDTreatments   OPDTreatments?   @relation(fields: [ODPtreatment_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   IPDTreatments   IPDTreatments?   @relation(fields: [IPDtreatment_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   AdvancePayment AdvancePayment[]
@@ -89,17 +91,19 @@ model DayItem {
 model IPDAdmissions {
   id                                          BigInt             @id @default(autoincrement())
   patient_id                                  BigInt?
+  PetientReportData_id                        BigInt?
   discharge_date                              DateTime?          @db.Date
   diagnosis                                   String?
   status                                      String?            @db.VarChar(20)
   created_at                                  DateTime?          @default(now()) @db.Timestamp(0)
   updated_at                                  DateTime?          @default(now()) @db.Timestamp(0)
+    PetientReportData PetientReportData?  @relation(fields: [PetientReportData_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "appointments_PetientReportData_id_foreign")
   DailyItemsList                              DailyItemsList[]
   DayItem                                     DayItem[]
-  Patients_IPDAdmissions_patient_idToPatients Patients?          @relation("IPDAdmissions_patient_idToPatients", fields: [patient_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "ipdadmissions_patient_id_foreign")
+  Patients_IPDAdmissions_patient_idToPatients Petients?          @relation("IPDAdmissions_patient_idToPatients", fields: [patient_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "ipdadmissions_patient_id_foreign")
   IPDTreatments                               IPDTreatments[]
   MainIntakeOutput                            MainIntakeOutput[]
-  Patients_Patients_idToIPDAdmissions         Patients?          @relation("Patients_idToIPDAdmissions")
+  Patients_Patients_idToIPDAdmissions         Petients?          @relation("Patients_idToIPDAdmissions")
   SurgeryRecords                              SurgeryRecords[]
   MainVitalSigns                              MainVitalSigns[]
   Ward                                        Ward[]
@@ -118,7 +122,7 @@ model IPDTreatments {
   updated_at         DateTime?           @default(now()) @db.Timestamp(0)
   DayItem            DayItem[]
   IPDAdmissions      IPDAdmissions?      @relation(fields: [ipd_admission_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "ipdtreatments_ipd_admission_id_foreign")
-  Patients           Patients            @relation(fields: [petient_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "ipdtreatments_petient_id_foreign")
+  Petients           Petients            @relation(fields: [petient_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "ipdtreatments_petient_id_foreign")
   MainIntakeOutput   MainIntakeOutput[]
   MainMedicalReports MainMedicalReports?
   PatientMedication  PatientMedication?
@@ -201,7 +205,7 @@ model LabReports {
   updated_at        DateTime?           @default(now()) @db.Timestamp(0)
   Staff             Staff?              @relation(fields: [doctor_id], references: [Staff_id], onDelete: NoAction, onUpdate: NoAction, map: "labreports_doctor_id_foreign")
   MainLabReports    MainLabReports?     @relation(fields: [MainLabReports_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "labreports_MainLabReports_id_foreign")
-  Patients          Patients?           @relation(fields: [patient_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "labreports_patient_id_foreign")
+  Patients          Petients?           @relation(fields: [patient_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "labreports_patient_id_foreign")
   LabTestDetails    LabTestDetails[]
   TechnicianReports TechnicianReports[]
 }
@@ -332,7 +336,7 @@ model OPDTreatments {
   Billing Billing[]
 }
 
-model Patients {
+model Petients {
   id                                               BigInt             @id @default(autoincrement())
   full_name                                        String             @db.VarChar(100)
   date_of_birth                                    DateTime           @db.Date
@@ -350,6 +354,23 @@ model Patients {
   LabReports                                       LabReports[]
   IPDAdmissions_Patients_idToIPDAdmissions         IPDAdmissions      @relation("Patients_idToIPDAdmissions", fields: [id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "patients_id_foreign")
   SurgeryRecords                                   SurgeryRecords[]
+
+  PetientReportData PetientReportData[] @relation(map: "PetientReportData_petinet_id_foreign")
+}
+model PetientReportData {
+  id         BigInt          @id @default(autoincrement())
+  petinet_id         BigInt?
+  title  String?         @db.VarChar(255)
+   discription  String?         @db.VarChar(255)
+   status       String?
+  created_at        DateTime?       @default(now()) @db.Timestamp(0)
+  updated_at        DateTime?       @default(now()) @db.Timestamp(0)
+  Petients Petients ?   @relation(fields: [petinet_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "PetientReportData_petinet_id_foreign")
+
+
+  Appointments_OPD Appointments_OPD[] @relation(map: "appointments_PetientReportData_id_foreign")
+
+  IPDAdmissions IPDAdmissions[] @relation(map: "appointments_PetientReportData_id_foreign")
 }
 
 model ReportResults {
@@ -427,7 +448,7 @@ model SurgeryRecords {
   MainMedication           MainMedication[]
   Staff                    Staff            @relation(fields: [doctor_id], references: [Staff_id], onDelete: NoAction, onUpdate: NoAction, map: "surgeryrecords_doctor_id_foreign")
   IPDAdmissions            IPDAdmissions    @relation(fields: [ipd_admission_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "surgeryrecords_ipd_admission_id_foreign")
-  Patients                 Patients?        @relation(fields: [patient_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "surgeryrecords_patient_id_foreign")
+  Petients                 Petients?        @relation(fields: [patient_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "surgeryrecords_patient_id_foreign")
   IPDTreatments            IPDTreatments    @relation(fields: [treatment_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "surgeryrecords_treatment_id_foreign")
 }
 

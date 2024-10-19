@@ -5,6 +5,7 @@ CREATE TABLE "Appointments_OPD" (
     "doctor_id" INTEGER,
     "appointment_date" DATE NOT NULL,
     "appointment_time" TIME(0) NOT NULL,
+    "PetientReportData_id" BIGINT NOT NULL,
     "appointment_type" VARCHAR(10),
     "status" VARCHAR(20),
     "created_at" TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP,
@@ -67,6 +68,8 @@ CREATE TABLE "DayItem" (
     "id" BIGSERIAL NOT NULL,
     "ipd_admission_id" BIGINT NOT NULL,
     "treatment_id" BIGINT NOT NULL,
+    "quantity" VARCHAR(50),
+    "cost" DOUBLE PRECISION NOT NULL DEFAULT 0.0,
     "created_at" TIMESTAMP(0) NOT NULL,
 
     CONSTRAINT "DayItem_pkey" PRIMARY KEY ("id")
@@ -76,6 +79,7 @@ CREATE TABLE "DayItem" (
 CREATE TABLE "IPDAdmissions" (
     "id" BIGSERIAL NOT NULL,
     "patient_id" BIGINT,
+    "PetientReportData_id" BIGINT,
     "discharge_date" DATE,
     "diagnosis" TEXT,
     "status" VARCHAR(20),
@@ -297,7 +301,7 @@ CREATE TABLE "OPDTreatments" (
 );
 
 -- CreateTable
-CREATE TABLE "Patients" (
+CREATE TABLE "Petients" (
     "id" BIGSERIAL NOT NULL,
     "full_name" VARCHAR(100) NOT NULL,
     "date_of_birth" DATE NOT NULL,
@@ -309,7 +313,20 @@ CREATE TABLE "Patients" (
     "created_at" TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP,
 
-    CONSTRAINT "Patients_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Petients_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "PetientReportData" (
+    "id" BIGSERIAL NOT NULL,
+    "petinet_id" BIGINT,
+    "title" VARCHAR(255),
+    "discription" VARCHAR(255),
+    "status" TEXT,
+    "created_at" TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(0) DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "PetientReportData_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -536,10 +553,10 @@ CREATE UNIQUE INDEX "PatientMedication_IPDtreatment_id_key" ON "PatientMedicatio
 CREATE UNIQUE INDEX "PatientMedication_ANCtreatment_id_key" ON "PatientMedication"("ANCtreatment_id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Patients_mobile_number_key" ON "Patients"("mobile_number");
+CREATE UNIQUE INDEX "Petients_mobile_number_key" ON "Petients"("mobile_number");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Patients_email_key" ON "Patients"("email");
+CREATE UNIQUE INDEX "Petients_email_key" ON "Petients"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Staff_contact_number_key" ON "Staff"("contact_number");
@@ -551,7 +568,10 @@ CREATE UNIQUE INDEX "Staff_email_key" ON "Staff"("email");
 CREATE UNIQUE INDEX "Ward_treatment_id_key" ON "Ward"("treatment_id");
 
 -- AddForeignKey
-ALTER TABLE "Appointments_OPD" ADD CONSTRAINT "appointments_opd_patient_id_foreign" FOREIGN KEY ("patient_id") REFERENCES "Patients"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE "Appointments_OPD" ADD CONSTRAINT "appointments_PetientReportData_id_foreign" FOREIGN KEY ("PetientReportData_id") REFERENCES "PetientReportData"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- AddForeignKey
+ALTER TABLE "Appointments_OPD" ADD CONSTRAINT "appointments_opd_patient_id_foreign" FOREIGN KEY ("patient_id") REFERENCES "Petients"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- AddForeignKey
 ALTER TABLE "AdvancePayment" ADD CONSTRAINT "AdvancePayment_billId_fkey" FOREIGN KEY ("billId") REFERENCES "Billing"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -560,7 +580,7 @@ ALTER TABLE "AdvancePayment" ADD CONSTRAINT "AdvancePayment_billId_fkey" FOREIGN
 ALTER TABLE "Billing" ADD CONSTRAINT "Billing_IPDAdmissions_id_fkey" FOREIGN KEY ("IPDAdmissions_id") REFERENCES "IPDAdmissions"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- AddForeignKey
-ALTER TABLE "Billing" ADD CONSTRAINT "billing_patient_id_foreign" FOREIGN KEY ("patient_id") REFERENCES "Patients"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE "Billing" ADD CONSTRAINT "billing_patient_id_foreign" FOREIGN KEY ("patient_id") REFERENCES "Petients"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- AddForeignKey
 ALTER TABLE "Billing" ADD CONSTRAINT "Billing_ODPtreatment_id_fkey" FOREIGN KEY ("ODPtreatment_id") REFERENCES "OPDTreatments"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
@@ -584,13 +604,16 @@ ALTER TABLE "DayItem" ADD CONSTRAINT "dayitem_ipd_admission_id_foreign" FOREIGN 
 ALTER TABLE "DayItem" ADD CONSTRAINT "dayitem_treatment_id_foreign" FOREIGN KEY ("treatment_id") REFERENCES "IPDTreatments"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- AddForeignKey
-ALTER TABLE "IPDAdmissions" ADD CONSTRAINT "ipdadmissions_patient_id_foreign" FOREIGN KEY ("patient_id") REFERENCES "Patients"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE "IPDAdmissions" ADD CONSTRAINT "appointments_PetientReportData_id_foreign" FOREIGN KEY ("PetientReportData_id") REFERENCES "PetientReportData"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- AddForeignKey
+ALTER TABLE "IPDAdmissions" ADD CONSTRAINT "ipdadmissions_patient_id_foreign" FOREIGN KEY ("patient_id") REFERENCES "Petients"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- AddForeignKey
 ALTER TABLE "IPDTreatments" ADD CONSTRAINT "ipdtreatments_ipd_admission_id_foreign" FOREIGN KEY ("ipd_admission_id") REFERENCES "IPDAdmissions"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- AddForeignKey
-ALTER TABLE "IPDTreatments" ADD CONSTRAINT "ipdtreatments_petient_id_foreign" FOREIGN KEY ("petient_id") REFERENCES "Patients"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE "IPDTreatments" ADD CONSTRAINT "ipdtreatments_petient_id_foreign" FOREIGN KEY ("petient_id") REFERENCES "Petients"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- AddForeignKey
 ALTER TABLE "MainIntakeOutput" ADD CONSTRAINT "MainIntakeOutput_ipd_admission_id_foreign" FOREIGN KEY ("ipd_admission_id") REFERENCES "IPDAdmissions"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
@@ -614,7 +637,7 @@ ALTER TABLE "LabReports" ADD CONSTRAINT "labreports_doctor_id_foreign" FOREIGN K
 ALTER TABLE "LabReports" ADD CONSTRAINT "labreports_MainLabReports_id_foreign" FOREIGN KEY ("MainLabReports_id") REFERENCES "MainLabReports"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- AddForeignKey
-ALTER TABLE "LabReports" ADD CONSTRAINT "labreports_patient_id_foreign" FOREIGN KEY ("patient_id") REFERENCES "Patients"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE "LabReports" ADD CONSTRAINT "labreports_patient_id_foreign" FOREIGN KEY ("patient_id") REFERENCES "Petients"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- AddForeignKey
 ALTER TABLE "LabTestDetails" ADD CONSTRAINT "labtestdetails_report_id_foreign" FOREIGN KEY ("report_id") REFERENCES "LabReports"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
@@ -659,7 +682,10 @@ ALTER TABLE "OPDTreatments" ADD CONSTRAINT "opdtreatments_appointment_id_foreign
 ALTER TABLE "OPDTreatments" ADD CONSTRAINT "opdtreatments_doctor_id_foreign" FOREIGN KEY ("doctor_id") REFERENCES "Staff"("Staff_id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- AddForeignKey
-ALTER TABLE "Patients" ADD CONSTRAINT "patients_id_foreign" FOREIGN KEY ("id") REFERENCES "IPDAdmissions"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE "Petients" ADD CONSTRAINT "patients_id_foreign" FOREIGN KEY ("id") REFERENCES "IPDAdmissions"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- AddForeignKey
+ALTER TABLE "PetientReportData" ADD CONSTRAINT "PetientReportData_petinet_id_foreign" FOREIGN KEY ("petinet_id") REFERENCES "Petients"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- AddForeignKey
 ALTER TABLE "ReportResults" ADD CONSTRAINT "reportresults_report_id_foreign" FOREIGN KEY ("report_id") REFERENCES "MedicalReports"("report_id") ON DELETE NO ACTION ON UPDATE NO ACTION;
@@ -671,7 +697,7 @@ ALTER TABLE "SurgeryRecords" ADD CONSTRAINT "surgeryrecords_doctor_id_foreign" F
 ALTER TABLE "SurgeryRecords" ADD CONSTRAINT "surgeryrecords_ipd_admission_id_foreign" FOREIGN KEY ("ipd_admission_id") REFERENCES "IPDAdmissions"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- AddForeignKey
-ALTER TABLE "SurgeryRecords" ADD CONSTRAINT "surgeryrecords_patient_id_foreign" FOREIGN KEY ("patient_id") REFERENCES "Patients"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE "SurgeryRecords" ADD CONSTRAINT "surgeryrecords_patient_id_foreign" FOREIGN KEY ("patient_id") REFERENCES "Petients"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- AddForeignKey
 ALTER TABLE "SurgeryRecords" ADD CONSTRAINT "surgeryrecords_treatment_id_foreign" FOREIGN KEY ("treatment_id") REFERENCES "IPDTreatments"("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
