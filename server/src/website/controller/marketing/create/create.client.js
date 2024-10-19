@@ -26,8 +26,10 @@ export const createMarketing = async (req, res) => {
         hospital,
       },
     });
+
     
 newMarketing.id = newMarketing.id.toString();
+
     res.status(201).json(newMarketing);
   } catch (error) {
     console.error(error);
