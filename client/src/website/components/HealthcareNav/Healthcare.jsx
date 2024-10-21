@@ -19,7 +19,9 @@ const HealthCareSection = () => {
     // Removed console.log here
   };
   const openPay = () => {
+    setRegistration(false);
     setPay(true);
+
     // Removed console.log here
   };
 
