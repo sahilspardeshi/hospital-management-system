@@ -1,32 +1,34 @@
-import { PrismaClient } from '@prisma/client';
-import bcrypt from 'bcrypt';
+import prisma from "../../../db/default.js";
 
-const prisma = new PrismaClient();
-
+import bcrypt from 'bcrypt'
 // Create a new Marketing record
 export const createMarketing = async (req, res) => {
   try {
-    const { name, phone, email, password, address, dob, hospital } = req.body;
-
+    const { fullName, phone, email, password, address, dateOfBirth, hospitalName } = req.body;
+    console.log(req.body)
     // Validate required fields
-    if (!name || !phone || !password || !address || !dob || !hospital) {
+    if (!fullName || !phone || !password || !address || !dateOfBirth || !hospitalName) {
       return res.status(400).json({ error: 'Missing required fields' });
     }
 
     // Hash the password before saving
     const hashedPassword = await bcrypt.hash(password, 10);
+    
 
-    const newMarketing = await prisma.marketing.create({
+    let newMarketing = await  prisma.marketing.create({
       data: {
-        name,
+        name:fullName,
         phone,
         email,
         password: hashedPassword,
         address,
-        dob: new Date(dob),
-        hospital,
+        dob:dateOfBirth,
+        hospital:hospitalName,
       },
     });
+
+    
+newMarketing.id = newMarketing.id.toString();
 
     res.status(201).json(newMarketing);
   } catch (error) {
