@@ -4,10 +4,10 @@ import bcrypt from 'bcrypt'
 // Create a new Marketing record
 export const createMarketing = async (req, res) => {
   try {
-    const { name, phone, email, password, address, dob, hospital } = req.body;
-    
+    const { fullName, phone, email, password, address, dateOfBirth, hospitalName } = req.body;
+    console.log(req.body)
     // Validate required fields
-    if (!name || !phone || !password || !address || !dob || !hospital) {
+    if (!fullName || !phone || !password || !address || !dateOfBirth || !hospitalName) {
       return res.status(400).json({ error: 'Missing required fields' });
     }
 
@@ -17,13 +17,13 @@ export const createMarketing = async (req, res) => {
 
     let newMarketing = await  prisma.marketing.create({
       data: {
-        name,
+        name:fullName,
         phone,
         email,
         password: hashedPassword,
         address,
-        dob: new Date(dob),
-        hospital,
+        dob:dateOfBirth,
+        hospital:hospitalName,
       },
     });
 
