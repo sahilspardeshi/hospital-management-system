@@ -6,138 +6,138 @@ datasource db {
 generator client {
   provider = "prisma-client-js"
 }
+
 // Define Enums for constrained fields
 enum Role {
   user
   admin
 }
 
-
 model Marketing {
-  id        BigInt    @id @default(autoincrement())
+  id        BigInt   @id @default(autoincrement())
   name      String
-  phone     String    @unique
-  email     String?   @unique
+  phone     String   @unique
+  email     String?  @unique
   password  String
   address   String
   dob       String
   hospital  String
-  createdAt DateTime  @default(now())
+  createdAt DateTime @default(now())
 
   @@map("Marketing")
 }
 
 model Advertisement {
-  id        BigInt    @id @default(autoincrement())
-  title     String
+  id          BigInt   @id @default(autoincrement())
+  title       String
   description String?
-  imageUrl  String
-  createdAt DateTime  @default(now())
+  imageUrl    String
+  createdAt   DateTime @default(now())
 
   @@map("Advertisement")
 }
 
 model Client {
-  id               BigInt             @id @default(autoincrement())
-  name             String
-  phone            String             @unique
-  email            String?            @unique
-  password         String
-  address          String
-  dob              DateTime
-  hospital         String
-  createdAt        DateTime           @default(now())
-  updatedAt        DateTime           @default(now())
+  id                 BigInt              @id @default(autoincrement())
+  name               String
+  phone              String              @unique
+  email              String?             @unique
+  password           String
+  address            String
+  dob                DateTime
+  hospital           String
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @default(now())
   clientSubscription ClientSubscription?
-  setting          Setting?
-  userCredentials  UserCredentials?
+  setting            Setting?
+  userCredentials    UserCredentials?
 
   @@map("Client")
 }
 
 model ClientSubscription {
-  id                 BigInt            @id @default(autoincrement())
-  clientId           BigInt?           @unique
+  id                 BigInt             @id @default(autoincrement())
+  clientId           BigInt?            @unique
   startDate          DateTime
   endDate            DateTime
-  paymentStatus      String?           @default("Pending")
-  subscriptionStatus String?           @default("Active")
-  createdAt          DateTime          @default(now())
+  paymentStatus      String?            @default("Pending")
+  subscriptionStatus String?            @default("Active")
+  createdAt          DateTime           @default(now())
   subscriptionPlan   SubscriptionPlan[]
-  client             Client?           @relation(fields: [clientId], references: [id])
+  client             Client?            @relation(fields: [clientId], references: [id])
 
   @@map("ClientSubscription")
 }
 
 model Setting {
-  id        BigInt    @id @default(autoincrement())
+  id        BigInt   @id @default(autoincrement())
   imageUrl  String
   hospital  String
   domain    String
-  client_id BigInt    @unique
-  createdAt DateTime  @default(now())
-  client    Client    @relation(fields: [client_id], references: [id])
+  client_id BigInt   @unique
+  createdAt DateTime @default(now())
+  client    Client   @relation(fields: [client_id], references: [id])
 
   @@map("Setting")
 }
 
 model SubscriptionPlan {
-  id                    BigInt             @id @default(autoincrement())
-  planName              String
-  price                 Decimal            @db.Decimal(10, 2)
-  duration              Int
-  features              String?
-  createdAt             DateTime           @default(now())
+  id                     BigInt             @id @default(autoincrement())
+  planName               String
+  price                  Decimal            @db.Decimal(10, 2)
+  duration               Int
+  features               String?
+  createdAt              DateTime           @default(now())
   clinet_subscription_id BigInt
-  paymentMethods        PaymentMethod[]
-  clientSubscription    ClientSubscription  @relation(fields: [clinet_subscription_id], references: [id])
+  paymentMethods         PaymentMethod[]
+  clientSubscription     ClientSubscription @relation(fields: [clinet_subscription_id], references: [id])
 
   @@map("SubscriptionPlan")
 }
 
 model User {
-  id           BigInt    @id @default(autoincrement())
-  name         String
-  username     String
-  password     String
-  email        String?   @unique
-  phoneNumber  BigInt    @unique
-  role         Role       @default(admin) // Assuming 'admin' is represented by 1
-  createdAt    DateTime  @default(now())
+  id          BigInt   @id @default(autoincrement())
+  name        String
+  username    String
+  password    String
+  email       String?  @unique
+  phoneNumber BigInt   @unique
+  role        Role     @default(admin) // Assuming 'admin' is represented by 1
+  createdAt   DateTime @default(now())
 
   @@map("User")
 }
 
 model Review {
-  id         BigInt    @id @default(autoincrement())
+  id         BigInt   @id @default(autoincrement())
   image      String?
   rating     Int
   reviewText String
-  createdAt  DateTime  @default(now())
+  createdAt  DateTime @default(now())
 
   @@map("Review")
 }
 
 model PaymentMethod {
-  id        BigInt    @id @default(autoincrement())
-  methodName String
-  paymentId  String
-  createdAt DateTime  @default(now())
-  plan_id   BigInt
+  id               BigInt           @id @default(autoincrement())
+  methodName       String
+  paymentId        String
+  createdAt        DateTime         @default(now())
+  plan_id          BigInt
   subscriptionPlan SubscriptionPlan @relation(fields: [plan_id], references: [id])
 
   @@map("PaymentMethod")
 }
 
 model UserCredentials {
-  id        BigInt    @id @default(autoincrement())
+  id        BigInt   @id @default(autoincrement())
   username  String
   password  String
-  phone     BigInt    @unique
-  role      Role      @default(admin) // Assuming 'admin' is represented by 1
-  client_id BigInt    @unique
-  createdAt DateTime  @default(now())
-  client    Client    @relation(fields: [client_id], references: [id])
+  phone     BigInt   @unique
+  role      Role     @default(admin) // Assuming 'admin' is represented by 1
+  client_id BigInt   @unique
+  createdAt DateTime @default(now())
+  client    Client   @relation(fields: [client_id], references: [id])
 
   @@map("UserCredentials")
 }

@@ -19,7 +19,7 @@ export const createUser = async (req, res) => {
                 OR: [
                     { username: username },
                     { email: email },
-                    { phoneNumber: BigInt(phoneNumber) } 
+                    { phoneNumber: BigInt(phoneNumber) }
                 ]
             }
         });
@@ -36,27 +36,27 @@ export const createUser = async (req, res) => {
                 name,
                 username,
                 email,
-                password: hashedPassword, 
+                password: hashedPassword,
                 phoneNumber: BigInt(phoneNumber),
-                role: role || 'admin' 
+                role: role || 'admin'
             }
         });
 
         // Generate JWT token
         const userid = user.id.toString()
-        const token = jwt.sign({ id: userid, username: user.username, role: user.role },  JWT_SECRET,{
-                 expiresIn: '1h' // Token expiration time
-                });
+        const token = jwt.sign({ id: userid, username: user.username, role: user.role }, JWT_SECRET, {
+            expiresIn: '1h' // Token expiration time
+        });
 
-//converting bigint into string
-        const responseUser  = {
+        //converting bigint into string
+        const responseUser = {
             ...user,
-            id: user.id.toString(),phoneNumber:user.phoneNumber.toString() 
+            id: user.id.toString(), phoneNumber: user.phoneNumber.toString()
         };
 
         return res.status(201).json({
-            token:token,
-            data:responseUser
+            token: token,
+            data: responseUser
         });
 
     } catch (error) {
@@ -75,12 +75,12 @@ export const loginUser = async (req, res) => {
     try {
         const { username, password } = req.body;
 
-      
+
         if (!username || !password) {
             return res.status(400).json({ message: "Username and password are required" });
         }
 
-       
+
         const user = await prisma.user.findFirst({
             where: { username },
         });
@@ -89,7 +89,7 @@ export const loginUser = async (req, res) => {
             return res.status(404).json({ message: "User not found" });
         }
 
-       
+
         const isValidPassword = await bcrypt.compare(password, user.password);
         if (!isValidPassword) {
             return res.status(401).json({ message: "Invalid password" });
@@ -102,19 +102,19 @@ export const loginUser = async (req, res) => {
             { expiresIn: '1h' }
         );
 
-      
- // Convert bigint to string
-        const responseUser  = {
+
+        // Convert bigint to string
+        const responseUser = {
             ...user,
-            id: user.id.toString(),phoneNumber:user.phoneNumber.toString() 
+            id: user.id.toString(), phoneNumber: user.phoneNumber.toString()
         };
 
         console.log(responseUser);
 
         res.status(200).json({
-           token: token,
-           data: responseUser
-            
+            token: token,
+            data: responseUser
+
         });
     } catch (error) {
         res.status(500).json({ message: error.message });
