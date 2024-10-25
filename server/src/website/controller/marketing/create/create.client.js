@@ -1,6 +1,7 @@
 import prisma from "../../../db/default.js";
-
 import bcrypt from 'bcrypt'
+
+
 // Create a new Marketing record
 export const createMarketing = async (req, res) => {
   try {
@@ -25,6 +26,7 @@ export const createMarketing = async (req, res) => {
         hospital,
       },
     });
+    
 newMarketing.id = newMarketing.id.toString(
   
 );
