@@ -7,4 +7,5 @@ staffRoutes.route('/delete/:id').delete(deleteStaff);
 staffRoutes.route('/:id').get(getStaffById);
 staffRoutes.route('/update/:id').put(updateStaff);
 
+
 export default staffRoutes;

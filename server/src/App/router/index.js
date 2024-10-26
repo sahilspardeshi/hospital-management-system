@@ -5,6 +5,7 @@ import  settingRoute  from '../routes/routes.setting.js'
 import { getSetting } from '../controller/setting/index.js';
 import staffRoutes from '../routes/routes.staff.js';
 import { getAllStaff } from '../controller/staff/index.js';
+import opdAppointmentRoutes from '../routes/routes.opdAppointment.js';
 
 
 
@@ -21,6 +22,9 @@ AllRoutes.route('/setting/:id').get(getSetting);
 //staff routes
 AllRoutes.use('/staff',staffRoutes);
 AllRoutes.route('/staff').get(getAllStaff);
+
+//opdAppointment Routes
+AllRoutes.use('/opdAppointment',opdAppointmentRoutes);
 
 // Export the router
 export default AllRoutes;
