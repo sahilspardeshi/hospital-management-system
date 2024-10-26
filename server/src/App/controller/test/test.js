@@ -16,7 +16,7 @@ export const createAppointment = async (req, res) => {
     // Step 1: Create a new PetientReportData record
     const patientReportData = await prisma.petientReportData.create({
       data: { 
-        title: "New Report",
+        title: "New Report", 
         discription: "Report created for this appointment",
         status: "Pending",
         petinet_id: Number(patient_id),  // Convert to Int if necessary
