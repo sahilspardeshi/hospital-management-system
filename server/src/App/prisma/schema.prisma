@@ -8,25 +8,25 @@ datasource db {
 }
 
 model Appointments_OPD {
-  id         BigInt  @id @default(autoincrement())
-  patient_id BigInt?
+  id         Int  @id @default(autoincrement())
+  patient_id Int
 
-  doctor_id        Int?
-  appointment_date DateTime        @db.Date
-  appointment_time DateTime        @db.Time(0)
-  PetientReportData_id BigInt
+  doctor_id        Int
+  appointment_date DateTime        @default(now()) @db.Date
+  appointment_time DateTime        @default(now()) @db.Time(0)
+  PetientReportData_id Int
   appointment_type String?         @db.VarChar(10)
   status           String?         @db.VarChar(20)
   created_at       DateTime?       @default(now()) @db.Timestamp(0)
   updated_at       DateTime?       @default(now()) @db.Timestamp(0)
   PetientReportData PetientReportData  @relation(fields: [PetientReportData_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "appointments_PetientReportData_id_foreign")
-  Petients         Petients?       @relation(fields: [patient_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "appointments_opd_patient_id_foreign")
+  Petients         Petients       @relation(fields: [patient_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "appointments_opd_patient_id_foreign")
   OPDTreatments    OPDTreatments[]
 }
 
 model AdvancePayment {
-  id            BigInt   @id @default(autoincrement()) // Primary Key
-  billId        BigInt // Foreign key to HospitalBill
+  id            Int   @id @default(autoincrement()) // Primary Key
+  billId        Int // Foreign key to HospitalBill
   paymentDate   DateTime
   amountPaid    Float
   payerName     String
@@ -39,12 +39,12 @@ model AdvancePayment {
 
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 model Billing {
-  id             BigInt    @id @default(autoincrement())
-  patient_id     BigInt?
-  ODPtreatment_id BigInt?        @unique
-  IPDAdmissions_id BigInt?        @unique
-  IPDtreatment_id BigInt?        
-  ANCtreatment_id BigInt?        @unique
+  id             Int    @id @default(autoincrement())
+  patient_id     Int?
+  ODPtreatment_id Int?        @unique
+  IPDAdmissions_id Int?        @unique
+  IPDtreatment_id Int?        
+  ANCtreatment_id Int?        @unique
   type           String    @default("OPD") @db.VarChar(255)
   bill_date      DateTime  @db.Date
   total_amount   Decimal   @db.Decimal(10, 2)
@@ -60,11 +60,11 @@ model Billing {
 }
 
 model DailyItemsList {
-  id               BigInt        @id @default(autoincrement())
-  ipd_admission_id BigInt
-  item_id          BigInt
+  id               Int        @id @default(autoincrement())
+  ipd_admission_id Int
+  item_id          Int
   record_date      DateTime      @db.Date
-  day_id           BigInt
+  day_id           Int
   item_category    String        @db.VarChar(100)
   item_name        String        @db.VarChar(255)
   item_quantity    String?       @db.VarChar(50)
@@ -77,9 +77,9 @@ model DailyItemsList {
 }
 
 model DayItem {
-  id               BigInt           @id @default(autoincrement())
-  ipd_admission_id BigInt
-  treatment_id     BigInt
+  id               Int           @id @default(autoincrement())
+  ipd_admission_id Int
+  treatment_id     Int
   quantity    String?       @db.VarChar(50)
   cost          Float               @default(0.0)
   created_at       DateTime         @db.Timestamp(0)
@@ -89,9 +89,9 @@ model DayItem {
 }
 
 model IPDAdmissions {
-  id                                          BigInt             @id @default(autoincrement())
-  patient_id                                  BigInt?
-  PetientReportData_id                        BigInt?
+  id                                          Int             @id @default(autoincrement())
+  patient_id                                  Int?
+  PetientReportData_id                        Int?
   discharge_date                              DateTime?          @db.Date
   diagnosis                                   String?
   status                                      String?            @db.VarChar(20)
@@ -103,7 +103,6 @@ model IPDAdmissions {
   Patients_IPDAdmissions_patient_idToPatients Petients?          @relation("IPDAdmissions_patient_idToPatients", fields: [patient_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "ipdadmissions_patient_id_foreign")
   IPDTreatments                               IPDTreatments[]
   MainIntakeOutput                            MainIntakeOutput[]
-  Patients_Patients_idToIPDAdmissions         Petients?          @relation("Patients_idToIPDAdmissions")
   SurgeryRecords                              SurgeryRecords[]
   MainVitalSigns                              MainVitalSigns[]
   Ward                                        Ward[]
@@ -112,9 +111,9 @@ model IPDAdmissions {
 }
 
 model IPDTreatments {
-  id                 BigInt              @id @default(autoincrement())
-  petient_id         BigInt
-  ipd_admission_id   BigInt?
+  id                 Int              @id @default(autoincrement())
+  petient_id         Int
+  ipd_admission_id   Int?
   treatment_date     DateTime            @db.Date
   treatment_details  String?
   cost               Float               @default(0.0)
@@ -136,9 +135,9 @@ model IPDTreatments {
 }
 
 model MainIntakeOutput {
-  id                 BigInt         @id @default(autoincrement())
-  ipd_admission_id   BigInt?
-  treatment_id       BigInt
+  id                 Int         @id @default(autoincrement())
+  ipd_admission_id   Int?
+  treatment_id       Int
   IntakeOutput_count Int
   cost               Float          @default(0.0)
   paid               Float          @default(0.0)
@@ -151,9 +150,9 @@ model MainIntakeOutput {
 }
 
 model IntakeOutput {
-  id                  BigInt           @id @default(autoincrement())
+  id                  Int           @id @default(autoincrement())
   record_date         DateTime         @db.Date
-  MainIntakeOutput_id BigInt
+  MainIntakeOutput_id Int
   intake_time         Int?
   intake_nature       Int?
   intake_amount       Int?
@@ -169,10 +168,10 @@ model IntakeOutput {
 }
 
 model MainLabReports {
-  id              BigInt         @id @default(autoincrement())
-  ODPtreatment_id BigInt?        @unique
-  IPDtreatment_id BigInt?        @unique
-  ANCtreatment_id BigInt?        @unique
+  id              Int         @id @default(autoincrement())
+  ODPtreatment_id Int?        @unique
+  IPDtreatment_id Int?        @unique
+  ANCtreatment_id Int?        @unique
   status          String?        @db.VarChar(20)
   labReport_count Int
   cost            Float          @default(0.0)
@@ -188,10 +187,10 @@ model MainLabReports {
 
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 model LabReports {
-  id                BigInt              @id @default(autoincrement())
-  patient_id        BigInt?
-  doctor_id         BigInt?
-  MainLabReports_id BigInt
+  id                Int              @id @default(autoincrement())
+  patient_id        Int?
+  doctor_id         Int?
+  MainLabReports_id Int
   test_name         String?             @db.VarChar(255)
   test_date         DateTime?           @db.Date
   test_result       String?
@@ -211,8 +210,8 @@ model LabReports {
 }
 
 model LabTestDetails {
-  detail_id       BigInt      @id
-  report_id       BigInt?
+  detail_id       Int      @id
+  report_id       Int?
   parameter_name  String?     @db.VarChar(255)
   parameter_value String?     @db.VarChar(100)
   normal_range    String?     @db.VarChar(100)
@@ -222,10 +221,10 @@ model LabTestDetails {
 }
 
 model MainMedicalReports {
-  id              BigInt           @id @default(autoincrement())
-  ODPtreatment_id BigInt?          @unique
-  IPDtreatment_id BigInt?          @unique
-  ANCtreatment_id BigInt?          @unique
+  id              Int           @id @default(autoincrement())
+  ODPtreatment_id Int?          @unique
+  IPDtreatment_id Int?          @unique
+  ANCtreatment_id Int?          @unique
   Medical_count   Int
   cost            Float            @default(0.0)
   paid            Float            @default(0.0)
@@ -240,9 +239,9 @@ model MainMedicalReports {
 }
 
 model MedicalReports {
-  report_id          BigInt              @id @default(autoincrement())
-  doctor_id          BigInt?
-  MainReports_id     BigInt?
+  report_id          Int              @id @default(autoincrement())
+  doctor_id          Int?
+  MainReports_id     Int?
   report_type        String?             @db.VarChar(255)
   report_description String?
   result_count       Int
@@ -260,9 +259,9 @@ model MedicalReports {
 
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 model Medications {
-  id              BigInt          @id @default(autoincrement())
-  treatment_id    BigInt
-  medicine_id     BigInt
+  id              Int          @id @default(autoincrement())
+  treatment_id    Int
+  medicine_id     Int
   medication_name String          @db.VarChar(100)
   dosage          String?         @db.VarChar(50)
   frequency       String?         @db.VarChar(50)
@@ -277,17 +276,17 @@ model Medications {
 }
 
 model MainMedication {
-  id                   BigInt            @id @default(autoincrement())
-  PatientMedication_id BigInt
-  SurgeryRecords_id    BigInt?
+  id                   Int            @id @default(autoincrement())
+  PatientMedication_id Int
+  SurgeryRecords_id    Int?
   treatment_type       String            @db.VarChar(10)
-  doctor_id            BigInt?
+  doctor_id            Int?
   type                 String            @default("OPD") @db.VarChar(255)
   description          String?           @db.VarChar(255)
   test_file            String?
   cost                 Float             @default(0.0)
   paid                 Float             @default(0.0)
-  total_quantity       BigInt
+  total_quantity       Int
   start_date           DateTime?         @db.Date
   end_date             DateTime?         @db.Date
   created_at           DateTime?         @default(now()) @db.Timestamp(0)
@@ -299,11 +298,11 @@ model MainMedication {
 }
 
 model PatientMedication {
-  id               BigInt           @id @default(autoincrement())
-  ODPtreatment_id  BigInt?          @unique
-  IPDtreatment_id  BigInt?          @unique
-  ANCtreatment_id  BigInt?          @unique
-  doctor_id        BigInt?
+  id               Int           @id @default(autoincrement())
+  ODPtreatment_id  Int?          @unique
+  IPDtreatment_id  Int?          @unique
+  ANCtreatment_id  Int?          @unique
+  doctor_id        Int?
   Medication_count Int
   cost             Float            @default(0.0)
   paid             Float            @default(0.0)
@@ -317,10 +316,10 @@ model PatientMedication {
 }
 
 model OPDTreatments {
-  id                 BigInt              @id @default(autoincrement())
-  appointment_id     BigInt?
-  patient_id         BigInt?
-  doctor_id          BigInt?
+  id                 Int              @id @default(autoincrement())
+  appointment_id     Int?
+  patient_id         Int?
+  doctor_id          Int?
   diagnosis          String?
   treatment_plan     String?
   report_file        String?
@@ -337,7 +336,7 @@ model OPDTreatments {
 }
 
 model Petients {
-  id                                               BigInt             @id @default(autoincrement())
+  id                                               Int             @id @default(autoincrement())
   full_name                                        String             @db.VarChar(100)
   date_of_birth                                    DateTime           @db.Date
   gender                                           String             @db.VarChar(10)
@@ -352,30 +351,30 @@ model Petients {
   IPDAdmissions_IPDAdmissions_patient_idToPatients IPDAdmissions[]    @relation("IPDAdmissions_patient_idToPatients")
   IPDTreatments                                    IPDTreatments[]
   LabReports                                       LabReports[]
-  IPDAdmissions_Patients_idToIPDAdmissions         IPDAdmissions      @relation("Patients_idToIPDAdmissions", fields: [id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "patients_id_foreign")
+
   SurgeryRecords                                   SurgeryRecords[]
 
   PetientReportData PetientReportData[] @relation(map: "PetientReportData_petinet_id_foreign")
 }
 model PetientReportData {
-  id         BigInt          @id @default(autoincrement())
-  petinet_id         BigInt?
+  id         Int          @id @default(autoincrement())
+  petinet_id         Int
   title  String?         @db.VarChar(255)
    discription  String?         @db.VarChar(255)
    status       String?
   created_at        DateTime?       @default(now()) @db.Timestamp(0)
   updated_at        DateTime?       @default(now()) @db.Timestamp(0)
-  Petients Petients ?   @relation(fields: [petinet_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "PetientReportData_petinet_id_foreign")
+  Petients Petients    @relation(fields: [petinet_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "PetientReportData_petinet_id_foreign")
 
 
-  Appointments_OPD Appointments_OPD[] @relation(map: "appointments_PetientReportData_id_foreign")
+  Appointments_OPD Appointments_OPD[]
 
   IPDAdmissions IPDAdmissions[] @relation(map: "appointments_PetientReportData_id_foreign")
 }
 
 model ReportResults {
-  result_id         BigInt          @id @default(autoincrement())
-  report_id         BigInt?
+  result_id         Int          @id @default(autoincrement())
+  report_id         Int?
   observation_name  String?         @db.VarChar(255)
   observation_value String?
   created_at        DateTime?       @default(now()) @db.Timestamp(0)
@@ -384,7 +383,7 @@ model ReportResults {
 }
 
 model Setting {
-  id           BigInt    @id @default(autoincrement())
+  id           Int    @id @default(autoincrement())
   domain       String?   @db.VarChar(500)
   icon         String?   @db.VarChar(500)
   hospital     String?   @db.VarChar(500)
@@ -396,7 +395,7 @@ model Setting {
 
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 model Staff {
-  Staff_id        BigInt           @id @default(autoincrement())
+  Staff_id        Int           @id @default(autoincrement())
   full_name       String           @db.VarChar(100)
   specialization  String?          @db.VarChar(100)
   user            String?          @db.VarChar(200)
@@ -417,17 +416,17 @@ model Staff {
 }
 
 model SurgeryRecords {
-  surgery_id               BigInt           @id @default(autoincrement())
-  patient_id               BigInt?
-  treatment_id             BigInt
-  ipd_admission_id         BigInt
-  doctor_id                BigInt
+  surgery_id               Int           @id @default(autoincrement())
+  patient_id               Int?
+  treatment_id             Int
+  ipd_admission_id         Int
+  doctor_id                Int
   surgery_type             String           @db.VarChar(255)
   surgery_date             DateTime         @db.Date
   start_time               DateTime         @db.Time(0)
   end_time                 DateTime         @db.Time(0)
   operating_room           String?          @db.VarChar(50)
-  team_members             BigInt
+  team_members             Int
   anesthesia_type          String?          @db.VarChar(100)
   preop_diagnosis          String?
   postop_diagnosis         String?
@@ -453,9 +452,9 @@ model SurgeryRecords {
 }
 
 model TechnicianReports {
-  technician_report_id BigInt      @id @default(autoincrement())
-  report_id            BigInt?
-  technician_id        BigInt?
+  technician_report_id Int      @id @default(autoincrement())
+  report_id            Int?
+  technician_id        Int?
   technician_notes     String?
   created_at           DateTime?   @default(now()) @db.Timestamp(0)
   updated_at           DateTime?   @default(now()) @db.Timestamp(0)
@@ -463,9 +462,9 @@ model TechnicianReports {
 }
 
 model MainVitalSigns {
-  id               BigInt         @id @default(autoincrement())
-  ipd_admission_id BigInt?
-  treatment_id     BigInt
+  id               Int         @id @default(autoincrement())
+  ipd_admission_id Int?
+  treatment_id     Int
   cost             Float          @default(0.0)
   paid             Float          @default(0.0)
   List_count       Int
@@ -478,8 +477,8 @@ model MainVitalSigns {
 }
 
 model VitalSigns {
-  id                BigInt          @id @default(autoincrement())
-  MainVitalSigns_id BigInt
+  id                Int          @id @default(autoincrement())
+  MainVitalSigns_id Int
   record_date       DateTime        @db.Date
   spo2              Int?
   temperature       Int?
@@ -493,10 +492,10 @@ model VitalSigns {
 }
 
 model Ward {
-  id               BigInt        @id @default(autoincrement())
-  dayitem_id       BigInt
-  treatment_id     BigInt        @unique
-  ipd_admission_id BigInt
+  id               Int        @id @default(autoincrement())
+  dayitem_id       Int
+  treatment_id     Int        @unique
+  ipd_admission_id Int
   transfer_date    DateTime      @db.Date
   transfer_time    DateTime      @db.Time(0)
   room             String        @db.VarChar(100)
@@ -510,17 +509,17 @@ model Ward {
 }
 
 model item {
-  id             BigInt           @id @default(autoincrement())
+  id             Int           @id @default(autoincrement())
   name           String           @db.VarChar(255)
   category       String           @db.VarChar(255)
   description    String
-  cost           BigInt
-  created_at     BigInt
+  cost           Int
+  created_at     Int
   DailyItemsList DailyItemsList[]
 }
 
 model medication_list {
-  id          BigInt        @id @default(autoincrement())
+  id          Int        @id @default(autoincrement())
   name        String        @db.VarChar(255)
   type        String        @db.VarChar(255)
   cost        Float         @default(0.0)
@@ -529,11 +528,11 @@ model medication_list {
 
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 model MainNotes {
-  id            BigInt        @id @default(autoincrement())
-  user_id       BigInt
+  id            Int        @id @default(autoincrement())
+  user_id       Int
   type          String        @default("doctor") @db.VarChar(255)
   cost          Float         @default(0.0)
-  treatment_id  BigInt
+  treatment_id  Int
   create_at     DateTime      @db.Timestamp(0)
   IPDTreatments IPDTreatments @relation(fields: [treatment_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "notes_treatment_id_foreign")
   Staff         Staff         @relation(fields: [user_id], references: [Staff_id], onDelete: NoAction, onUpdate: NoAction, map: "notes_user_id_foreign")
@@ -542,8 +541,8 @@ model MainNotes {
 }
 
 model Notes {
-  id           BigInt    @id @default(autoincrement())
-  MainNotes_id BigInt
+  id           Int    @id @default(autoincrement())
+  MainNotes_id Int
   type         String    @default("doctor") @db.VarChar(255)
   notes        String
   Date         String
