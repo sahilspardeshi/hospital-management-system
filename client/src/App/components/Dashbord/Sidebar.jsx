@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Logo from "../IMAGE/ArohiLogo.png"; 
+import Logo from "../../assets/images/Aarohilogo.png";
 
 const Menu = () => {
   const [activeIndex, setActiveIndex] = useState(null);
@@ -18,16 +18,16 @@ const Menu = () => {
   };
 
   return (
-    <ul className="list-none">
+    <ul className="space-y-2">
       {menuItems.map((item, index) => (
         <li
           key={index}
-          className={`flex items-center p-4 cursor-pointer text-sm 
-          hover:bg-orange-100 transition-colors duration-300 
-          ${activeIndex === index ? 'bg-orange-500 text-white' : ''}`}
+          className={`flex items-center p-4 cursor-pointer text-sm rounded-lg transition-colors duration-300
+            ${activeIndex === index ? 'bg-orange-500 text-white' : 'hover:bg-gray-100'}
+          `}
           onClick={() => handleClick(index)}
         >
-          <i className={`${item.icon} mr-2 ${activeIndex === index ? 'text-white' : ''}`}></i>
+          <i className={`${item.icon} mr-3 ${activeIndex === index ? 'text-white' : 'text-gray-500'}`}></i>
           {item.label}
         </li>
       ))}
@@ -37,10 +37,13 @@ const Menu = () => {
 
 const Sidebar = () => {
   return (
-    <div className="fixed left-0 top-0 w-64 bg-white h-screen shadow-lg">
-      <div className="p-6">
+    <div className="w-64 bg-white h-full shadow-lg flex flex-col p-6 rounded-lg">
+      {/* Logo */}
+      <div className="flex justify-center mb-6">
         <img src={Logo} alt="Hospital Logo" className="h-20 w-20" />
       </div>
+      
+      {/* Menu */}
       <Menu />
     </div>
   );
