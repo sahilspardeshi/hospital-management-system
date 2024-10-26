@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Line, Bar } from "react-chartjs-2";
+import { Line, Bar } from "react-chartjs";
 import {
   Chart as ChartJS,
   LineElement,
@@ -10,8 +10,8 @@ import {
   Tooltip,
   Title,
 } from "chart.js";
-import thisMonth from "../IMAGE/Timeline Button.png";
-import Track from "../IMAGE/Track.png";
+
+import Track from "../../assets/images/Track.png";
 
 ChartJS.register(LineElement, PointElement, LinearScale, CategoryScale, BarElement, Tooltip, Title);
 
