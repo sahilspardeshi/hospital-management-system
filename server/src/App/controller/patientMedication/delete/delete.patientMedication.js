@@ -9,12 +9,10 @@ export const deletePatientMedication = async (req, res) => {
     try {
         // Delete the medication record from the database
         const deletedMedication = await prisma.patientMedication.delete({
-            where: { id: BigInt(id) }, // Convert the id to BigInt for consistency
+            where: { id:id }, // Convert the id to BigInt for consistency
         });
 
         // Convert BigInt to string for serialization if needed
-        deletedMedication.id = deletedMedication.id.toString();
-
         // Send a success response
         return res.json({ message: 'Patient Medication deleted successfully', deletedMedication });
     } catch (error) {
