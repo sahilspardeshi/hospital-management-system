@@ -6,7 +6,7 @@ const Menu = () => {
 
   const menuItems = [
     { icon: 'fa-solid fa-house', label: 'Dashboard' },
-    { icon: 'fa-solid fa-clipboard', label: 'Appointment Request' },
+    { icon: 'fa-solid fa-clipboard', label: 'Appointment ' },
     { icon: 'fa-solid fa-chart-simple', label: 'Tables' },
     { icon: 'fa-brands fa-slack', label: 'Articles' },
     { icon: 'fa-solid fa-user', label: 'Profile' },
@@ -18,12 +18,11 @@ const Menu = () => {
   };
 
   return (
-    <ul className="list-none flex flex-col items-start w-full"> {/* Align menu items to start */}
+    <ul className="list-none flex flex-col items-start w-full"> 
       {menuItems.map((item, index) => (
         <li
           key={index}
-          className={`flex items-center p-4 cursor-pointer text-lg 
-          hover:bg-orange-100 transition-colors duration-300 
+          className={`flex items-center p-4 w-full cursor-pointer text-2xl transition-colors duration-300 hover:bg-orange-400 hover:text-white
           ${activeIndex === index ? 'bg-orange-500 text-white' : ''}`}
           onClick={() => handleClick(index)}
         >
@@ -37,11 +36,13 @@ const Menu = () => {
 
 const Sidebar = () => {
   return (
-    <div className="fixed left-0 top-0 w-96 bg-white h-screen shadow-lg flex flex-col items-start"> {/* Align everything to start */}
-      <div className="p-6 flex justify-start w-full"> {/* Center the logo and align to start */}
+    <div className="fixed left-7 bg-white top-5 w-96 bg-transparent h-[60vh] flex flex-col  items-start m-5 mt-7 p-10 shadow-md rounded-xl"> {/* Added pt-20 for top padding */}
+      <div className="pl-20 flex justify-center w-full">
         <img src={Logo} alt="Hospital Logo" className="h-20 w-20" />
       </div>
-      <Menu />
+      <div className="pl-20 pt-10">
+        <Menu />
+      </div>
     </div>
   );
 };

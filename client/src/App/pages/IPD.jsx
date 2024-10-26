@@ -4,7 +4,7 @@ import Header from "../components/NavBar/Navbar";
 
 
 
-const Dashboard = () => {
+const Ipd = () => {
   return (
     <div className="min-h-screen bg-custom-gradient flex">
       {/* Sidebar */}
@@ -36,4 +36,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default Ipd;
