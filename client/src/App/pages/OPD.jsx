@@ -4,7 +4,7 @@ import Header from "../components/NavBar/Navbar";
 
 
 
-const OPD = () => {
+const Opd = () => {
   return (
     <div className="min-h-screen bg-custom-gradient flex">
       {/* Sidebar */}
@@ -36,4 +36,4 @@ const OPD = () => {
   );
 };
 
-export default OPD;
+export default Opd;

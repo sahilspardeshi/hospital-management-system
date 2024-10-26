@@ -2,8 +2,8 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Dashboard from "./pages/dashboard";
-import OPD from "./pages/OPD";
-import IPD from "./pages/IPD";
+import Opd from "./pages/Opd";
+import Ipd from "./pages/Ipd";
 
 
 function SoftwareApp() {
@@ -11,8 +11,8 @@ function SoftwareApp() {
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/dashboard" element={< Dashboard/>} />
-      <Route path="/OPD" element={<OPD/>} />
-      <Route path="/IPD" element={< IPD/>} />
+      <Route path="/opd" element={<Opd/>} />
+      <Route path="/ipd" element={<Ipd/>} />
     </Routes>
   );
 }

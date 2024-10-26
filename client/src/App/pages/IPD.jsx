@@ -4,7 +4,7 @@ import Header from "../components/NavBar/Navbar";
 
 
 
-const IPD = () => {
+const Ipd = () => {
   return (
     <div className="min-h-screen bg-custom-gradient flex">
       {/* Sidebar */}
@@ -36,4 +36,4 @@ const IPD = () => {
   );
 };
 
-export default IPD;
+export default Ipd;
