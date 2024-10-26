@@ -4,7 +4,7 @@ import darkmode from '../../assets/images/moon-solid_1.png';
 import about from '../../assets/images/info_outline.png';
 import Doctor from '../../assets/images/dr.png';
 
-const Header = () => {
+const Navbar = () => {
   return (
     <header className="flex justify-between items-center mx-5 ">
       {/* Welcome Message */}
@@ -36,4 +36,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default Navbar;
