@@ -13,7 +13,6 @@ model Appointments_OPD {
 
   doctor_id        Int
   appointment_date DateTime        @default(now()) @db.Date
-  appointment_time DateTime        @default(now()) @db.Time(0)
   PetientReportData_id Int
   appointment_type String?         @db.VarChar(10)
   status           String?         @db.VarChar(20)
