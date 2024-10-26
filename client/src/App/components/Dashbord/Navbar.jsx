@@ -1,49 +1,36 @@
 import React from "react";
-import notification from '../IMAGE/notifications_none.png';
-import darkmode from '../IMAGE/moon-solid 1.png';
-import about from '../IMAGE/info_outline.png';
-import Doctor from '../IMAGE/dr.png';
+import notification from '../../assets/images/notifications_none.png';
+import darkmode from '../../assets/images/moon-solid_1.png';
+import about from '../../assets/images/info_outline.png';
+import Doctor from '../../assets/images/dr.png';
 
 const Header = () => {
   return (
-    <header className="flex w-full bg-gray-50">
-      <div className="w-full flex justify-between items-center p-4">
-      <div className="w-1/8"></div>
-      <h1 className="text-xl font-bold "> 
-            Welcome, <span className="text-orange-600">Dr. Robert Harry</span>
-          </h1>
+    <header className="flex justify-between items-center mx-5 ">
+      {/* Welcome Message */}
+      <h1 className="text-xl font-semibold">
+        Welcome, <span className="text-red-500">Dr. Robert Harry</span>
+      </h1>
 
+      {/* OPD and IPD Section */}
+      <div className="flex items-center space-x-4">
+        <button className="px-4 py-2 bg-green-300 text-sm rounded-full">OPD</button>
+        <button className="px-4 py-2 bg-gray-200 text-sm rounded-full">IPD</button>
+      </div>
 
-<div className="w-9/10 flex justify-between items-center p-4">
-  
-          
-          {/* OPD and IPD section */}
-          <ul className="flex justify-center items-center space-x-4">
-            <li className="p-2 hover:bg-gray-100 cursor-pointer rounded-full bg-gray-200 text-sm">
-              OPD
-            </li>
-            <li className="p-2 hover:bg-gray-100 cursor-pointer rounded-full bg-gray-200 text-sm">
-              IPD
-            </li>
-          </ul>
+      {/* Search and Icons */}
+      <div className="flex items-center space-x-4">
+        <input
+          type="text"
+          placeholder="Search"
+          className="px-3 py-1 bg-gray-200 rounded-full hidden md:block"
+        />
+        <img src={notification} alt="Notification Bell" className="w-6 h-6 cursor-pointer" />
+        <img src={darkmode} alt="Dark Mode Toggle" className="w-6 h-6 cursor-pointer" />
+        <img src={about} alt="Information" className="w-6 h-6 cursor-pointer" />
+        <div className="w-10 h-10 rounded-full overflow-hidden">
+          <img src={Doctor} alt="Doctor Avatar" className="w-full h-full" />
         </div>
-
-        {/* Right section: Search bar and icons */}
-        <nav className="flex items-center space-x-6">
-          <input
-            type="text"
-            placeholder="Search"
-            className="bg-gray-200 rounded-full px-3 py-1 outline-none text-lg hidden md:block"
-          />
-          <img src={notification} alt="Notification Bell" className="w-6 h-6 cursor-pointer" />
-          <img src={darkmode} alt="Dark Mode Toggle" className="w-6 h-6 cursor-pointer" />
-          <img src={about} alt="Information" className="w-6 h-6 cursor-pointer" />
-
-          {/* Doctor Avatar */}
-          <div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center">
-            <img src={Doctor} alt="Doctor Avatar" className="rounded-full w-8 h-8" />
-          </div>
-        </nav>
       </div>
     </header>
   );
