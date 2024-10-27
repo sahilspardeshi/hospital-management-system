@@ -201,7 +201,7 @@ model LabReports {
   status            String?             @db.VarChar(20)
   created_at        DateTime?           @default(now()) @db.Timestamp(0)
   updated_at        DateTime?           @default(now()) @db.Timestamp(0)
-  Staff             Staff?              @relation(fields: [doctor_id], references: [Staff_id], onDelete: NoAction, onUpdate: NoAction, map: "labreports_doctor_id_foreign")
+  Staff             Staff?              @relation(fields: [doctor_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "labreports_doctor_id_foreign")
   MainLabReports    MainLabReports?     @relation(fields: [MainLabReports_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "labreports_MainLabReports_id_foreign")
   Patients          Petients?           @relation(fields: [patient_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "labreports_patient_id_foreign")
   LabTestDetails    LabTestDetails[]
@@ -251,7 +251,7 @@ model MedicalReports {
   status             String?             @db.VarChar(20)
   created_at         DateTime?           @default(now()) @db.Timestamp(0)
   updated_at         DateTime?           @default(now()) @db.Timestamp(0)
-  Staff              Staff?              @relation(fields: [doctor_id], references: [Staff_id], onDelete: NoAction, onUpdate: NoAction, map: "medicalreports_doctor_id_foreign")
+  Staff              Staff?              @relation(fields: [doctor_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "medicalreports_doctor_id_foreign")
   MainMedicalReports MainMedicalReports? @relation(fields: [MainReports_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "medicalreports_MainMedicalReports_id_foreign")
   ReportResults      ReportResults[]
 }
@@ -291,7 +291,7 @@ model MainMedication {
   created_at           DateTime?         @default(now()) @db.Timestamp(0)
   updated_at           DateTime?         @default(now()) @db.Timestamp(0)
   SurgeryRecords       SurgeryRecords?   @relation(fields: [SurgeryRecords_id], references: [surgery_id], onDelete: NoAction, onUpdate: NoAction, map: "MainMedication_SurgeryRecords_id_foreign")
-  Staff                Staff?            @relation(fields: [doctor_id], references: [Staff_id], onDelete: NoAction, onUpdate: NoAction, map: "MainMedication_doctor_id_foreign")
+  Staff                Staff?            @relation(fields: [doctor_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "MainMedication_doctor_id_foreign")
   PatientMedication    PatientMedication @relation(fields: [PatientMedication_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "MainMedication_PatientMedication_id_foreign")
   Medications          Medications[]
 }
@@ -329,14 +329,14 @@ model OPDTreatments {
   PatientMedication  PatientMedication?
   MainLabReports     MainLabReports?
   Appointments_OPD   Appointments_OPD?   @relation(fields: [appointment_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "opdtreatments_appointment_id_foreign")
-  Staff              Staff?              @relation(fields: [doctor_id], references: [Staff_id], onDelete: NoAction, onUpdate: NoAction, map: "opdtreatments_doctor_id_foreign")
+  Staff              Staff?              @relation(fields: [doctor_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "opdtreatments_doctor_id_foreign")
 
   Billing Billing[]
 }
 
 model Petients {
   id                                               Int             @id @default(autoincrement())
-  full_name                                        String             @db.VarChar(100)
+  fullName                                        String             @db.VarChar(100)
   date_of_birth                                    DateTime           @db.Date
   gender                                           String             @db.VarChar(10)
   blood_group                                      String?            @db.VarChar(5)
@@ -394,12 +394,13 @@ model Setting {
 
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 model Staff {
-  Staff_id        Int           @id @default(autoincrement())
-  full_name       String           @db.VarChar(100)
+  id        Int           @id @default(autoincrement())
+  fullName       String           @db.VarChar(100)
   specialization  String?          @db.VarChar(100)
   user            String?          @db.VarChar(200)
   password        String?          @db.VarChar(200)
   type            String           @default("doctor") @db.VarChar(255)
+  role            String           @default("SuperAdmin")  @db.VarChar(255)
   contact_number  String           @unique @db.VarChar(15)
   email           String?          @unique @db.VarChar(100)
   qualifications  String?
@@ -444,7 +445,7 @@ model SurgeryRecords {
   created_at               DateTime?        @default(now()) @db.Timestamp(0)
   updated_at               DateTime?        @default(now()) @db.Timestamp(0)
   MainMedication           MainMedication[]
-  Staff                    Staff            @relation(fields: [doctor_id], references: [Staff_id], onDelete: NoAction, onUpdate: NoAction, map: "surgeryrecords_doctor_id_foreign")
+  Staff                    Staff            @relation(fields: [doctor_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "surgeryrecords_doctor_id_foreign")
   IPDAdmissions            IPDAdmissions    @relation(fields: [ipd_admission_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "surgeryrecords_ipd_admission_id_foreign")
   Petients                 Petients?        @relation(fields: [patient_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "surgeryrecords_patient_id_foreign")
   IPDTreatments            IPDTreatments    @relation(fields: [treatment_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "surgeryrecords_treatment_id_foreign")
@@ -534,7 +535,7 @@ model MainNotes {
   treatment_id  Int
   create_at     DateTime      @db.Timestamp(0)
   IPDTreatments IPDTreatments @relation(fields: [treatment_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "notes_treatment_id_foreign")
-  Staff         Staff         @relation(fields: [user_id], references: [Staff_id], onDelete: NoAction, onUpdate: NoAction, map: "notes_user_id_foreign")
+  Staff         Staff         @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "notes_user_id_foreign")
 
   Notes Notes[]
 }
