@@ -3,10 +3,11 @@ import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Login from "./pages/Login";
 import OPD from "./pages/OPD";
 import IPD from "./pages/IPD";
-import Dashboard from "./components/Patient/Patient";
+import Patient from "./components/Patient/Patient";
 import Appointment from "./components/Appointment/Appointment";
 import Profile from "./components/Profile/Profile";
-import Dashboard from "./pages/Dashboard";
+import Dashboard from "./pages/dashboard";
+
 
 
 
@@ -17,7 +18,7 @@ function SoftwareApp() {
         <Route path="/" element={<Login />} />
         <Route path="/dashboard" element={<Dashboard/>} />
         <Route path="/opd" element={<OPD />}>
-          <Route path="patient" element={<Patient/>} />
+          <Route path="" element={<Patient/>} />
           <Route path="appointment" element={<Appointment />} />
           {/* <Route path="tables" element={<Tables />} />  */}
           {/* <Route path="articles" element={<Articles/>} /> */}
