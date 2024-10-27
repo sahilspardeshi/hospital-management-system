@@ -4,10 +4,10 @@ import Logo from "../../assets/images/Aarohilogo.png";
 
 const Menu = () => {
   const navigate = useNavigate(); // Initialize useNavigate
-  const [activeIndex, setActiveIndex] = useState(null);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   const menuItems = [
-    { icon: 'fa-solid fa-house', label: 'Dashboard', path: 'dashboard' },
+    { icon: 'fa-solid fa-house', label: 'Dashboard', path: '' },
     { icon: 'fa-solid fa-clipboard', label: 'Appointment Request', path: 'appointment' },
     { icon: 'fa-solid fa-chart-simple', label: 'Tables', path: 'tables' },
     { icon: 'fa-brands fa-slack', label: 'Articles', path: 'articles' },
