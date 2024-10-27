@@ -11,7 +11,7 @@ const Dashboard = () => {
       <div className="bg-[#F8F7F7] bg-opacity-70 shadow-lg rounded-xl border border-gray-200 w-full  max-w-full max-h-full overflow-y-auto flex flex-row justify-start items-start mx-5 my-5 px-5 py-5">
       <Sidebar/>
       <div className="flex-1 flex flex-col">
-        <Navbar/>
+        <Navbar />
         {/* Main container with content */}
         <div className="flex-1 p-6 bg-white rounded-lg shadow-md m-4">
           <h2 className="text-2xl font-semibold mb-4">Reports</h2>
