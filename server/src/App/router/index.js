@@ -5,6 +5,7 @@ import  settingRoute  from '../routes/routes.setting.js'
 import { getSetting } from '../controller/setting/index.js';
 import staffRoutes from '../routes/routes.staff.js';
 import { getAllStaff } from '../controller/staff/index.js';
+import opdAppointmentRoutes from '../routes/routes.opdAppointment.js';
 
 import TestRoutes from '../routes/test.routes.js';
 
@@ -31,6 +32,9 @@ AllRoutes.use('/staff',staffRoutes);
 AllRoutes.use('/Medication', medicationRouter);
 
 
+
+//opdAppointment Routes
+AllRoutes.use('/opdAppointment',opdAppointmentRoutes);
 
 // Export the router
 export default AllRoutes;
