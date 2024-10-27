@@ -21,21 +21,25 @@ if (cluster.isPrimary || cluster.isMaster) {  // For compatibility with older ve
     console.log(`Worker ${worker.process.pid} died`);
   });
 } else {
-  const allowedOrigins = ['http://localhost:3000'];
+
   const app = express();
-  app.use(cors({
+  const allowedOrigins = ['http://localhost:5173'];
+
+  const corsOptions = {
     origin: function (origin, callback) {
-      if (!origin) return callback(null, true); // Allow requests with no origin
-      if (allowedOrigins.indexOf(origin) === -1) {
-        const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
-        return callback(new Error(msg), false);
+      if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
       }
-      return callback(null, true);
     },
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true, // Enable credentials
-  }));
+    credentials: true,
+  };
+  
+  app.use(cors(corsOptions));
+  
 
   let orderDate = new Date().setDate() + 1;
   
@@ -60,11 +64,12 @@ if (cluster.isPrimary || cluster.isMaster) {  // For compatibility with older ve
   
   
   // Use the function to dynamically determine the route:
-  app.use('/', (req, res, next) => {
-    const routeHandler = subdomainRoutingFunction(req); // Determine the route
-    routeHandler(req, res, next); // Pass the request to the correct handler
-  });
-  
+  // app.use('/', (req, res, next) => {
+  //   const routeHandler = subdomainRoutingFunction(req); // Determine the route
+  //   routeHandler(req, res, next); // Pass the request to the correct handler
+  // });
+  app.use('/web',WebApp);
+  app.use('/software',SoftwareApp);
   // Start the server
   app.listen(4000, () => {
     console.log('listening on *:4000');

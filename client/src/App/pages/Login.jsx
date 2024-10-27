@@ -5,10 +5,10 @@ import pass from '../assets/images/pass.png'
 export default function Login() {
     return (
         <> 
-         <div className="min-h-screen  bg-gradient-to-b from-purple-200 via-orange-100 to-gray-200 flex justify-center items-center">
-
-      <div className="bg-[#F8F7F7] bg-opacity-70 shadow-lg rounded-xl border border-gray-200 w-full  max-w-full max-h-full overflow-y-auto flex flex-col justify-start items-center mx-5 my-5 px-5 py-5">
-            <div className="lg:shadow-xl  lg:border-gray-50 h-5/6 w-4/5 m-auto my-20 bg-white flex justify-evenly rounded-xl">
+    <div className="max-h-screen bg-custom-gradient flex">
+      {/* Sidebar */}
+      <div className="bg-[#F8F7F7] bg-opacity-70 shadow-lg rounded-xl border border-gray-200 w-full  max-w-full max-h-full  flex flex-row justify-start items-start mx-5 my-5 px-5 py-5">
+            <div className="h-5/6 w-4/5 m-auto my-20 flex justify-evenly rounded-xl">
                 <div className=' h-[80vh] m-auto hidden lg:flex '>
                     <img src={Logimg} className='h-[65vh]  my-12' />
                 </div>

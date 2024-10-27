@@ -1,0 +1,551 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL_APP")
+}
+
+model Appointments_OPD {
+  id         Int  @id @default(autoincrement())
+  patient_id Int
+
+  doctor_id        Int
+  appointment_date DateTime        @default(now()) @db.Date
+  PetientReportData_id Int
+  appointment_type String?         @db.VarChar(10)
+  status           String?         @db.VarChar(20)
+  created_at       DateTime?       @default(now()) @db.Timestamp(0)
+  updated_at       DateTime?       @default(now()) @db.Timestamp(0)
+  PetientReportData PetientReportData  @relation(fields: [PetientReportData_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "appointments_PetientReportData_id_foreign")
+  Petients         Petients       @relation(fields: [patient_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "appointments_opd_patient_id_foreign")
+  OPDTreatments    OPDTreatments[]
+}
+
+model AdvancePayment {
+  id            Int   @id @default(autoincrement()) // Primary Key
+  billId        Int // Foreign key to HospitalBill
+  paymentDate   DateTime
+  amountPaid    Float
+  payerName     String
+  paymentMethod String?
+  createdAt     DateTime @default(now())
+
+  // Relations
+  Billing Billing? @relation(fields: [billId], references: [id])
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model Billing {
+  id             Int    @id @default(autoincrement())
+  patient_id     Int?
+  ODPtreatment_id Int?        @unique
+  IPDAdmissions_id Int?        @unique
+  IPDtreatment_id Int?        
+  ANCtreatment_id Int?        @unique
+  type           String    @default("OPD") @db.VarChar(255)
+  bill_date      DateTime  @db.Date
+  total_amount   Decimal   @db.Decimal(10, 2)
+  amount_paid    Decimal   @db.Decimal(10, 2)
+  payment_status String?   @db.VarChar(20)
+  created_at     DateTime? @default(now()) @db.Timestamp(0)
+  updated_at     DateTime? @default(now()) @db.Timestamp(0)
+  IPDAdmissions IPDAdmissions? @relation(fields: [IPDAdmissions_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  Petients       Petients? @relation(fields: [patient_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "billing_patient_id_foreign")
+  OPDTreatments   OPDTreatments?   @relation(fields: [ODPtreatment_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  IPDTreatments   IPDTreatments?   @relation(fields: [IPDtreatment_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  AdvancePayment AdvancePayment[]
+}
+
+model DailyItemsList {
+  id               Int        @id @default(autoincrement())
+  ipd_admission_id Int
+  item_id          Int
+  record_date      DateTime      @db.Date
+  day_id           Int
+  item_category    String        @db.VarChar(100)
+  item_name        String        @db.VarChar(255)
+  item_quantity    String?       @db.VarChar(50)
+  item_cost        Decimal?      @db.Decimal(10, 2)
+  created_at       DateTime?     @default(now()) @db.Timestamp(0)
+  updated_at       DateTime?     @default(now()) @db.Timestamp(0)
+  DayItem          DayItem       @relation(fields: [day_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "dailyitemslist_day_id_foreign")
+  IPDAdmissions    IPDAdmissions @relation(fields: [ipd_admission_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "dailyitemslist_ipd_admission_id_foreign")
+  item             item          @relation(fields: [item_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "dailyitemslist_item_id_foreign")
+}
+
+model DayItem {
+  id               Int           @id @default(autoincrement())
+  ipd_admission_id Int
+  treatment_id     Int
+  quantity    String?       @db.VarChar(50)
+  cost          Float               @default(0.0)
+  created_at       DateTime         @db.Timestamp(0)
+  DailyItemsList   DailyItemsList[]
+  IPDAdmissions    IPDAdmissions    @relation(fields: [ipd_admission_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "dayitem_ipd_admission_id_foreign")
+  IPDTreatments    IPDTreatments    @relation(fields: [treatment_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "dayitem_treatment_id_foreign")
+}
+
+model IPDAdmissions {
+  id                                          Int             @id @default(autoincrement())
+  patient_id                                  Int?
+  PetientReportData_id                        Int?
+  discharge_date                              DateTime?          @db.Date
+  diagnosis                                   String?
+  status                                      String?            @db.VarChar(20)
+  created_at                                  DateTime?          @default(now()) @db.Timestamp(0)
+  updated_at                                  DateTime?          @default(now()) @db.Timestamp(0)
+    PetientReportData PetientReportData?  @relation(fields: [PetientReportData_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "appointments_PetientReportData_id_foreign")
+  DailyItemsList                              DailyItemsList[]
+  DayItem                                     DayItem[]
+  Patients_IPDAdmissions_patient_idToPatients Petients?          @relation("IPDAdmissions_patient_idToPatients", fields: [patient_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "ipdadmissions_patient_id_foreign")
+  IPDTreatments                               IPDTreatments[]
+  MainIntakeOutput                            MainIntakeOutput[]
+  SurgeryRecords                              SurgeryRecords[]
+  MainVitalSigns                              MainVitalSigns[]
+  Ward                                        Ward[]
+
+  Billing Billing?
+}
+
+model IPDTreatments {
+  id                 Int              @id @default(autoincrement())
+  petient_id         Int
+  ipd_admission_id   Int?
+  treatment_date     DateTime            @db.Date
+  treatment_details  String?
+  cost               Float               @default(0.0)
+  created_at         DateTime?           @default(now()) @db.Timestamp(0)
+  updated_at         DateTime?           @default(now()) @db.Timestamp(0)
+  DayItem            DayItem[]
+  IPDAdmissions      IPDAdmissions?      @relation(fields: [ipd_admission_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "ipdtreatments_ipd_admission_id_foreign")
+  Petients           Petients            @relation(fields: [petient_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "ipdtreatments_petient_id_foreign")
+  MainIntakeOutput   MainIntakeOutput[]
+  MainMedicalReports MainMedicalReports?
+  PatientMedication  PatientMedication?
+  SurgeryRecords     SurgeryRecords[]
+  MainLabReports     MainLabReports?
+  MainVitalSigns     MainVitalSigns[]
+  MainNotes          MainNotes[]
+  Ward               Ward?
+
+  Billing Billing[]
+}
+
+model MainIntakeOutput {
+  id                 Int         @id @default(autoincrement())
+  ipd_admission_id   Int?
+  treatment_id       Int
+  IntakeOutput_count Int
+  cost               Float          @default(0.0)
+  paid               Float          @default(0.0)
+  record_date        DateTime       @db.Date
+  created_at         DateTime?      @default(now()) @db.Timestamp(0)
+  updated_at         DateTime?      @default(now()) @db.Timestamp(0)
+  IntakeOutput       IntakeOutput[]
+  IPDAdmissions      IPDAdmissions? @relation(fields: [ipd_admission_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "MainIntakeOutput_ipd_admission_id_foreign")
+  IPDTreatments      IPDTreatments  @relation(fields: [treatment_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "MainIntakeOutput_treatment_id_foreign")
+}
+
+model IntakeOutput {
+  id                  Int           @id @default(autoincrement())
+  record_date         DateTime         @db.Date
+  MainIntakeOutput_id Int
+  intake_time         Int?
+  intake_nature       Int?
+  intake_amount       Int?
+  cost                Float            @default(0.0)
+  intake_total        Decimal?         @db.Decimal(8, 2)
+  output_time         Int?
+  output_nature       Int?
+  output_amount       Int?
+  output_total        Decimal?         @db.Decimal(8, 2)
+  created_at          DateTime?        @default(now()) @db.Timestamp(0)
+  updated_at          DateTime?        @default(now()) @db.Timestamp(0)
+  MainIntakeOutput    MainIntakeOutput @relation(fields: [MainIntakeOutput_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "IntakeOutput_MainIntakeOutput_id_foreign")
+}
+
+model MainLabReports {
+  id              Int         @id @default(autoincrement())
+  ODPtreatment_id Int?        @unique
+  IPDtreatment_id Int?        @unique
+  ANCtreatment_id Int?        @unique
+  status          String?        @db.VarChar(20)
+  labReport_count Int
+  cost            Float          @default(0.0)
+  paid            Float          @default(0.0)
+  type            String         @default("OPD") @db.VarChar(255)
+  description     String?        @db.VarChar(255)
+  start_date      DateTime?      @db.Date
+  end_date        DateTime?      @db.Date
+  LabReports      LabReports[]
+  OPDTreatments   OPDTreatments? @relation(fields: [ODPtreatment_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  IPDTreatments   IPDTreatments? @relation(fields: [IPDtreatment_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model LabReports {
+  id                Int              @id @default(autoincrement())
+  patient_id        Int?
+  doctor_id         Int?
+  MainLabReports_id Int
+  test_name         String?             @db.VarChar(255)
+  test_date         DateTime?           @db.Date
+  test_result       String?
+  test_file         String?
+  labTest_count     Int
+  cost              Float               @default(0.0)
+  paid              Float               @default(0.0)
+  lab_technician    String?             @db.VarChar(255)
+  status            String?             @db.VarChar(20)
+  created_at        DateTime?           @default(now()) @db.Timestamp(0)
+  updated_at        DateTime?           @default(now()) @db.Timestamp(0)
+  Staff             Staff?              @relation(fields: [doctor_id], references: [Staff_id], onDelete: NoAction, onUpdate: NoAction, map: "labreports_doctor_id_foreign")
+  MainLabReports    MainLabReports?     @relation(fields: [MainLabReports_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "labreports_MainLabReports_id_foreign")
+  Patients          Petients?           @relation(fields: [patient_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "labreports_patient_id_foreign")
+  LabTestDetails    LabTestDetails[]
+  TechnicianReports TechnicianReports[]
+}
+
+model LabTestDetails {
+  detail_id       Int      @id
+  report_id       Int?
+  parameter_name  String?     @db.VarChar(255)
+  parameter_value String?     @db.VarChar(100)
+  normal_range    String?     @db.VarChar(100)
+  created_at      DateTime?   @default(now()) @db.Timestamp(0)
+  updated_at      DateTime?   @default(now()) @db.Timestamp(0)
+  LabReports      LabReports? @relation(fields: [report_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "labtestdetails_report_id_foreign")
+}
+
+model MainMedicalReports {
+  id              Int           @id @default(autoincrement())
+  ODPtreatment_id Int?          @unique
+  IPDtreatment_id Int?          @unique
+  ANCtreatment_id Int?          @unique
+  Medical_count   Int
+  cost            Float            @default(0.0)
+  paid            Float            @default(0.0)
+  status          String?          @db.VarChar(20)
+  type            String           @default("OPD") @db.VarChar(255)
+  description     String?          @db.VarChar(255)
+  start_date      DateTime?        @db.Date
+  end_date        DateTime?        @db.Date
+  MedicalReports  MedicalReports[]
+  OPDTreatments   OPDTreatments?   @relation(fields: [ODPtreatment_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  IPDTreatments   IPDTreatments?   @relation(fields: [IPDtreatment_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model MedicalReports {
+  report_id          Int              @id @default(autoincrement())
+  doctor_id          Int?
+  MainReports_id     Int?
+  report_type        String?             @db.VarChar(255)
+  report_description String?
+  result_count       Int
+  cost               Float               @default(0.0)
+  paid               Float               @default(0.0)
+  report_date        DateTime?           @db.Date
+  report_file        String?
+  status             String?             @db.VarChar(20)
+  created_at         DateTime?           @default(now()) @db.Timestamp(0)
+  updated_at         DateTime?           @default(now()) @db.Timestamp(0)
+  Staff              Staff?              @relation(fields: [doctor_id], references: [Staff_id], onDelete: NoAction, onUpdate: NoAction, map: "medicalreports_doctor_id_foreign")
+  MainMedicalReports MainMedicalReports? @relation(fields: [MainReports_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "medicalreports_MainMedicalReports_id_foreign")
+  ReportResults      ReportResults[]
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model Medications {
+  id              Int          @id @default(autoincrement())
+  treatment_id    Int
+  medicine_id     Int
+  medication_name String          @db.VarChar(100)
+  dosage          String?         @db.VarChar(50)
+  frequency       String?         @db.VarChar(50)
+  cost            Float           @default(0.0)
+  start_date      DateTime        @db.Date
+  end_date        DateTime?       @db.Date
+  instructions    String?
+  created_at      DateTime?       @default(now()) @db.Timestamp(0)
+  updated_at      DateTime?       @default(now()) @db.Timestamp(0)
+  medication_list medication_list @relation(fields: [medicine_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "medications_medicine_id_foreign")
+  MainMedication  MainMedication  @relation(fields: [treatment_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "medications_treatment_id_foreign")
+}
+
+model MainMedication {
+  id                   Int            @id @default(autoincrement())
+  PatientMedication_id Int
+  SurgeryRecords_id    Int?
+  treatment_type       String            @db.VarChar(10)
+  doctor_id            Int?
+  type                 String            @default("OPD") @db.VarChar(255)
+  description          String?           @db.VarChar(255)
+  test_file            String?
+  cost                 Float             @default(0.0)
+  paid                 Float             @default(0.0)
+  total_quantity       Int
+  start_date           DateTime?         @db.Date
+  end_date             DateTime?         @db.Date
+  created_at           DateTime?         @default(now()) @db.Timestamp(0)
+  updated_at           DateTime?         @default(now()) @db.Timestamp(0)
+  SurgeryRecords       SurgeryRecords?   @relation(fields: [SurgeryRecords_id], references: [surgery_id], onDelete: NoAction, onUpdate: NoAction, map: "MainMedication_SurgeryRecords_id_foreign")
+  Staff                Staff?            @relation(fields: [doctor_id], references: [Staff_id], onDelete: NoAction, onUpdate: NoAction, map: "MainMedication_doctor_id_foreign")
+  PatientMedication    PatientMedication @relation(fields: [PatientMedication_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "MainMedication_PatientMedication_id_foreign")
+  Medications          Medications[]
+}
+
+model PatientMedication {
+  id               Int           @id @default(autoincrement())
+  ODPtreatment_id  Int?          @unique
+  IPDtreatment_id  Int?          @unique
+  ANCtreatment_id  Int?          @unique
+  doctor_id        Int?
+  Medication_count Int
+  cost             Float            @default(0.0)
+  paid             Float            @default(0.0)
+  type             String           @default("OPD") @db.VarChar(255)
+  description      String?          @db.VarChar(255)
+  start_date       DateTime?        @db.Date
+  end_date         DateTime?        @db.Date
+  MainMedication   MainMedication[]
+  OPDTreatments    OPDTreatments?   @relation(fields: [ODPtreatment_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  IPDTreatments    IPDTreatments?   @relation(fields: [IPDtreatment_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model OPDTreatments {
+  id                 Int              @id @default(autoincrement())
+  appointment_id     Int?
+  patient_id         Int?
+  doctor_id          Int?
+  diagnosis          String?
+  treatment_plan     String?
+  report_file        String?
+  follow_up_date     DateTime?           @db.Date
+  created_at         DateTime?           @default(now()) @db.Timestamp(0)
+  updated_at         DateTime?           @default(now()) @db.Timestamp(0)
+  MainMedicalReports MainMedicalReports?
+  PatientMedication  PatientMedication?
+  MainLabReports     MainLabReports?
+  Appointments_OPD   Appointments_OPD?   @relation(fields: [appointment_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "opdtreatments_appointment_id_foreign")
+  Staff              Staff?              @relation(fields: [doctor_id], references: [Staff_id], onDelete: NoAction, onUpdate: NoAction, map: "opdtreatments_doctor_id_foreign")
+
+  Billing Billing[]
+}
+
+model Petients {
+  id                                               Int             @id @default(autoincrement())
+  full_name                                        String             @db.VarChar(100)
+  date_of_birth                                    DateTime           @db.Date
+  gender                                           String             @db.VarChar(10)
+  blood_group                                      String?            @db.VarChar(5)
+  mobile_number                                    String             @unique @db.VarChar(15)
+  address                                          String?
+  email                                            String?            @unique @db.VarChar(100)
+  created_at                                       DateTime?          @default(now()) @db.Timestamp(0)
+  updated_at                                       DateTime?          @default(now()) @db.Timestamp(0)
+  Appointments_OPD                                 Appointments_OPD[]
+  Billing                                          Billing[]
+  IPDAdmissions_IPDAdmissions_patient_idToPatients IPDAdmissions[]    @relation("IPDAdmissions_patient_idToPatients")
+  IPDTreatments                                    IPDTreatments[]
+  LabReports                                       LabReports[]
+
+  SurgeryRecords                                   SurgeryRecords[]
+
+  PetientReportData PetientReportData[] @relation(map: "PetientReportData_petinet_id_foreign")
+}
+model PetientReportData {
+  id         Int          @id @default(autoincrement())
+  petinet_id         Int
+  title  String?         @db.VarChar(255)
+   discription  String?         @db.VarChar(255)
+   status       String?
+  created_at        DateTime?       @default(now()) @db.Timestamp(0)
+  updated_at        DateTime?       @default(now()) @db.Timestamp(0)
+  Petients Petients    @relation(fields: [petinet_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "PetientReportData_petinet_id_foreign")
+
+
+  Appointments_OPD Appointments_OPD[]
+
+  IPDAdmissions IPDAdmissions[] @relation(map: "appointments_PetientReportData_id_foreign")
+}
+
+model ReportResults {
+  result_id         Int          @id @default(autoincrement())
+  report_id         Int?
+  observation_name  String?         @db.VarChar(255)
+  observation_value String?
+  created_at        DateTime?       @default(now()) @db.Timestamp(0)
+  updated_at        DateTime?       @default(now()) @db.Timestamp(0)
+  MedicalReports    MedicalReports? @relation(fields: [report_id], references: [report_id], onDelete: NoAction, onUpdate: NoAction, map: "reportresults_report_id_foreign")
+}
+
+model Setting {
+  id           Int    @id @default(autoincrement())
+  domain       String?   @db.VarChar(500)
+  icon         String?   @db.VarChar(500)
+  hospital     String?   @db.VarChar(500)
+  current_plan DateTime? @db.Date
+  feature      String?   @db.VarChar(500)
+  created_at   DateTime? @default(now()) @db.Timestamp(0)
+  updated_at   DateTime? @default(now()) @db.Timestamp(0)
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model Staff {
+  Staff_id        Int           @id @default(autoincrement())
+  full_name       String           @db.VarChar(100)
+  specialization  String?          @db.VarChar(100)
+  user            String?          @db.VarChar(200)
+  password        String?          @db.VarChar(200)
+  type            String           @default("doctor") @db.VarChar(255)
+  contact_number  String           @unique @db.VarChar(15)
+  email           String?          @unique @db.VarChar(100)
+  qualifications  String?
+  department      String?          @db.VarChar(100)
+  created_at      DateTime?        @default(now()) @db.Timestamp(0)
+  updated_at      DateTime?        @default(now()) @db.Timestamp(0)
+  LabReports      LabReports[]
+  MedicalReports  MedicalReports[]
+  MainMedications MainMedication[]
+  OPDTreatments   OPDTreatments[]
+  SurgeryRecords  SurgeryRecords[]
+  MainNotes       MainNotes[]
+}
+
+model SurgeryRecords {
+  surgery_id               Int           @id @default(autoincrement())
+  patient_id               Int?
+  treatment_id             Int
+  ipd_admission_id         Int
+  doctor_id                Int
+  surgery_type             String           @db.VarChar(255)
+  surgery_date             DateTime         @db.Date
+  start_time               DateTime         @db.Time(0)
+  end_time                 DateTime         @db.Time(0)
+  operating_room           String?          @db.VarChar(50)
+  team_members             Int
+  anesthesia_type          String?          @db.VarChar(100)
+  preop_diagnosis          String?
+  postop_diagnosis         String?
+  procedure_description    String?
+  surgery_outcome          String?          @db.VarChar(100)
+  complications            String?
+  medications_administered String?
+  blood_loss               String?          @db.VarChar(50)
+  implants_used            String?
+  recovery_notes           String?
+  DoctorCost               Float            @default(0.0)
+  MedicationCost           Float            @default(0.0)
+  teamCost                 Float            @default(0.0)
+  TotalCost                Float            @default(0.0)
+  paid                     Float            @default(0.0)
+  created_at               DateTime?        @default(now()) @db.Timestamp(0)
+  updated_at               DateTime?        @default(now()) @db.Timestamp(0)
+  MainMedication           MainMedication[]
+  Staff                    Staff            @relation(fields: [doctor_id], references: [Staff_id], onDelete: NoAction, onUpdate: NoAction, map: "surgeryrecords_doctor_id_foreign")
+  IPDAdmissions            IPDAdmissions    @relation(fields: [ipd_admission_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "surgeryrecords_ipd_admission_id_foreign")
+  Petients                 Petients?        @relation(fields: [patient_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "surgeryrecords_patient_id_foreign")
+  IPDTreatments            IPDTreatments    @relation(fields: [treatment_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "surgeryrecords_treatment_id_foreign")
+}
+
+model TechnicianReports {
+  technician_report_id Int      @id @default(autoincrement())
+  report_id            Int?
+  technician_id        Int?
+  technician_notes     String?
+  created_at           DateTime?   @default(now()) @db.Timestamp(0)
+  updated_at           DateTime?   @default(now()) @db.Timestamp(0)
+  LabReports           LabReports? @relation(fields: [report_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "technicianreports_report_id_foreign")
+}
+
+model MainVitalSigns {
+  id               Int         @id @default(autoincrement())
+  ipd_admission_id Int?
+  treatment_id     Int
+  cost             Float          @default(0.0)
+  paid             Float          @default(0.0)
+  List_count       Int
+  record_date      DateTime       @db.Date
+  created_at       DateTime?      @default(now()) @db.Timestamp(0)
+  updated_at       DateTime?      @default(now()) @db.Timestamp(0)
+  VitalSigns       VitalSigns[]
+  IPDAdmissions    IPDAdmissions? @relation(fields: [ipd_admission_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "MainVitalSigns_ipd_admission_id_foreign")
+  IPDTreatments    IPDTreatments  @relation(fields: [treatment_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "MainVitalSigns_treatment_id_foreign")
+}
+
+model VitalSigns {
+  id                Int          @id @default(autoincrement())
+  MainVitalSigns_id Int
+  record_date       DateTime        @db.Date
+  spo2              Int?
+  temperature       Int?
+  blood_pressure    Int?
+  cost              Float           @default(0.0)
+  pulse_rate        Int?
+  respiratory_rate  Int?
+  created_at        DateTime?       @default(now()) @db.Timestamp(0)
+  updated_at        DateTime?       @default(now()) @db.Timestamp(0)
+  MainVitalSigns    MainVitalSigns? @relation(fields: [MainVitalSigns_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "VitalSigns_MainVitalSigns_id_foreign")
+}
+
+model Ward {
+  id               Int        @id @default(autoincrement())
+  dayitem_id       Int
+  treatment_id     Int        @unique
+  ipd_admission_id Int
+  transfer_date    DateTime      @db.Date
+  transfer_time    DateTime      @db.Time(0)
+  room             String        @db.VarChar(100)
+  bed              String        @db.VarChar(100)
+  cost             Float         @default(0.0)
+  transfer_reason  String?
+  created_at       DateTime?     @default(now()) @db.Timestamp(0)
+  updated_at       DateTime?     @default(now()) @db.Timestamp(0)
+  IPDAdmissions    IPDAdmissions @relation(fields: [ipd_admission_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "ward_ipd_admission_id_foreign")
+  IPDTreatments    IPDTreatments @relation(fields: [treatment_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model item {
+  id             Int           @id @default(autoincrement())
+  name           String           @db.VarChar(255)
+  category       String           @db.VarChar(255)
+  description    String
+  cost           Int
+  created_at     Int
+  DailyItemsList DailyItemsList[]
+}
+
+model medication_list {
+  id          Int        @id @default(autoincrement())
+  name        String        @db.VarChar(255)
+  type        String        @db.VarChar(255)
+  cost        Float         @default(0.0)
+  Medications Medications[]
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model MainNotes {
+  id            Int        @id @default(autoincrement())
+  user_id       Int
+  type          String        @default("doctor") @db.VarChar(255)
+  cost          Float         @default(0.0)
+  treatment_id  Int
+  create_at     DateTime      @db.Timestamp(0)
+  IPDTreatments IPDTreatments @relation(fields: [treatment_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "notes_treatment_id_foreign")
+  Staff         Staff         @relation(fields: [user_id], references: [Staff_id], onDelete: NoAction, onUpdate: NoAction, map: "notes_user_id_foreign")
+
+  Notes Notes[]
+}
+
+model Notes {
+  id           Int    @id @default(autoincrement())
+  MainNotes_id Int
+  type         String    @default("doctor") @db.VarChar(255)
+  notes        String
+  Date         String
+  time         String
+  create_at    DateTime  @db.Timestamp(0)
+  MainNotes    MainNotes @relation(fields: [MainNotes_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "Notes_MainNotes_id_foreign")
+}

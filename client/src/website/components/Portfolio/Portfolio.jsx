@@ -28,14 +28,15 @@ export default function Portfolio() {
                     <h1 className='font-semibold lg:text-4xl text-2xl text-center mb-3'>Our Portfolio</h1>
                 </div>
                 <div>
-                    <ol className='flex tracking-wide mt-12 m-auto lg:w-3/4 justify-evenly '>
-                        <li className='mx-2 font-semibold text-sm lg:text-xl'>All</li>
-                        <li className='mx-2 font-semibold text-sm lg:text-xl'>Website Design</li>
-                        <li className='mx-2 font-semibold text-sm lg:text-xl'>Mobile App</li>
-                        <li className='mx-2 font-semibold text-sm lg:text-xl'>Design Branding</li>
-                        <li className='mx-2 font-semibold text-sm lg:text-xl'>UI/UX</li>
+                    <ol className='flex tracking-wide mt-12 m-auto lg:w-3/4 justify-evenly'>
+                        <li className='mx-2 font-semibold text-sm lg:text-xl hover:text-blue-500 hover:scale-105 transition-transform duration-300'>All</li>
+                        <li className='mx-2 font-semibold text-sm lg:text-xl hover:text-blue-500 hover:scale-105 transition-transform duration-300'>Website Design</li>
+                        <li className='mx-2 font-semibold text-sm lg:text-xl hover:text-blue-500 hover:scale-105 transition-transform duration-300'>Mobile App</li>
+                        <li className='mx-2 font-semibold text-sm lg:text-xl hover:text-blue-500 hover:scale-105 transition-transform duration-300'>Design Branding</li>
+                        <li className='mx-2 font-semibold text-sm lg:text-xl hover:text-blue-500 hover:scale-105 transition-transform duration-300'>UI/UX</li>
                     </ol>
                 </div>
+
                 <div className='w-11/12 flex flex-wrap mt-12 lg:max-w-screen-2xl m-auto'>
                    {
                     portfoliodata.map(
