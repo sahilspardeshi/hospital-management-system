@@ -10,12 +10,12 @@ import {
   Tooltip,
   Title,
 } from "chart.js";
-import thisMonth from "../IMAGE/Timeline Button.png";
-import Track from "../IMAGE/Track.png";
-import VISIT from '../IMAGE/Visit.png';
-import Rating from '../IMAGE/Vector.png';
-import VIS from '../IMAGE/doctor-visit 1.png';
-import Current from '../IMAGE/patient 1.png';
+import thisMonth from "../assets/image/Timeline Button.png";
+import Track from "../assets/image/Track.png";
+import VISIT from '../assets/image/Visit.png';
+import Rating from '../assets/image/Vector.png';
+import VIS from '../assets/image/doctor-visit 1.png';
+import Current from '../assets/image/patient_1.png';
 
 ChartJS.register(LineElement, PointElement, LinearScale, CategoryScale, BarElement, Tooltip, Title);
 
