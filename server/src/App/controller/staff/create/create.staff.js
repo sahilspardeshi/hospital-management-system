@@ -24,15 +24,13 @@ export const createStaff = async (req, res) => {
     }
 
     // Combine the password with the secret key
-    const passwordWithKey = `${password}${process.env.SECRET_KEY}`;
-    
-    // Hash the combined password
-    const hashedPassword = await bcrypt.hash(passwordWithKey, SALT_ROUNDS);
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
 
     // Create the new staff member
     const newStaff = await prisma.staff.create({
       data: {
-        full_name,
+        fullName,
         specialization,
         user,
         password: hashedPassword, // Save the hashed password
