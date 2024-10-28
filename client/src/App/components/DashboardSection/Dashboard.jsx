@@ -12,12 +12,14 @@ import {
   Tooltip,
   Title,
 } from "chart.js";
+
 // import thisMonth from "../IMAGE/Timeline Button.png";
 import Track from "../../assets/images/Track.png";
 import VISIT from '../../assets/images/Visit.png';
 // import Rating from '../../assets/images/Vector.png';
 import VIS from '../../assets/images/doctor-visit_1.png';
 import Current from '../../assets/images/patient_1.png';
+
 
 ChartJS.register(LineElement, PointElement, LinearScale, CategoryScale, BarElement, Tooltip, Title);
 

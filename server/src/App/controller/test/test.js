@@ -11,8 +11,8 @@ export const createAppointment = async (req, res) => {
   } = req.body;
 
   try {
-    const appointment_dateTime = new Date(`${appointment_date}T${appointment_time}:00.000Z`);
 
+    const appointment_dateTime = new Date(`${appointment_date}T${appointment_time}:00.000Z`);
     // Step 1: Create a new PetientReportData record
     const patientReportData = await prisma.petientReportData.create({
       data: { 
