@@ -28,7 +28,14 @@ export const createClientSubscription = async (req, res) => {
         // if (!subscriptionPlanId) {
         //     return res.status(400).json({ error: "Subscription plan ID is required." });
         // }
-        
+
+        const existingClient = await prisma.client.findUnique({
+            where: { id: clientId },
+        });
+
+        if (!existingClient) {
+            return res.status(404).json({ error: "Client not found." });
+        }
         // Check if client subscription already exists
         const existingSubscription = await prisma.clientSubscription.findUnique({
             where: { clientId: clientId },
