@@ -1,7 +1,6 @@
-// Import the PrismaClient
 import { PrismaClient } from '@prisma/client';
 
-// Initialize Prisma Client
+
 const prisma = new PrismaClient();
 
 export const createPlan = async (req, res) => {

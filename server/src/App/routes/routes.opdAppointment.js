@@ -1,8 +1,12 @@
 import express from "express";
-import { createAppointment } from "../controller/AppointmentsOpd/index.js";
+import { createAppointment ,deleteAppointment,getAllAppointments,getAppointmentById,updateAppointment} from "../controller/AppointmentsOpd/index.js";
 
 const opdAppointmentRoutes = express.Router();
 
-opdAppointmentRoutes.post("/create",createAppointment);
+opdAppointmentRoutes.route('/create').post(createAppointment);
+opdAppointmentRoutes.route('/delete/:id').delete(deleteAppointment);
+opdAppointmentRoutes.route('/update/:id').put(updateAppointment);
+opdAppointmentRoutes.route('/:id').get(getAppointmentById);
+opdAppointmentRoutes.route('/allappointments').get(getAllAppointments);
 
 export default opdAppointmentRoutes;

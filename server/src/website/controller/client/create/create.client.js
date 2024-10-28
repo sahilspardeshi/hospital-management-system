@@ -17,14 +17,24 @@ export const createClient = async (req, res) => {
 
 export const createClientSubscription = async (req, res) => {
     try {
-        const { clientId, startDate, endDate, paymentStatus, subscriptionStatus ,subscriptionPlanId} = req.body;
-         console.log(req.body)
+        const { clientId, startDate, endDate, paymentStatus, subscriptionStatus,
+            //  subscriptionPlanId
+             } = req.body;
+        console.log(req.body)
 
-         if (!clientId) {
+        if (!clientId) {
             return res.status(400).json({ error: "Client ID is required." });
         }
-        if (!subscriptionPlanId) {
-            return res.status(400).json({ error: "Subscription plan ID is required." });
+        // if (!subscriptionPlanId) {
+        //     return res.status(400).json({ error: "Subscription plan ID is required." });
+        // }
+
+        const existingClient = await prisma.client.findUnique({
+            where: { id: clientId },
+        });
+
+        if (!existingClient) {
+            return res.status(404).json({ error: "Client not found." });
         }
         // Check if client subscription already exists
         const existingSubscription = await prisma.clientSubscription.findUnique({
@@ -33,19 +43,22 @@ export const createClientSubscription = async (req, res) => {
 
         if (existingSubscription) {
             return res.status(400).json({ error: "Client subscription already exists." });
+        }else{
+            console.log("Client subscription does not exist, create a new one.");
         }
 
         // Create a new subscription if client not exists
         const clientSubscription = await prisma.clientSubscription.create({
-            data: { clientId,
-                 startDate, 
-                 endDate,
-                  paymentStatus,
-                   subscriptionStatus ,
-                   subscriptionPlan: {
-                    connect: { id: subscriptionPlanId },
-                  },
-                },
+            data: {
+                clientId,
+                startDate,
+                endDate,
+                paymentStatus,
+                subscriptionStatus,
+                // subscriptionPlan: {
+                //     connect: { id: subscriptionPlanId },
+                // },
+            },
         });
 
         res.status(201).json(clientSubscription);

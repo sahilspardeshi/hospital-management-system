@@ -8,7 +8,6 @@ import { createPaymentMethod } from '../controller/marketing/PaymentSub/create.p
 
 
 
-
 const marketing = express()
 marketing.route('/create').post(createMarketing);
 marketing.route('/client').post(createClient)

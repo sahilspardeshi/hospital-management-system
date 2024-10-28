@@ -17,7 +17,7 @@ export async function login (req, res) {
       return res.status(404).json({ error: 'Staff member not found' });
     }
 
-    // Combine the provided password with the secret key
+   
     
 
     // Compare the hashed passwords
