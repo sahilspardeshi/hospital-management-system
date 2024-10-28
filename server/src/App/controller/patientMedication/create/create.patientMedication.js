@@ -47,8 +47,8 @@ export const createPatientMedication = async (req, res) => {
                 paid,
                 type,
                 description,
-                start_date,
-                end_date
+                start_date : new Date(convertIndianDateToPostgres(start_date)),
+                end_date : new Date(convertIndianDateToPostgres(end_date))
             }
         });
 

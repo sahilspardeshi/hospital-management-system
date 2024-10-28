@@ -7,6 +7,8 @@ import staffRoutes from '../routes/routes.staff.js';
 import opdAppointmentRoutes from '../routes/routes.opdAppointment.js';
 import medicationRouter from  '../routes/routes.patientMedication.js'
 import pateintreportroutes from '../routes/routes.patientreportdata.js';
+import MainMedicationRoutes from '../routes/routes.MainMedication.js';
+import MedicationRoutes from '../routes/routes.Medication.js';
 
 
 
@@ -26,9 +28,13 @@ AllRoutes.route('/setting/:id').get(getSetting);
 AllRoutes.use('/staff',staffRoutes);
 
 //patientMedication routes
-AllRoutes.use('/Medication', medicationRouter);
+AllRoutes.use('/patientMedication', medicationRouter);
 
+//MainMedication routes
+AllRoutes.use('/mainMedication', MainMedicationRoutes);
 
+//Medication routes
+AllRoutes.use('/medication',  MedicationRoutes);
 
 //opdAppointment Routes
 AllRoutes.use('/opdAppointment',opdAppointmentRoutes);
