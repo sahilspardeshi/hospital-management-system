@@ -29,7 +29,7 @@ const WardSection = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center h-[80vh] w-full bg-gradient-to-r from-green-100 via-green-50 to-green-50 pl-20">
+    <div className="flex flex-col justify-center items-center h-[80vh] w-full  pl-20">
       <div className="w-full max-w-6xl mx-auto  pl-20">
         <h2 className="text-3xl font-bold mb-4 bg-gray-200 p-5 ">Ward Section</h2>
         <form onSubmit={handleSubmit} className="space-y-4">

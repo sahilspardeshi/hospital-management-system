@@ -25,7 +25,7 @@ const generateScaledData = (num, min, max, scale = 1) => {
   );
 };
 
-const App = () => {
+const Dashboard = () => {
   const scaleFactor = 1.2;
 
   const [barChartData, setBarChartData] = useState({
@@ -181,4 +181,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Dashboard;
