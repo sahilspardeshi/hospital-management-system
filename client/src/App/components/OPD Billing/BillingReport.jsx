@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import Sidebar from "../SideBar/Sidebar";
+import Navbar from "../Navbar/Navbar";
+
 
 const BillingReport = () => {
   const [patientName, setPatientName] = useState("");
@@ -32,9 +35,15 @@ const BillingReport = () => {
   const totalWithGST = (billingData.totalAmount + parseFloat(sgst) + parseFloat(cgst)).toFixed(2);
   
   return (
-    <div className="min-h-screen bg-opacity-80 p-6 flex">
+    <div className="min-h-screen bg-custom-gradient flex">
+      <div className="bg-[#F8F7F7] bg-opacity-70 shadow-lg rounded-xl border border-gray-200 w-full max-w-full max-h-full overflow-hidden flex flex-row justify-start items-start  my-5 py-5">
+        <Sidebar />
+        <div className="flex-1 flex flex-col overflow-hidden">
+          <Navbar />
+          {/* main content starts from here */}
+    <div className="min-h-screen bg-opacity-80 pt-10 flex">
       {/* Left side blank div taking 20% width */}
-      <div className="w-1/5"></div>
+      {/* <div className="w-1/5"></div> */}
 
       {/* Right side (content) taking 80% width */}
       <div className="w-4/5 max-w-7xl mx-auto"> 
@@ -43,7 +52,7 @@ const BillingReport = () => {
           <div className="flex justify-between mt-2">
             <div className="text-sm">
               <p>
-                <span className="font-bold">Billing Id:</span> {billingData.billingId}
+                <span className="font-bold"> Id:</span> {billingData.billingId}
               </p>
             </div>
             <div className="text-sm">
@@ -58,7 +67,7 @@ const BillingReport = () => {
         </div>
 
         {/* Input fields for user data */}
-        <div className="mt-4 grid grid-cols-2 gap-4 px-6">
+        <div className="mt-2 grid grid-cols-2 gap-4 px">
           <div className="p-3 rounded">
             <p className="text-sm font-bold">Patient Name</p>
             <input
@@ -114,7 +123,7 @@ const BillingReport = () => {
         <div className="px-6 mt-6">
           <table className="w-full">
             <thead>
-              <tr className="bg-red-100">
+              <tr className="bg-[#E4D7D7]">
                 <th className="p-2 text-left">S.no.</th>
                 <th className="p-2 text-left">Particulars</th>
                 <th className="p-2 text-right">Amount</th>
@@ -154,7 +163,7 @@ const BillingReport = () => {
       <p className="text-lg font-bold">{`₹${totalWithGST}/-`}</p>
     </div>
         <br />
-        <hr className="border-black border-1" />
+        {/* <hr className="border-black border-1" /> */}
 
         <div className="px-6 py-4 flex justify-center">
           <button className="mt-6 bg-green-500 text-white px-6 py-2 rounded-lg ">
@@ -162,6 +171,9 @@ const BillingReport = () => {
           </button>
         </div>
       </div>
+    </div>
+    </div>
+    </div>
     </div>
   );
 };

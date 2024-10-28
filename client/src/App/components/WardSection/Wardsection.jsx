@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import Navbar from '../Navbar/Navbar';
+import Sidebar from '../SideBar/Sidebar';
+
 
 const WardSection = () => {
   const [formData, setFormData] = useState({
@@ -29,9 +32,15 @@ const WardSection = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center h-[80vh] w-full  pl-20">
-      <div className="w-full max-w-6xl mx-auto  pl-20">
-        <h2 className="text-3xl font-bold mb-4 bg-gray-200 p-5 ">Ward Section</h2>
+    <div className="min-h-screen bg-custom-gradient flex">
+    <div className="bg-[#F8F7F7] bg-opacity-70 shadow-lg rounded-xl border border-gray-200 w-full max-w-full max-h-full overflow-hidden flex flex-row justify-start items-start mx-5 my-5 px-5 py-5">
+      <Sidebar />
+      <div className="flex-1 flex flex-col overflow-hidden">
+        <Navbar />
+        {/* main content starts from here */}
+    <div className="flex flex-col justify-center items-center h-[100vh] w-full mt-16  pl-20">
+      <div className="w-full max-w-6xl mx-auto ">
+        <h2 className="text-xl font-semibold my-4 bg-[#D9D9D9] px-5 py-2 ">Ward Section</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
@@ -184,6 +193,9 @@ const WardSection = () => {
           </div>
         </form>
       </div>
+    </div>
+    </div>
+    </div>
     </div>
   );
 };

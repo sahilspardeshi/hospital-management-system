@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import Header from './Navbar';
-import Sidebar from './Sidebar';
+import Navbar from '../Navbar/Navbar';
+import Sidebar from '../SideBar/Sidebar';
 
 const ReportAddAppointment = () => {
   const [patientName, setPatientName] = useState('');
@@ -40,22 +40,18 @@ const ReportAddAppointment = () => {
   };
 
   return (
-    <div className="h-screen flex flex-col">
-      {/* Navbar */}
-      <nav className="bg-white text-white py-4 px-6 w-auto">
-        <Header />
-      </nav>
-
-      <div className="flex flex-1">
-        {/* Sidebar */}
-        <div className="bg-gray-800 text-white p-4">
-          <Sidebar />
-        </div>
-       
+    <div className="min-h-screen bg-custom-gradient flex">
+    {/* Sidebar */}
+    <div className="bg-[#F8F7F7] bg-opacity-70 shadow-lg rounded-xl border border-gray-200 w-full  max-w-full max-h-full overflow-y-auto flex flex-row justify-start items-start mx-5 my-5 px-5 py-5">
+    <Sidebar/>
+    <div className="flex-1 flex flex-col">
+      <Navbar/>
+      {/* Main container with content */}
+    <div className="h-screen flex flex-col ">
         {/* Main Content - Vertically Aligned */}
-        <div className="flex-1 bg-#FFFFFFA1 pt-2 flex flex-col items-center justify-start">
+        <div className="flex-1 pt-2 flex flex-col items-center justify-start">
           {/* View History Section */}
-          <form onSubmit={handleHistory} className="bg-#f4f8f9 bg-opacity-60 rounded-lg p-6 w-full max-w-4xl mb-8">
+          <form onSubmit={handleHistory} className=" bg-opacity-60 rounded-lg p-6 w-full max-w-4xl mb-8">
             <div className="flex justify-between items-center mb-0">
               <h2 className="text-lg font-bold pl-20">Reports</h2>
               <div className="flex space-x-2">
@@ -74,40 +70,40 @@ const ReportAddAppointment = () => {
               </div>
             </div>
           </form>
-          <div className="flex-1 bg-white  pt-2 w-full max-w-4xl flex flex-col items-center justify-start">
-            <div className="bg-white rounded-bl-2xl p-5 w-full max-w-4xl">
+          <div className="flex-1   w-full max-w-4xl flex flex-col items-center justify-start">
+            <div className=" rounded-bl-2xl px-5 w-full max-w-4xl">
               <h1 className="text-2xl font-bold mb-10 mt-2 text-center">Medical Report</h1>
 
               {reportData ? (
                 <div className="grid grid-cols-3 gap-6 mb-6">
                   <div>
                     <label className="block text-gray-700 font-bold mb-2">Report Id</label>
-                    <div className="bg-gray-100 rounded-md p-2">{reportData.reportId}</div>
+                    <div className=" bg-gray-200 rounded-md p-2">{reportData.reportId}</div>
                   </div>
 
                   <div>
                     <label className="block text-gray-700 font-bold mb-2">Doctor Id</label>
-                    <div className="bg-gray-100 rounded-md p-2">{reportData.doctorId}</div>
+                    <div className="bg-gray-200 rounded-md p-2">{reportData.doctorId}</div>
                   </div>
 
                   <div>
                     <label className="block text-gray-700 font-bold mb-2">Treatment Id</label>
-                    <div className="bg-gray-100 rounded-md p-2">{reportData.treatmentId}</div>
+                    <div className="bg-gray-200 rounded-md p-2">{reportData.treatmentId}</div>
                   </div>
 
                   <div>
                     <label className="block text-gray-700 font-bold mb-2">Report Type</label>
-                    <div className="bg-gray-100 rounded-md p-2">{reportData.reportType}</div>
+                    <div className="bg-gray-200 rounded-md p-2">{reportData.reportType}</div>
                   </div>
 
                   <div>
                     <label className="block text-gray-700 font-bold mb-2">Report Date</label>
-                    <div className="bg-gray-100 rounded-md p-2">{reportData.reportDate}</div>
+                    <div className="bg-gray-200 rounded-md p-2">{reportData.reportDate}</div>
                   </div>
 
                   <div>
                     <label className="block text-gray-700 font-bold mb-2">Patient Name</label>
-                    <div className="bg-gray-100 rounded-md p-2">{reportData.patientName}</div>
+                    <div className="bg-gray-200 rounded-md p-2">{reportData.patientName}</div>
                   </div>
                 </div>
               ) : (
@@ -118,14 +114,14 @@ const ReportAddAppointment = () => {
                 <label className="block text-gray-700 font-bold mb-2">Report Description</label>
                 <textarea
                   readOnly
-                  className="w-full bg-gray-100 rounded-md p-2 h-20 resize-none"
+                  className="w-full bg-gray-200 rounded-md p-2 h-20 resize-none"
                   value={reportData?.description || ""}
                 />
               </div>
 
               <div className="mb-6 w-2/6">
                 <label className="block text-gray-700 font-bold mb-2">Status</label>
-                <div className="bg-gray-100 rounded-md p-2">{reportData?.status || ""}</div>
+                <div className="bg-gray-200 rounded-md p-2">{reportData?.status || ""}</div>
               </div>
 
               <div className="text-center">
@@ -138,6 +134,9 @@ const ReportAddAppointment = () => {
         </div>
       </div>
     </div>
+    </div>
+    </div>
+    
   );
 };
 
