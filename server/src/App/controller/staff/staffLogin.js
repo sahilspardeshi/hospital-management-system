@@ -7,6 +7,7 @@ import jwt from 'jsonwebtoken';
 export const staffLogin = async (req, res) => {
 
   const { password, email } = req.body;
+  console.log("Login request received:", req.body);
 
   try {
     // Retrieve the staff member from the database
