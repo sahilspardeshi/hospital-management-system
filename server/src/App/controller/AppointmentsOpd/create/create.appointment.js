@@ -1,50 +1,61 @@
 import prisma from "../../../db/index.js";
-
+import {  getCurrentDateInIST } from "../../../utils/dateConverter.js";
+import { createPatientReport } from "../../PatientReportData/create/create.patientreportdata.js";
 
 export const createAppointment = async (req, res) => {
-  const { patient_id, doctor_id, appointment_date, appointment_time, appointment_type, status, diagnosis, treatment_plan, report_file, follow_up_date } = req.body;
+  const { patient_id, doctor_id, appointment_date, appointment_type, status, title, description, report_id } = req.body;
 
   try {
+    // Using transactions to ensure data integrity
+    await prisma.$transaction(async (prisma) => {
+      // Check if the PatientReportData already exists using the provided report_id
+      const existingReport = await prisma.petientReportData.findFirst({
+        where: {
+          id: Number(report_id) // Find by report ID
+        },
+      });
 
-    // Always create a new PetientReportData record for every new appointment
-    const petientReportData = await prisma.petientReportData.create({
-      data: {
-        petinet_id: BigInt(patient_id),
-        title: 'New Report', // Set the default title or modify this
-        discription: 'Report created for this appointment', // Set the default description
-        status: 'Pending',  // You can modify the initial status
+      let patientReportData;
+
+      // If the report exists, use it; otherwise, create a new one
+      if (existingReport) {
+        patientReportData = existingReport;
+      } else {
+        // Create a new PatientReportData record
+        patientReportData = await createPatientReport({
+          patient_id,
+          title,
+          description,
+        });
+
+        if (!patientReportData) {
+          throw new Error("Error creating Patient report!");
+        }
       }
-    });
 
-    const newAppointment = await prisma.appointments_OPD.create({
-      data: {
-        patient_id: BigInt(patient_id),
-        doctor_id,
-        appointment_date: new Date(appointment_date),
-        appointment_time: new Date(appointment_time),
-        PetientReportData_id: petientReportData.id,  // Use the newly created PetientReportData
-        appointment_type,
-        status
+      // Create the Appointment record with the associated PatientReportData
+      const newAppointment = await prisma.appointments_OPD.create({
+        data: {
+          patient_id: patient_id,
+          doctor_id,
+          appointment_date: getCurrentDateInIST(),
+          PetientReportData_id: patientReportData.id, // Link to the report data
+          appointment_type,
+          status,
+        },
+      });
+
+      if (!newAppointment) {
+        throw new Error("Error creating Appointment!");
       }
+
+      // Return success response
+      res.json({ msg: "success", data: { newAppointment } });
     });
-
-    if(newAppointment){
-      res.json({msg:"success",data:newAppointment});
-    };
-
-
-    //ivoke function to create opdteatment record
-
-
-
 
   } catch (err) {
-      throw err
+    // Handle any errors that occur during the transaction
+    console.error("Transaction failed: ", err.message);
+    res.status(500).json({ msg: "Transaction failed", error: err.message });
   }
-
-
-
-
-
-}
-
+};

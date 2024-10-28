@@ -12,7 +12,10 @@ const Profileupdate = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md border border-blue-200">
+    <div className="max-h-screen bg-custom-gradient flex">
+    <div className="bg-[#F8F7F7] bg-opacity-70 shadow-lg rounded-xl border border-gray-200 w-full max-w-full max-h-full flex flex-row justify-start items-start mx-5 my-5 px-5 py-5">
+     
+    <div className="max-w-md mx-auto mt-5 w-[80%] p-6 bg-white rounded-lg shadow-md border border-blue-200">
       <h1 className="text-2xl font-semibold text-center mb-6">Update Profile</h1>
       
       <div className="mb-6">
@@ -77,6 +80,8 @@ const Profileupdate = () => {
           </button>
         </div>
       </form>
+    </div>
+    </div>
     </div>
   );
 };
