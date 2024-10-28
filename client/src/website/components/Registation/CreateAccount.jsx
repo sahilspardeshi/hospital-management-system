@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
 import google from "../../assets/images/google.png";
-import axiosInstanceWeb from "../../axiosConfig";
+import { useDispatch, useSelector } from "react-redux";
+import { createAccount } from "../../redux/actions/accountActions";
 
 const CreateAccount = ({ close, isOpen, onSuccess }) => {
   const navigate = useNavigate();
-  
+  const dispatch = useDispatch();
+
   // State to manage form inputs
   const [formData, setFormData] = useState({
     fullName: "",
@@ -31,7 +33,7 @@ const CreateAccount = ({ close, isOpen, onSuccess }) => {
   };
 
   // Handle form submission
-  const handleNext = async (e) => {
+  const handleNext = (e) => {
     e.preventDefault();
 
     // Check if passwords match
@@ -40,17 +42,8 @@ const CreateAccount = ({ close, isOpen, onSuccess }) => {
       return;
     }
 
-    try {
-      // Send data to the backend API
-      const response = await axiosInstanceWeb.post('/marketing/create', formData);
-      console.log(response.data);
-      setFormData({});
-      alert("create account successfull")
-      // If successful, close the modal and navigate
-      onSuccess();
-    } catch (error) {
-    alert("Error registering account:", error);
-    }
+    // Dispatch the createAccount action
+    dispatch(createAccount(formData, onSuccess));
   };
 
   // Close modal on Esc key press
@@ -197,20 +190,17 @@ const CreateAccount = ({ close, isOpen, onSuccess }) => {
               />
             </div>
             
-            {/* Show password error if passwords do not match */}
+            {/* Show password mismatch error if any */}
             {passwordError && (
-              <div className="mb-4 text-red-500 text-sm">{passwordError}</div>
+              <div className="text-red-500 text-sm mb-4">{passwordError}</div>
             )}
-            
-            <div className="text-sm text-center mt-4">
-              <span className="text-gray-600">Already have an account?</span>
-              <a href="/login" className="text-blue-500 w-1/2 pt-3 hover:text-blue-700 font-semibold ml-1">Login</a>
-            </div>
-            <div className="flex justify-end">
-              <button type="submit" className="w-full lg:w-1/4 bg-green-600 text-white py-2 rounded-lg text-base hover:bg-green-400 transition duration-200">
-                Next
-              </button>
-            </div>
+
+            <button
+              type="submit"
+              className="w-full bg-orange-600 text-white font-semibold px-4 py-2 rounded-lg hover:bg-orange-500 focus:outline-none"
+            >
+              Next
+            </button>
           </form>
         </div>
       </div>

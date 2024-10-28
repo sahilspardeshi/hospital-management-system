@@ -1,19 +1,29 @@
 import { PrismaClient } from '@prisma/client';
-
 const prisma = new PrismaClient();
+
+import bcrypt from 'bcrypt';
+
+const SALT_ROUNDS = 10; // Number of salt rounds for hashing
+const SECRET_KEY = 'your_secret_key'; // Replace this with your actual secret key
 
 export const updateStaff = async (req, res) => {
     const { id } = req.params;
     const { full_name, specialization, user, password, type, contact_number, email, qualifications, department } = req.body;
 
     try {
+        // Combine the password with the secret key
+        const passwordWithKey = `${password}${SECRET_KEY}`;
+
+        // Hash the combined password
+        const hashedPassword = await bcrypt.hash(passwordWithKey, SALT_ROUNDS);
+
         const updatedStaff = await prisma.staff.update({
             where: { Staff_id: BigInt(id) },
             data: {
                 full_name,
                 specialization,
                 user,
-                password,
+                password: hashedPassword, // Save the hashed password
                 type,
                 contact_number,
                 email,
