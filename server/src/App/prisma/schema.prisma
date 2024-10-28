@@ -7,6 +7,11 @@ datasource db {
   url      = env("DATABASE_URL_APP")
 }
 
+enum AppointmentStatus {
+  PENDING
+  COMPLETED
+}
+
 model Appointments_OPD {
   id         Int  @id @default(autoincrement())
   patient_id Int
@@ -15,7 +20,7 @@ model Appointments_OPD {
   appointment_date DateTime        @default(now()) @db.Date
   PetientReportData_id Int
   appointment_type String?         @db.VarChar(10)
-  status           String?         @db.VarChar(20)
+  status           AppointmentStatus?
   created_at       DateTime?       @default(now()) @db.Timestamp(0)
   updated_at       DateTime?       @default(now()) @db.Timestamp(0)
   PetientReportData PetientReportData  @relation(fields: [PetientReportData_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "appointments_PetientReportData_id_foreign")

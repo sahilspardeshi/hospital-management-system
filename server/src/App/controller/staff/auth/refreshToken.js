@@ -1,5 +1,5 @@
-import prisma from "../../../db";
-import { generateAccessToken } from "../../../middleware/generateToken";
+import prisma from "../../../db/index.js";
+import { generateAccessToken } from "../../../middleware/generateToken.js";
 
 export async function  refreshToken  (req, res)  {
     const refreshToken = req.cookies.refreshToken; // Read refresh token from cookies
