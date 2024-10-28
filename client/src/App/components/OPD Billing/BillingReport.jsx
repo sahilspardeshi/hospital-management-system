@@ -52,7 +52,7 @@ const BillingReport = () => {
           <div className="flex justify-between mt-2">
             <div className="text-sm">
               <p>
-                <span className="font-bold">Billing Id:</span> {billingData.billingId}
+                <span className="font-bold"> Id:</span> {billingData.billingId}
               </p>
             </div>
             <div className="text-sm">
@@ -67,7 +67,7 @@ const BillingReport = () => {
         </div>
 
         {/* Input fields for user data */}
-        <div className="mt-4 grid grid-cols-2 gap-4 px-6">
+        <div className="mt-2 grid grid-cols-2 gap-4 px">
           <div className="p-3 rounded">
             <p className="text-sm font-bold">Patient Name</p>
             <input
@@ -123,7 +123,7 @@ const BillingReport = () => {
         <div className="px-6 mt-6">
           <table className="w-full">
             <thead>
-              <tr className="bg-red-100">
+              <tr className="bg-[#E4D7D7]">
                 <th className="p-2 text-left">S.no.</th>
                 <th className="p-2 text-left">Particulars</th>
                 <th className="p-2 text-right">Amount</th>
@@ -163,7 +163,7 @@ const BillingReport = () => {
       <p className="text-lg font-bold">{`₹${totalWithGST}/-`}</p>
     </div>
         <br />
-        <hr className="border-black border-1" />
+        {/* <hr className="border-black border-1" /> */}
 
         <div className="px-6 py-4 flex justify-center">
           <button className="mt-6 bg-green-500 text-white px-6 py-2 rounded-lg ">

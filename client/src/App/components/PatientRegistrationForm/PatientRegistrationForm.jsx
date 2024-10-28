@@ -81,11 +81,11 @@ export default function PatientRegistrationForm() {
         <Sidebar />
         <div className="flex-1 flex flex-col overflow-hidden">
           <Navbar />
-          <div className="flex-1 overflow-y-auto px-16 mt-10 rounded-lg m-4">
-            <h1 className="text-2xl font-bold text-center mb-6">Patient Registration</h1>
+          <div className="flex-1 overflow-y-auto px-20 mt-10 rounded-lg m-4">
+            <h1 className="text-2xl font-bold text-center mb-6 ">Patient Registration</h1>
             <form onSubmit={handleSubmit}>
               <div className="mb-6">
-                <h2 className="text-lg font-semibold mb-4 bg-rose-100 p-2">Basic Information:</h2>
+                <h2 className="text-lg font-semibold mb-4 bg-[#E4D7D7] p-2">Basic Information:</h2>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label htmlFor="patientName" className="block mb-1 text-sm font-medium">Patient Name</label>
@@ -231,7 +231,7 @@ export default function PatientRegistrationForm() {
               </div>
 
               <div className="mb-6">
-                <h2 className="text-lg font-semibold mb-4 bg-rose-100 p-2">Emergency contact:</h2>
+                <h2 className="text-lg font-semibold mb-4 bg-[#E4D7D7] p-2">Emergency contact:</h2>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label htmlFor="emergencyName" className="block mb-1 text-sm font-medium">Name</label>
@@ -301,7 +301,7 @@ export default function PatientRegistrationForm() {
               </div>
 
               <div className="mb-6">
-                <h2 className="text-lg font-semibold mb-4 bg-rose-100 p-2">Insurance details (if applicable)</h2>
+                <h2 className="text-lg font-semibold mb-4 bg-[#E4D7D7] p-2">Insurance details (if applicable)</h2>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label htmlFor="insuranceIssuer" className="block mb-1 text-sm font-medium">Insurance issuer/ company name</label>
@@ -353,9 +353,9 @@ export default function PatientRegistrationForm() {
                 </div>
               </div>
 
-              <div className="mb-6">
+              <div className="mb-6 ">
                 <h2 className="text-lg font-semibold mb-4">Upload consent form</h2>
-                <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center">
+                <div className="border-2 border-dashed border-gray-300 bg-white rounded-lg p-4 py-14 text-center w-3/4 m-auto ">
                   <input
                     type="file"
                     id="consentForm"
@@ -369,6 +369,7 @@ export default function PatientRegistrationForm() {
                     <p className="text-sm text-gray-500">JPEG, PNG, PDF, and Excel formats, up to 50MB</p>
                   </label>
                   {file && <p className="mt-2 text-sm text-gray-600">Selected file: {file.name}</p>}
+
                 </div>
               </div>
 
