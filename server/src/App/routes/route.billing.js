@@ -1,5 +1,5 @@
 import express from 'express';
-import { createBilling, deleteBilling, getAllBilling, getOneBilling, updateBilling } from '../controller/billing /index.js'
+import { createBilling, deleteBilling, getAllBilling, getOneBilling, updateBilling } from '../controller/Billing/index.js'
 const billing = express.Router();
 
 // Billing routes
