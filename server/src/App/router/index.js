@@ -9,6 +9,8 @@ import pateintreportroutes from '../routes/routes.patientreportdata.js';
 import Opdtreatment from '../routes/route.Opdtreatment.js';
 import billing from '../routes/route.billing.js';
 import AdvancePayment from '../routes/route.advancePay.js';
+import MainMedicationRoutes from '../routes/routes.MainMedication.js';
+import MedicationRoutes from '../routes/routes.Medication.js';
 
 
 
@@ -29,9 +31,13 @@ AllRoutes.use('/AdvanceBilling',AdvancePayment)
 AllRoutes.use('/staff',staffRoutes);
 
 //patientMedication routes
-AllRoutes.use('/Medication', medicationRouter);
+AllRoutes.use('/patientMedication', medicationRouter);
 
+//MainMedication routes
+AllRoutes.use('/mainMedication', MainMedicationRoutes);
 
+//Medication routes
+AllRoutes.use('/medication',  MedicationRoutes);
 
 //opdAppointment Routes
 AllRoutes.use('/opdAppointment',opdAppointmentRoutes);
