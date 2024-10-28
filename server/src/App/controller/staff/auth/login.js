@@ -1,7 +1,7 @@
 
 import bcrypt from 'bcrypt';
-import prisma from '../../../db';
-import {setTokens} from '../../../middleware/generateToken'
+import prisma from '../../../db/index.js';
+import {setTokens} from '../../../middleware/generateToken.js'
 
 export async function login (req, res) {
 
