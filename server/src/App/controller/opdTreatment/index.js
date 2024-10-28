@@ -1,5 +1,6 @@
-import { createPatientMedication } from "./create/create.patientMedication.js";
-import { deletePatientMedication } from "./delete/delete.patientMedication.js";
-import { updatePatientMedication } from "./update/update.patientMedication.js";
-import { getPatientMedication } from "./GET/get.patientMedication.js";
-export {createPatientMedication, deletePatientMedication , getPatientMedication, updatePatientMedication};
+import { OPDTreatmentsController } from "./create/create.Treatment.js";
+import { getOneTreatment } from "./GET/get.OpdTreatment.js";
+import { getAllTreatment } from "./GET/get.all.js";
+import { deleteOpdTreatment } from "./delete/delete.OpdTreatment.js";
+import { OPDTreatmentsUpdate } from "./update/update.Treatment.js";
+export {OPDTreatmentsController,getAllTreatment,getOneTreatment,deleteOpdTreatment,OPDTreatmentsUpdate};

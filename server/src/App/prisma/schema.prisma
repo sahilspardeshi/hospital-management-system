@@ -17,7 +17,7 @@ model Appointments_OPD {
   patient_id Int
 
   doctor_id        Int
-  appointment_date DateTime        @default(now()) @db.Date
+  appointment_date String
   PetientReportData_id Int
   appointment_type String?         @db.VarChar(10)
   status           AppointmentStatus?
@@ -31,7 +31,7 @@ model Appointments_OPD {
 model AdvancePayment {
   id            Int   @id @default(autoincrement()) // Primary Key
   billId        Int // Foreign key to HospitalBill
-  paymentDate   DateTime
+  paymentDate   String
   amountPaid    Float
   payerName     String
   paymentMethod String?
@@ -50,7 +50,7 @@ model Billing {
   IPDtreatment_id Int?        
   ANCtreatment_id Int?        @unique
   type           String    @default("OPD") @db.VarChar(255)
-  bill_date      DateTime  @db.Date
+  bill_date      String
   total_amount   Decimal   @db.Decimal(10, 2)
   amount_paid    Decimal   @db.Decimal(10, 2)
   payment_status String?   @db.VarChar(20)
@@ -67,7 +67,7 @@ model DailyItemsList {
   id               Int        @id @default(autoincrement())
   ipd_admission_id Int
   item_id          Int
-  record_date      DateTime      @db.Date
+  record_date     String
   day_id           Int
   item_category    String        @db.VarChar(100)
   item_name        String        @db.VarChar(255)
@@ -86,7 +86,7 @@ model DayItem {
   treatment_id     Int
   quantity    String?       @db.VarChar(50)
   cost          Float               @default(0.0)
-  created_at       DateTime         @db.Timestamp(0)
+  created_at       String
   DailyItemsList   DailyItemsList[]
   IPDAdmissions    IPDAdmissions    @relation(fields: [ipd_admission_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "dayitem_ipd_admission_id_foreign")
   IPDTreatments    IPDTreatments    @relation(fields: [treatment_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "dayitem_treatment_id_foreign")
@@ -96,7 +96,7 @@ model IPDAdmissions {
   id                                          Int             @id @default(autoincrement())
   patient_id                                  Int?
   PetientReportData_id                        Int?
-  discharge_date                              DateTime?          @db.Date
+  discharge_date                             String
   diagnosis                                   String?
   status                                      String?            @db.VarChar(20)
   created_at                                  DateTime?          @default(now()) @db.Timestamp(0)
@@ -118,7 +118,7 @@ model IPDTreatments {
   id                 Int              @id @default(autoincrement())
   petient_id         Int
   ipd_admission_id   Int?
-  treatment_date     DateTime            @db.Date
+  treatment_date     String
   treatment_details  String?
   cost               Float               @default(0.0)
   created_at         DateTime?           @default(now()) @db.Timestamp(0)
@@ -145,7 +145,7 @@ model MainIntakeOutput {
   IntakeOutput_count Int
   cost               Float          @default(0.0)
   paid               Float          @default(0.0)
-  record_date        DateTime       @db.Date
+  record_date        String
   created_at         DateTime?      @default(now()) @db.Timestamp(0)
   updated_at         DateTime?      @default(now()) @db.Timestamp(0)
   IntakeOutput       IntakeOutput[]
@@ -155,7 +155,7 @@ model MainIntakeOutput {
 
 model IntakeOutput {
   id                  Int           @id @default(autoincrement())
-  record_date         DateTime         @db.Date
+  record_date         String
   MainIntakeOutput_id Int
   intake_time         Int?
   intake_nature       Int?
@@ -182,8 +182,8 @@ model MainLabReports {
   paid            Float          @default(0.0)
   type            String         @default("OPD") @db.VarChar(255)
   description     String?        @db.VarChar(255)
-  start_date      DateTime?      @db.Date
-  end_date        DateTime?      @db.Date
+  start_date      String
+  end_date        String
   LabReports      LabReports[]
   OPDTreatments   OPDTreatments? @relation(fields: [ODPtreatment_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   IPDTreatments   IPDTreatments? @relation(fields: [IPDtreatment_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
@@ -196,7 +196,7 @@ model LabReports {
   doctor_id         Int?
   MainLabReports_id Int
   test_name         String?             @db.VarChar(255)
-  test_date         DateTime?           @db.Date
+  test_date         String
   test_result       String?
   test_file         String?
   labTest_count     Int
@@ -235,8 +235,8 @@ model MainMedicalReports {
   status          String?          @db.VarChar(20)
   type            String           @default("OPD") @db.VarChar(255)
   description     String?          @db.VarChar(255)
-  start_date      DateTime?        @db.Date
-  end_date        DateTime?        @db.Date
+  start_date     String
+  end_date        String
   MedicalReports  MedicalReports[]
   OPDTreatments   OPDTreatments?   @relation(fields: [ODPtreatment_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   IPDTreatments   IPDTreatments?   @relation(fields: [IPDtreatment_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
@@ -251,7 +251,7 @@ model MedicalReports {
   result_count       Int
   cost               Float               @default(0.0)
   paid               Float               @default(0.0)
-  report_date        DateTime?           @db.Date
+  report_date        String
   report_file        String?
   status             String?             @db.VarChar(20)
   created_at         DateTime?           @default(now()) @db.Timestamp(0)
@@ -270,8 +270,8 @@ model Medications {
   dosage          String?         @db.VarChar(50)
   frequency       String?         @db.VarChar(50)
   cost            Float           @default(0.0)
-  start_date      DateTime        @db.Date
-  end_date        DateTime?       @db.Date
+  start_date     String
+  end_date       String
   instructions    String?
   created_at      DateTime?       @default(now()) @db.Timestamp(0)
   updated_at      DateTime?       @default(now()) @db.Timestamp(0)
@@ -291,8 +291,8 @@ model MainMedication {
   cost                 Float             @default(0.0)
   paid                 Float             @default(0.0)
   total_quantity       Int
-  start_date           DateTime?         @db.Date
-  end_date             DateTime?         @db.Date
+  start_date           String
+  end_date             String
   created_at           DateTime?         @default(now()) @db.Timestamp(0)
   updated_at           DateTime?         @default(now()) @db.Timestamp(0)
   SurgeryRecords       SurgeryRecords?   @relation(fields: [SurgeryRecords_id], references: [surgery_id], onDelete: NoAction, onUpdate: NoAction, map: "MainMedication_SurgeryRecords_id_foreign")
@@ -312,8 +312,8 @@ model PatientMedication {
   paid             Float            @default(0.0)
   type             String           @default("OPD") @db.VarChar(255)
   description      String?          @db.VarChar(255)
-  start_date       DateTime?        @db.Date
-  end_date         DateTime?        @db.Date
+  start_date       String
+  end_date         String
   MainMedication   MainMedication[]
   OPDTreatments    OPDTreatments?   @relation(fields: [ODPtreatment_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   IPDTreatments    IPDTreatments?   @relation(fields: [IPDtreatment_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
@@ -327,7 +327,7 @@ model OPDTreatments {
   diagnosis          String?
   treatment_plan     String?
   report_file        String?
-  follow_up_date     DateTime?           @db.Date
+  follow_up_date     String
   created_at         DateTime?           @default(now()) @db.Timestamp(0)
   updated_at         DateTime?           @default(now()) @db.Timestamp(0)
   MainMedicalReports MainMedicalReports?
@@ -342,7 +342,7 @@ model OPDTreatments {
 model Petients {
   id                                               Int             @id @default(autoincrement())
   fullName                                        String             @db.VarChar(100)
-  date_of_birth                                    DateTime           @db.Date
+  date_of_birth                                    String
   gender                                           String             @db.VarChar(10)
   blood_group                                      String?            @db.VarChar(5)
   mobile_number                                    String             @unique @db.VarChar(15)
@@ -391,7 +391,7 @@ model Setting {
   domain       String?   @db.VarChar(500)
   icon         String?   @db.VarChar(500)
   hospital     String?   @db.VarChar(500)
-  current_plan DateTime? @db.Date
+  current_plan String
   feature      String?   @db.VarChar(500)
   created_at   DateTime? @default(now()) @db.Timestamp(0)
   updated_at   DateTime? @default(now()) @db.Timestamp(0)
@@ -427,9 +427,9 @@ model SurgeryRecords {
   ipd_admission_id         Int
   doctor_id                Int
   surgery_type             String           @db.VarChar(255)
-  surgery_date             DateTime         @db.Date
-  start_time               DateTime         @db.Time(0)
-  end_time                 DateTime         @db.Time(0)
+  surgery_date             String
+  start_time              String
+  end_time                 String
   operating_room           String?          @db.VarChar(50)
   team_members             Int
   anesthesia_type          String?          @db.VarChar(100)
@@ -473,7 +473,7 @@ model MainVitalSigns {
   cost             Float          @default(0.0)
   paid             Float          @default(0.0)
   List_count       Int
-  record_date      DateTime       @db.Date
+  record_date      String
   created_at       DateTime?      @default(now()) @db.Timestamp(0)
   updated_at       DateTime?      @default(now()) @db.Timestamp(0)
   VitalSigns       VitalSigns[]
@@ -484,7 +484,7 @@ model MainVitalSigns {
 model VitalSigns {
   id                Int          @id @default(autoincrement())
   MainVitalSigns_id Int
-  record_date       DateTime        @db.Date
+  record_date      String
   spo2              Int?
   temperature       Int?
   blood_pressure    Int?
@@ -501,8 +501,8 @@ model Ward {
   dayitem_id       Int
   treatment_id     Int        @unique
   ipd_admission_id Int
-  transfer_date    DateTime      @db.Date
-  transfer_time    DateTime      @db.Time(0)
+  transfer_date   String
+  transfer_time    String
   room             String        @db.VarChar(100)
   bed              String        @db.VarChar(100)
   cost             Float         @default(0.0)
@@ -538,7 +538,7 @@ model MainNotes {
   type          String        @default("doctor") @db.VarChar(255)
   cost          Float         @default(0.0)
   treatment_id  Int
-  create_at     DateTime      @db.Timestamp(0)
+  created_at     DateTime      @db.Timestamp(0)
   IPDTreatments IPDTreatments @relation(fields: [treatment_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "notes_treatment_id_foreign")
   Staff         Staff         @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "notes_user_id_foreign")
 

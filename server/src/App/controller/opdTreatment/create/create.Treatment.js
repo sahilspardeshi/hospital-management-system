@@ -1,62 +1,25 @@
-import { PrismaClient } from '@prisma/client';
 
-let prisma = new PrismaClient();
+import prisma from '../../../db/index.js';
+import {  getCurrentDateInIST } from '../../../utils/dateConverter.js';
 
-// Function to create a new Patient Medication record
-export const createPatientMedication = async (req, res) => {
-    const { 
-        ODPtreatment_id, 
-        IPDtreatment_id, 
-        ANCtreatment_id, 
-        doctor_id, 
-        Medication_count, 
-        cost, 
-        paid, 
-        type, 
-        description, 
-        start_date, 
-        end_date 
-    } = req.body;
+export const OPDTreatmentsController = async (req, res) => {
+    const { appointment_id, patient_id, doctor_id, diagnosis, treatment_plan, report_file, follow_up_date } = req.body;
 
     try {
-        // Check if the medication already exists
-        const existingMedication = await prisma.patientMedication.findFirst({
-            where: {
-                ODPtreatment_id: ODPtreatment_id,
-                IPDtreatment_id: IPDtreatment_id,
-                ANCtreatment_id: ANCtreatment_id,
-                doctor_id: doctor_id,
-                start_date: start_date,
-                end_date: end_date
-            }
-        });
+      const existingTreatment = await prisma.oPDTreatments.findFirst({
+        where: { appointment_id, patient_id, doctor_id, diagnosis, follow_up_date }
+      });
 
-        if (existingMedication) {
-            return res.status(400).json({ message: 'Medication already exists for this treatment and doctor.' });
-        }
+      if (existingTreatment) {
+        return res.status(400).json({ message: 'Treatment already exists for this appointment and doctor.' });
+      }
 
-        // If no existing medication is found, create a new one
-        const newMedication = await prisma.patientMedication.create({
-            data: {
-                ODPtreatment_id,
-                IPDtreatment_id,
-                ANCtreatment_id,
-                doctor_id,
-                Medication_count,
-                cost,
-                paid,
-                type,
-                description,
-                start_date,
-                end_date
-            }
-        });
+      const newTreatment = await prisma.oPDTreatments.create({
+        data: { appointment_id, patient_id, doctor_id, diagnosis, treatment_plan, report_file,follow_up_date:getCurrentDateInIST(), }
+      });
 
-        console.log(newMedication); // Log the created record
-        res.json({ msg: 'Successfully created Patient Medication', data: newMedication });
+      res.status(201).json({ msg: 'Successfully created OPD Treatment', data: newTreatment });
     } catch (error) {
-        console.error('Error creating Patient Medication:', error.message);
-        res.status(500).json({ message: 'Error creating Patient Medication.', error: error.message });
-        throw error; // Re-throw error for further handling
+      res.status(500).json({ message: 'Error creating OPD Treatment.', error: error.message });
     }
-};
+  }

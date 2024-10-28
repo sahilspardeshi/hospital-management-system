@@ -1,5 +1,5 @@
 import prisma from "../../../db/index.js";
-import { convertIndianDateToPostgres } from "../../../utils/dateConverter.js";
+import {  getCurrentDateInIST } from "../../../utils/dateConverter.js";
 
 export const updateAppointment = async (req, res) => {
   const appointment_id  = req.params.id;
@@ -26,7 +26,7 @@ export const updateAppointment = async (req, res) => {
       where: { id: Number(appointment_id) },
       data: {
         status: status !== undefined ? status : appointment.status, // If status is provided, update it; otherwise, keep the existing value
-        appointment_date: appointment_date !== undefined ? convertIndianDateToPostgres(appointment_date) : appointment.appointment_date, // Same for appointment_date
+        appointment_date: appointment_date !== undefined ? getCurrentDateInIST() : appointment.appointment_date, // Same for appointment_date
         appointment_type: appointment_type !== undefined ? appointment_type : appointment.appointment_type, // Same for appointment_type
         doctor_id: doctor_id !== undefined ? doctor_id : appointment.doctor_id, // Same for doctor_id
         updated_at: new Date(), // Update the timestamp

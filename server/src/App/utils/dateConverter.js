@@ -1,26 +1,25 @@
-export function convertIndianDateToPostgres(dateString) {
-
-     // Check if the input is already in YYYY-MM-DD format
-     const postgresDatePattern = /^\d{4}-\d{2}-\d{2}$/;
-     if (postgresDatePattern.test(dateString)) {
-         return dateString; // Return as-is if already in PostgreSQL format
-     }
-     
-    // Check if the input is in DD/MM/YYYY or DD-MM-YYYY format
-    const datePattern = /^(\d{2})[-/](\d{2})[-/](\d{4})$/; // Matches DD/MM/YYYY or DD-MM-YYYY
-    const match = dateString.match(datePattern);
+export const getCurrentDateInIST = () => {
+    const date = new Date();
     
-    if (!match) {
-        throw new Error('Invalid date format. Please use DD/MM/YYYY or DD-MM-YYYY.');
-    }
-
-    // Extract the day, month, and year from the matched groups
-    const day = match[1];
-    const month = match[2];
-    const year = match[3];
-
-    // Construct the date in YYYY-MM-DD format
-    const postgresDateString = `${year}-${month}-${day}`;
-
-    return postgresDateString;
-}
+    // Convert the date to IST (UTC+5:30)
+    const options = {
+      timeZone: 'Asia/Kolkata', // IST time zone
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+    };
+  
+    // Format the date
+    const formattedDate = date.toLocaleString('en-IN', options);
+    
+    // Return formatted date as string
+    return formattedDate; // Output format: "28-10-2024, 03:30:00 PM"
+  };
+  
+  // Example usage
+  const currentDate = getCurrentDateInIST();
+  console.log(currentDate);
+  
