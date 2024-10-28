@@ -54,7 +54,7 @@ const Appointment = () => {
         <div className="flex-1 flex flex-col overflow-hidden">
           <Navbar />
         {/* Main Content */}
-        <div className=" flex-1 p-6 rounded-lg shadow-md m-4flex-1 bg-white pt-2 flex flex-col items-center justify-start ">
+        <div className=" flex-1 p-6 rounded-lg my-10  pt-2 flex flex-col items-center justify-start ">
           {/* Button to Show Form */}
           {!showForm && (
             <button
@@ -68,38 +68,42 @@ const Appointment = () => {
           {/* Add New Appointment Form */}
           {showForm && (
             <form onSubmit={handleSubmit} className="mt-0 bg-opacity-60 rounded-lg p-6 w-full max-w-4xl">
-              <h2 className="text-lg font-semibold mb-4">Add New Appointment</h2>
+              <h2 className="text-lg  my-8 bg-[#E4D7D7] text-gray-600 font-bold py-1 px-2">Add New Appointment</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
                 <div>
                   <label className="block text-gray-700 text-sm font-bold mb-1">Patient Name</label>
-                  <select
+                  <input 
+                  placeholder='Enter Patient Name'
                     className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
                     value={patientName}
                     onChange={(e) => setPatientName(e.target.value)}
-                  >
-                    <option value="">Select Patient</option>
+                  />
+                    {/* <option value="">Select Patient</option>
                     {patients.map((patient, index) => (
                       <option key={index} value={patient}>
                         {patient}
-                      </option>
-                    ))}
-                  </select>
+                      </option> */}
+                    {/* ))} */}
+                  {/* </input> */}
+                  
                 </div>
+                
 
                 <div>
                   <label className="block text-gray-700 text-sm font-bold mb-1">Doctor Name</label>
-                  <select
+                  <input
+                  placeholder='Enter doctor name'
                     className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
                     value={doctorName}
                     onChange={(e) => setDoctorName(e.target.value)}
-                  >
-                    <option value="">Select Doctor</option>
+                  />
+                    {/* <option value="">Select Doctor</option>
                     {doctors.map((doctor, index) => (
                       <option key={index} value={doctor}>
                         {doctor}
                       </option>
                     ))}
-                  </select>
+                  </input> */}
                 </div>
 
                 <div>
@@ -125,6 +129,7 @@ const Appointment = () => {
                 <div>
                   <label className="block text-gray-700 text-sm font-bold mb-1">Appointment Number</label>
                   <input
+                  placeholder='0'
                     type="number"
                     className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
                     value={appointmentNumber}
@@ -159,11 +164,11 @@ const Appointment = () => {
                   />
                 </div>
 
-                <div className="md:col-span-2 flex justify-between">
+                <div className="md:col-span-2 flex justify-between w-28 m-auto font-bold">
                   {!submitted ? (
                     <button
                       type="submit"
-                      className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+                      className="bg-green-500 text-white px-4 py-2  rounded hover:bg-green-600"
                     >
                       Submit
                     </button>

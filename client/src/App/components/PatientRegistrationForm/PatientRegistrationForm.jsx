@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import { Upload } from 'lucide-react'
 import Navbar from "../Navbar/Navbar"
-import Sidebar from "../Sidebar/Sidebar"
+import Sidebar from "../SideBar/Sidebar"
 
 export default function PatientRegistrationForm() {
   const [formData, setFormData] = useState({
@@ -81,7 +81,7 @@ export default function PatientRegistrationForm() {
         <Sidebar />
         <div className="flex-1 flex flex-col overflow-hidden">
           <Navbar />
-          <div className="flex-1 overflow-y-auto p-6 bg-white rounded-lg shadow-md m-4">
+          <div className="flex-1 overflow-y-auto px-16 mt-10 rounded-lg m-4">
             <h1 className="text-2xl font-bold text-center mb-6">Patient Registration</h1>
             <form onSubmit={handleSubmit}>
               <div className="mb-6">

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Line, Bar } from "react-chartjs-2";
+import Sidebar from "../SideBar/Sidebar";
+import Navbar from "../Navbar/Navbar";
 import {
   Chart as ChartJS,
   LineElement,
@@ -10,12 +12,12 @@ import {
   Tooltip,
   Title,
 } from "chart.js";
-import thisMonth from "../IMAGE/Timeline Button.png";
-import Track from "../IMAGE/Track.png";
-import VISIT from '../IMAGE/Visit.png';
-import Rating from '../IMAGE/Vector.png';
-import VIS from '../IMAGE/doctor-visit 1.png';
-import Current from '../IMAGE/patient 1.png';
+// import thisMonth from "../IMAGE/Timeline Button.png";
+import Track from "../../assets/images/Track.png";
+import VISIT from '../../assets/images/Visit.png';
+// import Rating from '../../assets/images/Vector.png';
+import VIS from '../../assets/images/doctor-visit_1.png';
+import Current from '../../assets/images/patient_1.png';
 
 ChartJS.register(LineElement, PointElement, LinearScale, CategoryScale, BarElement, Tooltip, Title);
 
@@ -110,30 +112,36 @@ const Dashboard = () => {
 
   return (
     <>
-      <div className="flex flex-col items-center ">
+     <div className="min-h-screen bg-custom-gradient flex">
+      <div className="bg-[#F8F7F7] bg-opacity-70 shadow-lg rounded-xl border border-gray-200 w-full max-w-full max-h-full overflow-hidden flex flex-row justify-start items-start mx-5 my-5 px-5 py-5">
+        <Sidebar />
+        <div className="flex-1 flex flex-col overflow-hidden">
+          <Navbar />
+          {/* main content starts from here */}
+      <div className="flex flex-col items-center my-9">
         {/* Visit card section */}
-        <div className="w-full max-w-7xl flex flex-wrap justify-center gap-x-4 mb-4">
-          <div className="p-4 rounded-lg shadow-lg flex items-center space-x-2 max-w-xs">
+        <div className="w-[80%] max-w-7xl flex justify-evenly flex-wrap gap-x-4  my-6">
+          <div className="p-4 rounded-lg shadow-lg bg-white flex items-center space-x-2 max-w-xs">
             <img src={VISIT} alt="Doctor Avatar" className="rounded-full w-10" />
             <h3 className="text-lg font-bold">3000 Patients <br /> Treated</h3>
           </div>
-          <div className="p-4 rounded-lg shadow-md flex items-center space-x-2 max-w-xs">
-            <img src={Rating} alt="Rating" className="rounded-full w-8" />
+          <div className="p-4 rounded-lg shadow-md bg-white flex items-center space-x-2 max-w-xs">
+            {/* <img src={Rating} alt="Rating" className="rounded-full w-8" /> */}
             <h3 className="text-lg font-bold">Ratings <br /> ⭐⭐⭐⭐⭐</h3>
           </div>
-          <div className="p-4 rounded-lg shadow-md flex items-center space-x-2 max-w-xs">
+          <div className="p-4 rounded-lg shadow-md bg-white flex items-center space-x-2 max-w-xs">
             <img src={VIS} alt="Visits" className="rounded-full w-10" />
             <h3 className="text-lg font-bold">Visit’s <br /> +1200</h3>
           </div>
-          <div className="p-4 rounded-lg shadow-md flex items-center space-x-2 max-w-xs">
+          <div className="p-4 rounded-lg shadow-md flex bg-white items-center space-x-2 max-w-xs">
             <img src={Current} alt="Current Treatment" className="rounded-full w-10" />
             <h3 className="text-lg font-bold">Current Treatment <br /> +8</h3>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 w-full max-w-7xl">
-          <div className="rounded-lg shadow-lg p-4 ">
-            <img src={thisMonth} alt="Doctor Avatar" className="rounded-full w-16" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 w-full max-w-5xl">
+          <div className="rounded-lg shadow-lg p-4 bg-white">
+            {/* <img src={thisMonth} alt="Doctor Avatar" className="rounded-full w-16" /> */}
             <div className="text-2xl font-bold text-gray-800">+273</div>
             <div className="text-green-500 text-sm font-semibold mt-1">
               <span className="text-gray-500 text-sm font-semibold pr-2">Total Visit</span>
@@ -143,8 +151,8 @@ const Dashboard = () => {
             <Bar data={barChartData} options={commonOptions} height={150} width={300} />
           </div>
 
-          <div className="rounded-lg shadow-lg p-4 ">
-            <img src={thisMonth} alt="Doctor Avatar" className="rounded-full w-16" />
+          <div className="rounded-lg shadow-lg p-4 bg-white ">
+            {/* <img src={thisMonth} alt="Doctor Avatar" className="rounded-full w-16" /> */}
             <div className="text-2xl font-bold text-gray-800">+106</div>
             <div className="text-green-500 text-sm font-semibold mt-1">
               <span className="text-gray-500 text-sm font-semibold pr-2">Total Treatment</span>
@@ -154,8 +162,8 @@ const Dashboard = () => {
             <Line data={lineChartData} options={commonOptions} height={150} width={300} />
           </div>
 
-          <div className="rounded-lg shadow-lg p-4">
-            <img src={thisMonth} alt="Doctor Avatar" className="rounded-full w-16" />
+          <div className="rounded-lg shadow-lg p-4 bg-white">
+            {/* <img src={thisMonth} alt="Doctor Avatar" className="rounded-full w-16" /> */}
             <div className="text-2xl font-bold text-gray-800">$10.5K</div>
             <div className="text-green-500 text-sm font-semibold mt-1">
               <span className="text-gray-500 text-sm font-semibold pr-2">Total Earning</span>
@@ -165,8 +173,8 @@ const Dashboard = () => {
             <Line data={chartData} options={commonOptions} height={150} width={300} />
           </div>
 
-          <div className="rounded-lg shadow-lg p-4 ">
-            <img src={thisMonth} alt="Doctor Avatar" className="rounded-full w-20" />
+          <div className="rounded-lg shadow-lg p-4 bg-white">
+            {/* <img src={thisMonth} alt="Doctor Avatar" className="rounded-full w-20" /> */}
             <div className="text-2xl font-bold text-gray-800">$38.00</div>
             <div className="text-green-500 text-sm font-semibold mt-1">
               <span className="text-gray-500 text-sm font-semibold pr-2">Total Medicine</span>
@@ -176,6 +184,9 @@ const Dashboard = () => {
             <Line data={rightChartData} options={commonOptions} height={150} width={300} />
           </div>
         </div>
+      </div>
+      </div>
+      </div>
       </div>
     </>
   );

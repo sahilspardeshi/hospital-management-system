@@ -8,7 +8,7 @@ const Navbar = () => {
   return (
     <header className="flex justify-between items-center mx-5 ">
       {/* Welcome Message */}
-      <h1 className="text-xl font-semibold">
+      <h1 className="text-xl font-semibold mx-8">
         Welcome, <span className="text-red-500">Dr. Robert Harry</span>
       </h1>
 

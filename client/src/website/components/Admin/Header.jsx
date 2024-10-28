@@ -5,7 +5,7 @@ import React from "react";
 import Doctor from '../../assets/images/d1.png';
 
 const Header = () => {
-  return (
+  return (;
     <header className="flex justify-between items-center p-6 bg-gray-50 w-full pl-20 fixed -mt-10">
       <div>
         <h1 className="text-2xl font-bold pl-48">

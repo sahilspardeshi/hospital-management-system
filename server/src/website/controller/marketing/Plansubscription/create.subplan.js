@@ -20,15 +20,15 @@ export const createPlan = async (req, res) => {
       const plan = await prisma.subscriptionPlan.create({
           data: {
               planName,
-              price,
+              price:price.toString(),
               duration,
               features,
               clientSubscription: {
-                  connect: { id: clinet_subscription_id },
+                  connect: { id: clinet_subscription_id.toString() },
               },
-              paymentMethods: {
-                  connect: paymentMethodIds.map(id => ({ id })),
-              }
+            //   paymentMethods: {
+            //       connect: paymentMethodIds.map(id => ({ id })),
+            //   }
           }
       });
       
