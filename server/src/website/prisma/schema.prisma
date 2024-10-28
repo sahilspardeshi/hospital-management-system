@@ -89,7 +89,7 @@ model SubscriptionPlan {
   features               String?
   createdAt              DateTime           @default(now())
   clinet_subscription_id BigInt
-  paymentMethods         PaymentMethod[]
+  paymentMethods         PaymentMethod[] 
   clientSubscription     ClientSubscription @relation(fields: [clinet_subscription_id], references: [id])
 
   @@map("SubscriptionPlan")
