@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Loader2Icon } from 'lucide-react'
+import Navbar from '../Navbar/Navbar'
+import Sidebar from '../SideBar/Sidebar'
 //1
 
 // Dummy data to simulate backend response
@@ -85,10 +87,16 @@ export default function MainMedicalReport() {
   const recentReports = sortedReports.slice(0, 3)
 
   return (
+    <div className="min-h-screen bg-custom-gradient flex">
+    <div className="bg-[#F8F7F7] bg-opacity-70 shadow-lg rounded-xl border border-gray-200 w-full max-w-full max-h-full overflow-hidden flex flex-row justify-start items-start mx-5 my-5 px-5 py-5">
+      <Sidebar />
+      <div className="flex-1 flex flex-col overflow-hidden">
+        <Navbar />
+        {/* main content starts from here */}
     <div className='p-8'>
-      <div className="bg-rose-100 flex justify-between items-center w-full mx-auto p-4">
+      <div className="bg-[#E4D7D7] flex justify-between items-center w-full mx-auto py-2 px-4">
         <h1 className="text-xl font-bold">Main medical report</h1>
-        <button onClick={handleAddNewFile} className="bg-green-500 text-white px-4 py-2 rounded-2xl">
+        <button onClick={handleAddNewFile} className="bg-green-400 text-white px-4 py-2 rounded-2xl">
           Add new file +
         </button>
       </div>
@@ -102,7 +110,7 @@ export default function MainMedicalReport() {
             placeholder="Search Patient Name or ID"
             className="w-2/5 p-2 border rounded-xl"
           />
-          <button className="bg-green-500 text-white px-4 py-2 rounded-xl">View</button>
+          <button className="bg-green-500 text-white px-6 py-2 rounded-xl">View</button>
         </div>
         {recentReports.map((report, index) => (
           <div key={report.id} className="flex justify-between items-center bg-gray-100 p-4 rounded mb-2">
@@ -112,7 +120,7 @@ export default function MainMedicalReport() {
               </svg>
               Medical report {index + 1}
             </span>
-            <button onClick={() => handleEditReport(report.id)} className="bg-green-500 text-white px-4 py-2 rounded-xl">
+            <button onClick={() => handleEditReport(report.id)} className="bg-green-400  text-white px-5 py-2 rounded-xl">
               Edit
             </button>
           </div>
@@ -125,6 +133,9 @@ export default function MainMedicalReport() {
         )}
         {error && <div className="text-red-500 text-center py-4">{error}</div>}
       </div>
+    </div>
+    </div>
+    </div>
     </div>
   )
 }

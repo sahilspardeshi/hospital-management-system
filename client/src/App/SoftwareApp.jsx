@@ -14,6 +14,8 @@ import Profileupdate from "./components/ProfileUpdate/Profileupdate";
 import ReportAddAppointment from "./components/ReportAddAppointment/ReportAddAppoint";
 import StaffSection from "./components/Staff/StaffSection";
 import WardSection from "./components/WardSection/Wardsection";
+import MainMedicalReport from "./components/MedicalReportSystem/MainMedicalReport";
+import Medication from "./components/Medication/Medication";
 
 function SoftwareApp() {
   return (
@@ -22,7 +24,7 @@ function SoftwareApp() {
       {/* <Route path="/dashboard" element={< Dashboard/>} /> */}
       <Route path="/opd" element={<OPD/>} />
       {/* <Route path="/ipd" element={<IPD/>} /> */}
-      <Route path="/appointment" element={<WardSection/>}/>
+      <Route path="/appointment" element={<Medication/>}/>
     </Routes>
   );
 }
