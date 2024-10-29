@@ -1,20 +1,14 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import Logo from "../../assets/images/Aarohilogo.png";
 
-const Menu = () => {
-  const [activeIndex, setActiveIndex] = useState(null);
+const Menu = ({menuItems}) => {
+  const navigate = useNavigate(); // Initialize useNavigate
+  const [activeIndex, setActiveIndex] = useState(0);
 
-  const menuItems = [
-    { icon: 'fa-solid fa-house', label: 'Dashboard' },
-    { icon: 'fa-solid fa-clipboard', label: 'Appointment Request' },
-    { icon: 'fa-solid fa-chart-simple', label: 'Tables' },
-    { icon: 'fa-brands fa-slack', label: 'Articles' },
-    { icon: 'fa-solid fa-user', label: 'Profile' },
-    { icon: 'fa-solid fa-lock', label: 'Logout' },
-  ];
-
-  const handleClick = (index) => {
+  const handleClick = (index, path) => {
     setActiveIndex(index);
+    navigate(path); // Navigate to the specified path
   };
 
   return (
@@ -25,7 +19,7 @@ const Menu = () => {
           className={`flex items-center p-4 cursor-pointer text-sm rounded-lg transition-colors duration-300
             ${activeIndex === index ? 'bg-orange-500 text-white' : 'hover:bg-gray-100'}
           `}
-          onClick={() => handleClick(index)}
+          onClick={() => handleClick(index, item.path)} // Pass the path to handleClick
         >
           <i className={`${item.icon} mr-3 ${activeIndex === index ? 'text-white' : 'text-gray-500'}`}></i>
           {item.label}
@@ -35,7 +29,7 @@ const Menu = () => {
   );
 };
 
-const Sidebar = () => {
+const Sidebar = ({menuItems}) => {
   return (
     <div className="w-64 bg-white h-full shadow-lg flex flex-col p-6 rounded-lg">
       {/* Logo */}
@@ -44,7 +38,7 @@ const Sidebar = () => {
       </div>
       
       {/* Menu */}
-      <Menu />
+      <Menu menuItems={menuItems}/>
     </div>
   );
 };
