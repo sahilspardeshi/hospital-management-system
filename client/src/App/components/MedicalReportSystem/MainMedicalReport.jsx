@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Loader2Icon } from 'lucide-react'
-import Navbar from '../Navbar/Navbar'
-import Sidebar from '../SideBar/Sidebar'
 //1
 
 // Dummy data to simulate backend response
@@ -87,12 +85,7 @@ export default function MainMedicalReport() {
   const recentReports = sortedReports.slice(0, 3)
 
   return (
-    <div className="min-h-screen bg-custom-gradient flex">
-    <div className="bg-[#F8F7F7] bg-opacity-70 shadow-lg rounded-xl border border-gray-200 w-full max-w-full max-h-full overflow-hidden flex flex-row justify-start items-start mx-5 my-5 px-5 py-5">
-      <Sidebar />
-      <div className="flex-1 flex flex-col overflow-hidden">
-        <Navbar />
-        {/* main content starts from here */}
+  
     <div className='p-8'>
       <div className="bg-[#E4D7D7] flex justify-between items-center w-full mx-auto py-2 px-4">
         <h1 className="text-xl font-bold">Main medical report</h1>
@@ -134,8 +127,6 @@ export default function MainMedicalReport() {
         {error && <div className="text-red-500 text-center py-4">{error}</div>}
       </div>
     </div>
-    </div>
-    </div>
-    </div>
+   
   )
 }

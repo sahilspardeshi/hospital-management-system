@@ -40,18 +40,12 @@ const ReportAddAppointment = () => {
   };
 
   return (
-    <div className="min-h-screen bg-custom-gradient flex">
-    {/* Sidebar */}
-    <div className="bg-[#F8F7F7] bg-opacity-70 shadow-lg rounded-xl border border-gray-200 w-full  max-w-full max-h-full overflow-y-auto flex flex-row justify-start items-start mx-5 my-5 px-5 py-5">
-    <Sidebar/>
-    <div className="flex-1 flex flex-col">
-      <Navbar/>
-      {/* Main container with content */}
+    
     <div className="h-screen flex flex-col ">
         {/* Main Content - Vertically Aligned */}
         <div className="flex-1 pt-2 flex flex-col items-center justify-start">
           {/* View History Section */}
-          <form onSubmit={handleHistory} className=" bg-opacity-60 rounded-lg p-6 w-full max-w-4xl mb-8">
+          <form onSubmit={handleHistory} className=" bg-opacity-60 rounded-lg p-6 w-full  max-w-5xl mb-8">
             <div className="flex justify-between items-center mb-0">
               <h2 className="text-lg font-bold pl-20">Reports</h2>
               <div className="flex space-x-2">
@@ -70,8 +64,8 @@ const ReportAddAppointment = () => {
               </div>
             </div>
           </form>
-          <div className="flex-1   w-full max-w-4xl flex flex-col items-center justify-start">
-            <div className=" rounded-bl-2xl px-5 w-full max-w-4xl">
+          <div className="flex-1   w-full max-w-6xl  flex flex-col items-center justify-start">
+            <div className=" rounded-bl-2xl px-5 w-full max-w-5xl">
               <h1 className="text-2xl font-bold mb-10 mt-2 text-center">Medical Report</h1>
 
               {reportData ? (
@@ -133,9 +127,7 @@ const ReportAddAppointment = () => {
           </div>
         </div>
       </div>
-    </div>
-    </div>
-    </div>
+   
     
   );
 };

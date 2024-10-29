@@ -10,6 +10,14 @@ import Graphs from "./components/graph/graph";
 import PatientRegistrationForm from "./components/PatientRegistrationForm/PatientRegistrationForm";
 import Appointment from "./components/Appointment/Appointment";
 import Ipd from "./pages/IPD";
+import PatientCard from "./components/History/PatientCard"
+import MainMedicalReport from "./components/MedicalReportSystem/MainMedicalReport";
+import Medication from "./components/Medication/Medication";
+import BillingReport from "./components/OPD Billing/BillingReport";
+import Patient from "./components/Patient/Patient";
+import ReportAddAppointment from "./components/ReportAddAppointment/ReportAddAppoint";
+import StaffSection from "./components/Staff/StaffSection";
+import WardSection from "./components/WardSection/Wardsection";
 
 function SoftwareApp() {
   return (
@@ -21,7 +29,7 @@ function SoftwareApp() {
         </Route>
         <Route path="/opd" element={<OPD/>}>
         <Route path="" element={<PatientRegistrationForm/>}/>
-        <Route path="Appointment" element={<Appointment/>}/>
+        <Route path="Appointment" element={<WardSection/>}/>
         </Route>
         <Route path="/ipd" element={<Ipd/>}>
         <Route path="" element={<PatientRegistrationForm/>}/>
