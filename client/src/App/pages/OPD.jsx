@@ -9,8 +9,8 @@ const Opd = () => {
   const menuItems = [
     { icon: 'fa-solid fa-user', label: 'Registration',path: '' },
     { icon: 'fa-solid fa-clipboard', label: 'Appointment Request',path:'Appointment' },
-    { icon: 'fa-solid fa-chart-simple', label: 'Treatment' ,path:'Appointment' },
-    { icon: 'fa-brands fa-slack', label: 'Billing',path:'Appointment'  },
+    { icon: 'fa-solid fa-chart-simple', label: 'Treatment' ,path:'Treatment' },
+    { icon: 'fa-brands fa-slack', label: 'Billing',path:'Billing'  },
     { icon: 'fa-solid fa-user', label: 'All Appointment' ,path:'Appointment' },
     { icon: 'fa-solid fa-home', label: 'Dashboard',path:'Appointment'  },
     { icon: 'fa-solid fa-lock', label: 'Logout',path:'Appointment'  },
