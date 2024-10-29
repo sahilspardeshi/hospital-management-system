@@ -4,8 +4,8 @@ import MainMedicalReport from './MainMedicalReport'
 import NewMedicalReport from './NewMedicalReport'
 import ReportResult from './ReportResult'
 import Sidebar from "../SideBar/Sidebar"
-import Navbar from "../Navbar/Navbar"
-import { ReportProvider } from './ReportContext'
+import Navbar from "../Navbar/Navbar" 
+import { ReportProvider } from './ReportContext.jsx'
 
 export default function MedicalReportSystem() {
   return (
