@@ -5,7 +5,7 @@ import  settingRoute  from '../routes/routes.setting.js'
 import staffRoutes from '../routes/routes.staff.js';
 import opdAppointmentRoutes from '../routes/routes.opdAppointment.js';
 import medicationRouter from  '../routes/routes.patientMedication.js'
-import PatientRoute from '../routes/patient.route.js';import pateintreportroutes from '../routes/routes.patientreportdata.js';
+import pateintreportroutes from '../routes/routes.patientreportdata.js';
 import Opdtreatment from '../routes/route.Opdtreatment.js';
 import billing from '../routes/route.billing.js';
 import AdvancePayment from '../routes/route.advancePay.js';
@@ -33,8 +33,17 @@ AllRoutes.use('/staff',staffRoutes);
 //patientMedication routes
 AllRoutes.use('/patientMedication', medicationRouter);
 
-//patients routes
-AllRoutes.route('/patient', PatientRoute);
+//MainMedication routes
+AllRoutes.use('/mainMedication', MainMedicationRoutes);
+
+//Medication routes
+AllRoutes.use('/medication',  MedicationRoutes);
+
+//opdAppointment Routes
+AllRoutes.use('/opdAppointment',opdAppointmentRoutes);
+
+//PatintReportData route
+AllRoutes.use('/patientreport',pateintreportroutes);
 
 // Export the router
 export default AllRoutes;

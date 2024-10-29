@@ -3,7 +3,7 @@ import {  getCurrentDateInIST } from "../../../utils/dateConverter.js";
 import { createPatientReport } from "../../PatientReportData/create/create.patientreportdata.js";
 
 export const createAppointment = async (req, res) => {
-  const { patient_id, doctor_id, appointment_date, appointment_type, status, title, description, report_id } = req.body;
+  const { patient_id, doctor_id, appointment_date,time, appointment_type, status, title, description, report_id } = req.body;
 
   try {
     // Using transactions to ensure data integrity
@@ -38,7 +38,7 @@ export const createAppointment = async (req, res) => {
         data: {
           patient_id: patient_id,
           doctor_id,
-          appointment_date: getCurrentDateInIST(),
+          appointment_date:(appointment_date+" "+time)|| getCurrentDateInIST(),
           PetientReportData_id: patientReportData.id, // Link to the report data
           appointment_type,
           status,

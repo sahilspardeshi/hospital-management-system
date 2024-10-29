@@ -2,18 +2,9 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 import Logo from "../../assets/images/Aarohilogo.png";
 
-const Menu = () => {
+const Menu = ({menuItems}) => {
   const navigate = useNavigate(); // Initialize useNavigate
   const [activeIndex, setActiveIndex] = useState(0);
-
-  const menuItems = [
-    { icon: 'fa-solid fa-house', label: 'Dashboard', path: '' },
-    { icon: 'fa-solid fa-clipboard', label: 'Appointment Request', path: 'appointment' },
-    { icon: 'fa-solid fa-chart-simple', label: 'Tables', path: 'tables' },
-    { icon: 'fa-brands fa-slack', label: 'Articles', path: 'articles' },
-    { icon: 'fa-solid fa-user', label: 'Profile', path: 'profile' },
-    { icon: 'fa-solid fa-lock', label: 'Logout', path: 'logout' },
-  ];
 
   const handleClick = (index, path) => {
     setActiveIndex(index);
@@ -38,7 +29,7 @@ const Menu = () => {
   );
 };
 
-const Sidebar = () => {
+const Sidebar = ({menuItems}) => {
   return (
     <div className="w-64 bg-white h-full shadow-lg flex flex-col p-6 rounded-lg">
       {/* Logo */}
@@ -47,7 +38,7 @@ const Sidebar = () => {
       </div>
       
       {/* Menu */}
-      <Menu />
+      <Menu menuItems={menuItems}/>
     </div>
   );
 };

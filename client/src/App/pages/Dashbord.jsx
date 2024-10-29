@@ -5,15 +5,15 @@ import { Outlet } from "react-router-dom";
 
 
 
-const Opd = () => {
+const Dashboard = () => {
+
   const menuItems = [
-    { icon: 'fa-solid fa-user', label: 'Registration',path: '' },
-    { icon: 'fa-solid fa-clipboard', label: 'Appointment Request',path:'Appointment' },
-    { icon: 'fa-solid fa-chart-simple', label: 'Treatment' ,path:'Appointment' },
-    { icon: 'fa-brands fa-slack', label: 'Billing',path:'Appointment'  },
-    { icon: 'fa-solid fa-user', label: 'All Appointment' ,path:'Appointment' },
-    { icon: 'fa-solid fa-home', label: 'Dashboard',path:'Appointment'  },
-    { icon: 'fa-solid fa-lock', label: 'Logout',path:'Appointment'  },
+    { icon: 'fa-solid fa-house', label: 'Home',path:''  },
+    { icon: 'fa-solid fa-clipboard', label: 'Appointment Request',path:'' },
+    { icon: 'fa-solid fa-chart-simple', label: 'Tables',path:'' },
+    { icon: 'fa-brands fa-slack', label: 'Articles' ,path:''},
+    { icon: 'fa-solid fa-user', label: 'Profile',path:'' },
+    { icon: 'fa-solid fa-lock', label: 'Logout',path:'' },
   ];
   return (
     <div className="max-h-screen min-h-screen bg-custom-gradient flex">
@@ -22,7 +22,8 @@ const Opd = () => {
       <Sidebar menuItems={menuItems}/>
       <div className="flex-1 flex flex-col max-h-full max-w-full  p-5">
         <Navbar/>
-          <div className="flex-1 overflow-y-auto ">
+
+                <div className="flex-1 overflow-y-auto ">
             <Outlet />
           </div>
       </div>
@@ -31,4 +32,4 @@ const Opd = () => {
   );
 };
 
-export default Opd;
+export default Dashboard;

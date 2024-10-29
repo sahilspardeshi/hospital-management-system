@@ -5,7 +5,7 @@ import { Upload } from 'lucide-react'
 import Navbar from "../Navbar/Navbar"
 import Sidebar from "../SideBar/Sidebar"
 
-export default function PatientRegistrationForm() {
+const PatientRegistrationForm = () =>{
   const [formData, setFormData] = useState({
     patientName: '',
     age: '',
@@ -76,11 +76,7 @@ export default function PatientRegistrationForm() {
   }
 
   return (
-    <div className="min-h-screen bg-custom-gradient flex">
-      <div className="bg-[#F8F7F7] bg-opacity-70 shadow-lg rounded-xl border border-gray-200 w-full max-w-full max-h-full overflow-hidden flex flex-row justify-start items-start mx-5 my-5 px-5 py-5">
-        <Sidebar />
-        <div className="flex-1 flex flex-col overflow-hidden">
-          <Navbar />
+
           <div className="flex-1 overflow-y-auto px-20 mt-10 rounded-lg m-4">
             <h1 className="text-2xl font-bold text-center mb-6 ">Patient Registration</h1>
             <form onSubmit={handleSubmit}>
@@ -383,8 +379,6 @@ export default function PatientRegistrationForm() {
               </div>
             </form>
           </div>
-        </div>
-      </div>
-    </div>
   )
 }
+export default PatientRegistrationForm
