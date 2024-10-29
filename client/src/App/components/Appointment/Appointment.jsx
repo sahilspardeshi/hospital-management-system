@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState } from 'react';
 import Navbar from "../Navbar/Navbar"
 import Sidebar from "../SideBar/Sidebar"
@@ -194,3 +195,14 @@ const Appointment = () => {
 };
 
 export default Appointment;
+=======
+import React from 'react'
+
+const Appointment = () => {
+  return (
+    <div>Appointment</div>
+  )
+}
+
+export default Appointment;
+>>>>>>> features/patientController

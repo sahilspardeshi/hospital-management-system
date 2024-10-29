@@ -1,12 +1,12 @@
 import React from "react";
 import Sidebar from "../components/SideBar/Sidebar";
 
-import Dashboard from "../components/Patient/Patient";
 import Navbar from "../components/NavBar/Navbar";
 
 
 
-const IPD = () => {
+
+const Dashboard = () => {
   return (
 
     <div className="min-h-screen bg-custom-gradient flex">
@@ -21,7 +21,6 @@ const IPD = () => {
     </div>
 
     );
-
 };
 
-export default IPD;
+export default Dashboard;
