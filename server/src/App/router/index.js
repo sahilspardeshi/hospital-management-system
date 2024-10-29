@@ -9,7 +9,7 @@ import { getAllStaff } from '../controller/staff/index.js';
 import TestRoutes from '../routes/test.routes.js';
 
 import medicationRouter from  '../routes/routes.patientMedication.js'
-
+import PatientRoute from '../routes/patient.route.js';
 
 import { getPatientMedication } from '../controller/patientMedication/index.js';
 
@@ -30,7 +30,8 @@ AllRoutes.use('/staff',staffRoutes);
 //patientMedication routes
 AllRoutes.use('/Medication', medicationRouter);
 
-
+//patients routes
+AllRoutes.route('/patient', PatientRoute);
 
 // Export the router
 export default AllRoutes;
