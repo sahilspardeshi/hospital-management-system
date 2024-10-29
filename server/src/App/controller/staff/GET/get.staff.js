@@ -57,3 +57,31 @@ export const getAllStaff = async (req, res) => {
         return res.status(500).json({ error: 'Error fetching staff members' });
     }
 };
+
+//Get staff by name
+export const getStaffByName =async (req,res)=>{
+    const { name } = req.body;
+  try {
+    const staff = await prisma.staff.findMany({
+        where: {
+          fullName: {
+            contains: name,
+            mode: 'insensitive',
+          },
+        },
+        take: 5,
+      });
+      
+      // Filter unique names
+      const uniqueStaff = Array.from(
+        new Set(staff.map((staff) => staff.fullName))
+      ).map((fullName) => {
+        return staff.find((staff) => staff.fullName === fullName);
+      });
+      
+      res.json(uniqueStaff);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error retrieving staff suggestions' });
+  }
+}

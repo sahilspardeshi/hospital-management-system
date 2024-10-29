@@ -11,6 +11,7 @@ import billing from '../routes/route.billing.js';
 import AdvancePayment from '../routes/route.advancePay.js';
 import MainMedicationRoutes from '../routes/routes.MainMedication.js';
 import MedicationRoutes from '../routes/routes.Medication.js';
+import PatientRoute from '../routes/patient.route.js';
 
 
 
@@ -44,6 +45,9 @@ AllRoutes.use('/opdAppointment',opdAppointmentRoutes);
 
 //PatintReportData route
 AllRoutes.use('/patientreport',pateintreportroutes);
+
+//patient Routes
+AllRoutes.use('/patient',PatientRoute);
 
 // Export the router
 export default AllRoutes;

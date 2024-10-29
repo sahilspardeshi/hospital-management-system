@@ -6,7 +6,7 @@ const SALT_ROUNDS = 10; // Number of salt rounds for hashing
 
 // Create a new Staff member
 export const createStaff = async (req, res) => {
-  const { full_name, specialization, user, password, type, contact_number, email, qualifications, department } = req.body;
+  const { fullName, specialization, user, password, type, contact_number, email, qualifications, department } = req.body;
 
   try {
     // Check if SECRET_KEY is defined
