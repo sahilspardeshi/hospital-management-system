@@ -1,19 +1,12 @@
 import React from 'react'
 import search from '../../assets/images/search.png'
-import Navbar from '../Navbar/Navbar'
-import Sidebar from '../SideBar/Sidebar'
 
 export default function IPD() {
     return (
         <>
-       <div className="min-h-screen bg-custom-gradient flex">
-      <div className="bg-[#F8F7F7] bg-opacity-70 shadow-lg rounded-xl border border-gray-200 w-full max-w-full max-h-full overflow-hidden flex flex-row justify-start items-start mx-5 my-5 px-5 py-5">
-        <Sidebar />
-        <div className="flex-1 flex flex-col overflow-hidden">
-          <Navbar />
-          {/* main content starts from here */}
+      
             <div>
-                <form className='m-auto mx-20 w-[70vw] py-20 '>
+                <form className='m-auto  w-[70vw] py-12 '>
 
                     <label className='font-bold text-xl mx-3 text-gray-600'>Reports </label>
                     <input type='text'
@@ -170,9 +163,7 @@ export default function IPD() {
                     </div>
                 </form>
             </div>
-            </div>
-            </div>
-            </div>
+            
         </>
     )
 }

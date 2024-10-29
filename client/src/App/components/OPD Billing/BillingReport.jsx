@@ -35,18 +35,13 @@ const BillingReport = () => {
   const totalWithGST = (billingData.totalAmount + parseFloat(sgst) + parseFloat(cgst)).toFixed(2);
   
   return (
-    <div className="min-h-screen bg-custom-gradient flex">
-      <div className="bg-[#F8F7F7] bg-opacity-70 shadow-lg rounded-xl border border-gray-200 w-full max-w-full max-h-full overflow-hidden flex flex-row justify-start items-start  my-5 py-5">
-        <Sidebar />
-        <div className="flex-1 flex flex-col overflow-hidden">
-          <Navbar />
-          {/* main content starts from here */}
+    
     <div className="min-h-screen bg-opacity-80 pt-10 flex">
       {/* Left side blank div taking 20% width */}
       {/* <div className="w-1/5"></div> */}
 
       {/* Right side (content) taking 80% width */}
-      <div className="w-4/5 max-w-7xl mx-auto"> 
+      <div className="w-[85%] max-w-7xl mx-auto"> 
         <div className=" p-4 rounded-t-md ">
           <h1 className="text-3xl font-bold">Billing </h1>
           <div className="flex justify-between mt-2">
@@ -172,9 +167,7 @@ const BillingReport = () => {
         </div>
       </div>
     </div>
-    </div>
-    </div>
-    </div>
+    
   );
 };
 

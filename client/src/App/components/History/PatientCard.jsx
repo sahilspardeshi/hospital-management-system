@@ -1,18 +1,10 @@
 import React from "react";
 import Avatar from "../../assets/images/21.png";
-import Sidebar from "../SideBar/Sidebar";
-import Navbar from "../Navbar/Navbar";
 
 
 const PatientCard = ({ patientData, vitals }) => {
   return (
     <>
-    <div className="min-h-screen bg-custom-gradient flex">
-      <div className="bg-[#F8F7F7] bg-opacity-70 shadow-lg rounded-xl border border-gray-200 w-full max-w-full max-h-full overflow-hidden flex flex-row justify-start items-start mx-5 my-5 px-5 py-5">
-        <Sidebar />
-        <div className="flex-1 flex flex-col overflow-hidden">
-          <Navbar />
-          {/* main content starts from here */}
           <div className="my-9 rounded-lg min-h-screen p-3 sm:p-4 md:p-6 ">
   <div className="grid grid-cols-1 gap-2 md:gap-4 h-full w-full bg-white px-8 py-2 rounded-lg">
     {/* Removed the hidden left column */}
@@ -145,9 +137,7 @@ const PatientCard = ({ patientData, vitals }) => {
   </div>
 </div>
 
-      </div>
-      </div>
-      </div>
+      
     </>
   );
 };

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import notification from '../../assets/images/notifications_none.png';
 import darkmode from '../../assets/images/moon-solid_1.png';
 import about from '../../assets/images/info_outline.png';
@@ -8,11 +8,14 @@ import { useNavigate } from "react-router-dom";
 const Navbar = () => {
   const navigate = useNavigate();
 
-  const handleClick = () => {
-    navigate('/opd')
+  const [selectedSection, setSelectedSection] = useState(null);
+
+  const handleClick = (section) => {
+    setSelectedSection(section);
+    navigate(`/${section.toLowerCase()}`);
   };
   return (
-    <header className="flex justify-between items-center px-10 mx-2 w-full rounded-t-lg   ">
+    <header className="flex justify-between items-center py-2 px-10 mx-2 w-full rounded-t-lg   ">
       {/* Welcome Message */}
       <h1 className="text-xl font-bold mx-8">
         Welcome, <span className="text-red-500">Dr. Robert Harry</span>
@@ -20,10 +23,23 @@ const Navbar = () => {
 
       {/* OPD and IPD Section */}
       <div className="flex items-center space-x-4">
-        <button className="px-5 py-2 bg-white  hover:bg-green-300 hover:text-white font-semibold text-sm rounded-full" onClick={handleClick }>OPD</button>
-        <button className="px-5 py-2 bg-white  hover:bg-green-300 hover:text-white font-semibold  text-sm rounded-full">IPD</button>
+        <button
+          className={`px-5 py-2 font-semibold text-sm rounded-full transition-all duration-200 ${
+            selectedSection === 'OPD' ? 'bg-green-300 text-white' : 'bg-white hover:bg-green-300 hover:text-white'
+          }`}
+          onClick={() => handleClick('OPD')}
+        >
+          OPD
+        </button>
+        <button
+          className={`px-5 py-2 font-semibold text-sm rounded-full transition-all duration-200 ${
+            selectedSection === 'IPD' ? 'bg-green-300 text-white' : 'bg-white hover:bg-green-300 hover:text-white'
+          }`}
+          onClick={() => handleClick('IPD')}
+        >
+          IPD
+        </button>
       </div>
-
       {/* Search and Icons */}
       <div className="flex items-center space-x-4 bg-white p-2 rounded-full">
         <input
