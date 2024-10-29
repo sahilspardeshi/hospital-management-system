@@ -13,7 +13,7 @@ const Menu = ({menuItems}) => {
 
   return (
     <ul className="space-y-2">
-      {menuItems.map((item, index) => (
+      {menuItems?.map((item, index) => (
         <li
           key={index}
           className={`flex items-center p-4 cursor-pointer text-sm rounded-lg transition-colors duration-300
