@@ -74,11 +74,15 @@ export default function MainMedicalReport() {
   }, [])
 
   const handleAddNewFile = () => {
-    navigate('/new-report')
+    const hostname = window.location.pathname;
+    console.log(hostname)
+    navigate(`${hostname}/new-report`)
   }
 
   const handleEditReport = (reportId) => {
-    navigate(`/report-result/${reportId}`)
+    const hostname = window.location.pathname;
+    console.log(hostname)
+    navigate(`${hostname}/report-result/${reportId}`)
   }
 
   const sortedReports = [...reports].sort((a, b) => b.lastModified.getTime() - a.lastModified.getTime())
