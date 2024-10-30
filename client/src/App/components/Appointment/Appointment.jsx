@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Appointment = () => {
   const [patientName, setPatientName] = useState('');
@@ -151,7 +153,7 @@ const Appointment = () => {
 
       const data = await response.json();
       setSubmitted(true);
-      alert("Appointment created successfully!");
+      toast.success("Appointment created successfully!")
 
 
       //clear all fields after the alert//
@@ -184,10 +186,12 @@ const Appointment = () => {
 
   const handleDoctorBlur = () => {
     setShowDoctorSuggestions(false);
+    
   };
 
   return (
     <div className="flex flex-col justify-center items-center h-screen">
+      <ToastContainer />
       <form onSubmit={handleSubmit} className="w-full max-w-md">
         <h1 className="text-3xl font-bold mb-4">Create Appointment</h1>
 
