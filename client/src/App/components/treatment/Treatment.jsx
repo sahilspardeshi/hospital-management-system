@@ -163,7 +163,7 @@ const Treatment = () => {
           <div className="md:col-span-2 flex justify-between m-auto font-bold">
             <button
               type="button"
-              onClick={() => { handleSubmit(); handleNavigation('/billing'); }}
+              onClick={() => {handleSubmit('/billing'); }}
               className="bg-red-400 text-white px-6 py-2 rounded hover:bg-green-600"
             >
               Billing

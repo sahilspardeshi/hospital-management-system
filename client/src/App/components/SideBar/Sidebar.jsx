@@ -22,6 +22,11 @@ const Menu = ({ menuItems }) => {
   const handleClick = (index, path) => {
     setActiveIndex(index);
     navigate(path);
+    if(menuItems[index].label==='Dashboard')
+    {
+      localStorage.setItem("activeIndex", 0);
+      return;
+    }
     localStorage.setItem("activeIndex", index); // Save the index in localStorage
   };
 
