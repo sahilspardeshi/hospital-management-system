@@ -7,7 +7,7 @@ export const getPatientById = async (req, res) => {
     const { id } = req.params;
 
     try {
-        const patient = await prisma.patients.findUnique({
+        const patient = await prisma.petients.findUnique({
             where: { id: BigInt(id) },
         });
 
@@ -37,7 +37,7 @@ export const getPatientById = async (req, res) => {
 // Get all patient members
 export const getAllPatients = async (req, res) => {
     try {
-        const AllPatients = await prisma.patients.findMany();
+        const AllPatients = await prisma.petients.findMany();
 
         // Function to serialize staff data
         const serializePatient = (AllPatients) => {
@@ -56,3 +56,32 @@ export const getAllPatients = async (req, res) => {
         return res.status(500).json({ error: 'Error fetching Patients' });
     }
 };
+
+
+//get patient by name 
+export const getPatientByName =async (req,res)=>{
+    const { name } = req.body;
+  try {
+    const patients = await prisma.petients.findMany({
+        where: {
+          fullName: {
+            contains: name,
+            mode: 'insensitive',
+          },
+        },
+        take: 5,
+      });
+      
+      // Filter unique names
+      const uniquePatients = Array.from(
+        new Set(patients.map((patient) => patient.fullName))
+      ).map((fullName) => {
+        return patients.find((patient) => patient.fullName === fullName);
+      });
+      
+      res.json(uniquePatients);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error retrieving patient suggestions' });
+  }
+}
