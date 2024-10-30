@@ -1,10 +1,5 @@
 import express from 'express';
-import {createMarketing} from "../controller/marketing/index.js"
-import { loginClient } from '../controller/client/auth/auth.client.js';
-import { createClient, createClientSubscription } from '../controller/client/create/create.client.js';
-import { updateSubscriptionStatus } from '../controller/marketing/Clientsubscription/Update.clientsub.js';
-import { createPlan } from '../controller/marketing/Plansubscription/create.subplan.js';
-import { createPaymentMethod } from '../controller/marketing/PaymentSub/create.pay.js';
+import {createMarketing , loginClient ,createClient, createClientSubscription ,updateSubscriptionStatus ,createPlan ,createPaymentMethod} from "../controller/marketing/index.js"
 
 
 
