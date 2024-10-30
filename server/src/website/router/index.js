@@ -3,6 +3,7 @@ import AuthRoutes from '../routes/auth.routes.js';  // Add .js extension for loc
 import advertisement from '../routes/Advertisment.js';
 import { healthCheck } from '../utils/healthCheck/health.controller.js';
 import marketing from '../routes/route.marketing.js';
+import review from '../routes/Review.routes.js';
 
 const AllRoutes = express();
 
@@ -10,5 +11,6 @@ const AllRoutes = express();
 AllRoutes.use('/auth', AuthRoutes);
 AllRoutes.use('/advertisement',advertisement);
 AllRoutes.route('/health').get(healthCheck);
-AllRoutes.use('/marketing', marketing)
+AllRoutes.use('/marketing', marketing);
+AllRoutes.use('/review' ,review )
 export default AllRoutes;
