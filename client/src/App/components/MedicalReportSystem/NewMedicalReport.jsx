@@ -42,7 +42,9 @@ export default function NewMedicalReport() {
   }, [setReportData])
 
   const handleNextFromB = () => {
-    navigate(`/report-result/${currentReport.id}`)
+    const hostname = window.location.pathname;
+    console.log(hostname)
+    navigate(`${hostname}/report-result/${currentReport.id}`)
   }
 
   if (isLoading) {

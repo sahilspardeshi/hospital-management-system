@@ -16,10 +16,10 @@ const Medication = () => {
           <MedicationContext.Provider value={{ medications, setMedications }}>
             <div className="container mx-auto">
               <Routes>
-                <Route path="/" element={<MedicationList />} />
-                <Route path="/new-medication" element={<NewMedicationForm />} />
-                <Route path="/medication-details" element={<MedicationDetails />} />
-                <Route path="/edit-medication/:id" element={<MedicationDetails />} />
+                <Route path="" element={<MedicationList />} />
+                <Route path="new-medication" element={<NewMedicationForm />} />
+                <Route path="medication-details" element={<MedicationDetails />} />
+                <Route path="edit-medication/:id" element={<MedicationDetails />} />
               </Routes>
             </div>
           </MedicationContext.Provider>

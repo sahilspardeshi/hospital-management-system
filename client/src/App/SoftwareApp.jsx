@@ -14,11 +14,7 @@ import PatientCard from "./components/History/PatientCard";
 import MainMedicalReport from "./components/MedicalReportSystem/MainMedicalReport";
 import Medication from "./components/Medication/Medication";
 import BillingReport from "./components/OPD Billing/BillingReport";
-import Patient from "./components/Patient/Patient";
-import ReportAddAppointment from "./components/ReportAddAppointment/ReportAddAppoint";
-import StaffSection from "./components/Staff/StaffSection";
-import WardSection from "./components/WardSection/Wardsection";
-import MedicalReportSystem from "./components/MedicalReportSystem/MedicalReportSystem";
+import TreatmentRoute from "./routes/treatment";
 
 function SoftwareApp() {
   return (
@@ -30,9 +26,9 @@ function SoftwareApp() {
       <Route path="/opd" element={<OPD />}>
         <Route path="" element={<PatientRegistrationForm />} />
         <Route path="Appointment" element={<Appointment />} />
-        <Route path="Treatment" element={<MedicalReportSystem/>} />
+        <Route path="Treatment/*" element={<TreatmentRoute/>} />
         <Route path="Billing" element={<BillingReport />} />
-        <Route path="Appointment" element={<WardSection />} />
+        <Route path="medication/*" element={<Medication/>} />
       </Route>
       <Route path="/ipd" element={<Ipd />}>
         <Route path="" element={<PatientRegistrationForm />} />

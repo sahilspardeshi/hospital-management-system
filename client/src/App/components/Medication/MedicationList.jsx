@@ -1,19 +1,18 @@
 //Medication First Page Code
 import { Link } from 'react-router-dom';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { MedicationContext } from '../Medication/Medication';
 //1
 export default function MedicationList() {
   const { medications } = useContext(MedicationContext);
-
-  
+const currentPath =window.location.pathname;
   const recentMedications = medications.slice(-3).reverse();
 
   return (
     <div>
       <div className=" bg-rose-100 flex justify-between items-center  max-w-screen-2xl mx-auto">
       <h1 className="text-xl font-bold px-3 ">Main Medication Report</h1>
-       <Link to="/new-medication" className="bg-green-500 text-white px-4 py-2 rounded-2xl">
+       <Link to={`${currentPath}/new-medication`} className="bg-green-500 text-white px-4 py-2 rounded-2xl">
          Add new file +
        </Link>
      </div>
@@ -36,7 +35,7 @@ export default function MedicationList() {
       {medications.map((medication, index) => (
         <div key={index} className="flex justify-between items-center bg-gray-100 p-4 rounded-md mb-2">
           <span>{medication.id} - {medication.patientMedicationId}</span>
-          <Link to={`/edit-medication/${medication.id}`} className="bg-green-500 text-white px-4 py-2 rounded-2xl">
+          <Link to={`${currentPath}/edit-medication/${medication.id}`} className="bg-green-500 text-white px-4 py-2 rounded-2xl">
             Edit
           </Link>
         </div>
