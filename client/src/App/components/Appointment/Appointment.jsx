@@ -102,7 +102,7 @@ const Appointment = () => {
     setDoctorSuggestions([]);
     setShowDoctorSuggestions(false);
   };
-
+  // render Suggestions function
   const renderSuggestions = (suggestions, handleSelect) => {
     return (
       <ul className="absolute bg-white border border-gray-300 mt-1 rounded-lg shadow-lg z-10">
@@ -119,6 +119,8 @@ const Appointment = () => {
     );
   };
 
+
+  //Handel Submit function
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -149,7 +151,20 @@ const Appointment = () => {
 
       const data = await response.json();
       setSubmitted(true);
-      navigate('/appointments');
+      alert("Appointment created successfully!");
+
+
+      //clear all fields after the alert//
+      setPatientName('');
+      setDoctorName('');
+      setAppointmentDate('');
+      setReportTitle('Fever');
+      setAppointmentType('New');
+      setDescription('');
+      setAppointmentStatus('PENDING');
+      setPatientSuggestions([]);
+      setDoctorSuggestions([]);
+
     } catch (error) {
       console.error('Error creating appointment:', error);
     }
