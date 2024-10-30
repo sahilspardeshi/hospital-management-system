@@ -43,9 +43,10 @@ export const createClientSubscription = async (req, res) => {
 
         if (existingSubscription) {
             return res.status(400).json({ error: "Client subscription already exists." });
-        }else{
-            console.log("Client subscription does not exist, create a new one.");
         }
+        // else{
+        //     console.log("Client subscription does not exist, create a new one.");
+        // }
 
         // Create a new subscription if client not exists
         const clientSubscription = await prisma.clientSubscription.create({
