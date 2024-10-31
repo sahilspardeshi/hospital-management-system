@@ -7,18 +7,24 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-
   const [selectedSection, setSelectedSection] = useState(null);
 
   // Check the path on initial render and set the selected section accordingly
-  useEffect(() => {
-    const path = location.pathname.slice(1).toUpperCase(); // Get path and convert to uppercase
-    if (path === "OPD" || path === "IPD") {
-      setSelectedSection(path);
-    }
-  }, [location.pathname]);
 
+  useEffect(() => {
+    const pathSegments = location.pathname.split('/').filter(Boolean); // Get non-empty path segments
+
+    // Keywords to check for in the path
+    const keywords = ["IPD", "OPD", "DASHBOARD"];
+
+    // Find the keyword present in the path, if any
+    const matchedKeyword = keywords.find(keyword =>
+      pathSegments.some(segment => segment.toLowerCase() === keyword.toLowerCase())
+    );
+
+    // Set the selected section to the matched keyword or default to null if no match
+    setSelectedSection(matchedKeyword || null);
+  }, [location.pathname]);
   const handleClick = (section) => {
     setSelectedSection(section);
     navigate(`/${section.toLowerCase()}`);
@@ -51,6 +57,16 @@ const Navbar = () => {
           onClick={() => handleClick("IPD")}
         >
           IPD
+        </button>
+        <button
+          className={`px-5 py-2 font-semibold text-sm rounded-full transition-all duration-200 ${
+            selectedSection === "DASHBOARD"
+              ? "bg-green-300 text-white"
+              : "bg-white hover:bg-green-300 hover:text-white"
+          }`}
+          onClick={() => handleClick("DASHBOARD")}
+        >
+          DASHBOARD
         </button>
       </div>
 

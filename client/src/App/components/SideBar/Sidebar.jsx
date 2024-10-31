@@ -4,32 +4,24 @@ import Logo from "../../assets/images/Aarohilogo.png";
 
 const Menu = ({ menuItems }) => {
   const navigate = useNavigate();
-  const location = useLocation();
+
 
   // Initialize activeIndex from localStorage or default to 0
-  const [activeIndex, setActiveIndex] = useState(() => {
-    // Check if activeIndex exists in localStorage and set it to the stored value, else default to 0
-    const savedIndex = localStorage.getItem("activeIndex");
-    return savedIndex ? parseInt(savedIndex, 10) : 0;
-  });
-
+  const [activeIndex, setActiveIndex] = useState(null);
   useEffect(() => {
-    // Find the index of the current path in menuItems
-    const currentIndex = menuItems.findIndex(item => item.path === location.pathname);
-    if (currentIndex !== -1) setActiveIndex(currentIndex);
+    const pathSegments = location.pathname.split('/').filter(Boolean); // Remove any empty strings
+    
+    const currentIndex = menuItems.findIndex(item =>
+      pathSegments.some(segment => item.path.includes(segment))
+    );
+    
+    setActiveIndex(currentIndex !== -1 ? currentIndex : 0);
   }, [location.pathname, menuItems]);
 
   const handleClick = (index, path) => {
     setActiveIndex(index);
     navigate(path);
-    if(menuItems[index].label==='Dashboard')
-    {
-      localStorage.setItem("activeIndex", 0);
-      return;
-    }
-    localStorage.setItem("activeIndex", index); // Save the index in localStorage
   };
-
   return (
     <ul className="space-y-2">
       {menuItems?.map((item, index) => (

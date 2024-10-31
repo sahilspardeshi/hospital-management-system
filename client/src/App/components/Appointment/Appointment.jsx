@@ -149,7 +149,8 @@ const Appointment = () => {
 
       const data = await response.json();
       setSubmitted(true);
-      navigate('/appointments');
+      const path = window.location.pathname;
+      navigate(`${path}/appointments`);
     } catch (error) {
       console.error('Error creating appointment:', error);
     }
@@ -172,8 +173,8 @@ const Appointment = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center h-screen">
-      <form onSubmit={handleSubmit} className="w-full max-w-md">
+    <div className="flex-1 overflow-y-auto px-20 mt-10 rounded-lg m-4">
+      <form onSubmit={handleSubmit} >
         <h1 className="text-3xl font-bold mb-4">Create Appointment</h1>
 
         <div className="flex flex-wrap -mx-3 mb-6">
