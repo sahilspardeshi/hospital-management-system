@@ -48,8 +48,8 @@ const Treatment = () => {
   };
 
   return (
-    <div className="flex-1 p-6 rounded-lg my-10 pt-2 flex flex-col items-center justify-start">
-      <form onSubmit={handleSubmit} className="mt-0 bg-opacity-60 rounded-lg p-6 w-full max-w-4xl">
+    <div className="flex-1 rounded-lg  pt-2 flex flex-col items-center justify-start">
+      <form onSubmit={handleSubmit} className="mt-0 bg-opacity-60 rounded-lg p-6 w-full ">
         <h2 className="text-lg my-8 bg-[#E4D7D7] text-gray-600 font-bold py-1 px-2">Add New Treatment</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
           <div>

@@ -52,7 +52,12 @@ export default function NewMedicationForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    navigate('/medication-details', { state: { formData } });
+    const pathSegments = window.location.pathname.split('/');
+    pathSegments[pathSegments.length - 1] = `medication-details`;
+    const newPath = pathSegments.join('/');
+   console.log(newPath);
+   navigate(newPath);
+
   };
 
   return (
