@@ -102,7 +102,7 @@ export default function MedicationDetails() {
     <>
       
       <div className=''>
-        <h1 className="text-xl font-semibold mb-6 bg-rose-100 p-2 rounded max-w-screen-2xl mx-auto">New Medication</h1>
+        <h1 className="text-xl font-semibold mb-6 bg-[#E4D7D7] p-2 rounded max-w-screen-2xl mx-auto">New Medication</h1>
       </div>
       <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md max-w-screen-2xl mx-auto">
         <div className="grid grid-cols-3 gap-4 mb-6">

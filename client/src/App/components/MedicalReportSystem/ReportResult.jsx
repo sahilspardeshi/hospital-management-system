@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { PlusIcon, MinusIcon } from 'lucide-react'
 import { useReportContext } from './ReportContext'
-
+//3
 export default function ReportResult() {
   const { reportData, setReportData } = useReportContext()
   const [currentReport, setCurrentReport] = useState(null)

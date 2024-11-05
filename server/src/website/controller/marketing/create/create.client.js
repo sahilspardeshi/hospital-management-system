@@ -5,10 +5,10 @@ import bcrypt from 'bcrypt'
 // Create a new Marketing record
 export const createMarketing = async (req, res) => {
   try {
-    const { name, phone, email, password, address, dateOfBirth, hospitalName } = req.body;
+    const { name, phone, email, password, address, dob, hospital } = req.body;
     console.log(req.body)
     // Validate required fields
-    if (!name || !phone || !password || !address || !dateOfBirth || !hospitalName) {
+    if (!name || !phone || !email || !password || !dob) {
       return res.status(400).json({ error: 'Missing required fields' });
     }
 
@@ -23,8 +23,8 @@ export const createMarketing = async (req, res) => {
         email,
         password: hashedPassword,
         address,
-        dob:dateOfBirth,
-        hospital:hospitalName,
+        dob,
+        hospital,
       },
     });
 

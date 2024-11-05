@@ -29,7 +29,7 @@ const generateScaledData = (num, min, max, scale = 1) => {
   );
 };
 
-const Dashboard = () => {
+const Graphs = () => {
   const scaleFactor = 1.2;
 
   const [barChartData, setBarChartData] = useState({
@@ -114,15 +114,9 @@ const Dashboard = () => {
 
   return (
     <>
-     <div className="min-h-screen bg-custom-gradient flex">
-      <div className="bg-[#F8F7F7] bg-opacity-70 shadow-lg rounded-xl border border-gray-200 w-full max-w-full max-h-full overflow-hidden flex flex-row justify-start items-start mx-5 my-5 px-5 py-5">
-        <Sidebar />
-        <div className="flex-1 flex flex-col overflow-hidden">
-          <Navbar />
-          {/* main content starts from here */}
-      <div className="flex flex-col items-center my-9">
+      <div className="flex flex-col items-center ">
         {/* Visit card section */}
-        <div className="w-[80%] max-w-7xl flex justify-evenly flex-wrap gap-x-4  my-6">
+        <div className="w-full flex justify-evenly flex-wrap gap-x-4  my-6">
           <div className="p-4 rounded-lg shadow-lg bg-white flex items-center space-x-2 max-w-xs">
             <img src={VISIT} alt="Doctor Avatar" className="rounded-full w-10" />
             <h3 className="text-lg font-bold">3000 Patients <br /> Treated</h3>
@@ -141,7 +135,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 w-full max-w-5xl">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 w-full max-w-full">
           <div className="rounded-lg shadow-lg p-4 bg-white">
             {/* <img src={thisMonth} alt="Doctor Avatar" className="rounded-full w-16" /> */}
             <div className="text-2xl font-bold text-gray-800">+273</div>
@@ -187,11 +181,8 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-      </div>
-      </div>
-      </div>
     </>
   );
 };
 
-export default Dashboard;
+export default Graphs;

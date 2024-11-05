@@ -32,13 +32,7 @@ const StaffSection = () => {
   };
 
   return (
-    <div className="min-h-screen bg-custom-gradient flex">
-    {/* Sidebar */}
-    <div className="bg-[#F8F7F7] bg-opacity-70 shadow-lg rounded-xl border border-gray-200 w-full  max-w-full max-h-full overflow-y-auto flex flex-row justify-start items-start mx-5 my-5 px-5 py-5">
-    <Sidebar/>
-    <div className="flex-1 flex flex-col">
-      <Navbar/>
-      {/* Main container with content */}
+   
     <div className="flex flex-col justify-center items-center h-[82vh] w-[90%]  ">
       <div className="w-full max-w-7xl mx-auto  pl-20">
         <h2 className="text-xl font-semibold mb-4 bg-[#D9D9D9] py-2 px-5">Staff Section</h2>
@@ -185,9 +179,7 @@ const StaffSection = () => {
         </form>
       </div>
     </div>
-    </div>
-    </div>
-    </div>
+    
   );
 };
 
