@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 
 export const createPaymentMethod = async (req, res) => {
   const { methodName, paymentId, plan_id } = req.body;
-
+a
   try {
       // Check if the subscription plan exists
       const subscriptionPlan = await prisma.subscriptionPlan.findUnique({
@@ -25,8 +25,14 @@ export const createPaymentMethod = async (req, res) => {
               }
           }
       });
+console.log(paymentMethod)
 
-      res.status(201).json(paymentMethod);
+  //converting bigint into string
+  const paymenthod= {
+    ...paymentMethod,
+    id: paymentMethod.id.toString()
+};
+      res.status(201).json(paymenthod);
   } catch (err) {
       res.status(500).json({ error: err.message });
   }

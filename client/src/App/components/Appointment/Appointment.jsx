@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Appointment = () => {
   const [patientName, setPatientName] = useState('');
@@ -102,7 +104,7 @@ const Appointment = () => {
     setDoctorSuggestions([]);
     setShowDoctorSuggestions(false);
   };
-
+  // render Suggestions function
   const renderSuggestions = (suggestions, handleSelect) => {
     return (
       <ul className="absolute bg-white border border-gray-300 mt-1 rounded-lg shadow-lg z-10">
@@ -119,6 +121,8 @@ const Appointment = () => {
     );
   };
 
+
+  //Handel Submit function
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -149,8 +153,24 @@ const Appointment = () => {
 
       const data = await response.json();
       setSubmitted(true);
+
       const path = window.location.pathname;
       navigate(`${path}/appointments`);
+      toast.success("Appointment created successfully!")
+
+
+      //clear all fields after the alert//
+      setPatientName('');
+      setDoctorName('');
+      setAppointmentDate('');
+      setReportTitle('Fever');
+      setAppointmentType('New');
+      setDescription('');
+      setAppointmentStatus('PENDING');
+      setPatientSuggestions([]);
+      setDoctorSuggestions([]);
+
+
     } catch (error) {
       console.error('Error creating appointment:', error);
     }
@@ -170,9 +190,11 @@ const Appointment = () => {
 
   const handleDoctorBlur = () => {
     setShowDoctorSuggestions(false);
+    
   };
 
   return (
+
     <div className="flex-1 overflow-y-auto px-20 mt-10 rounded-lg m-4">
       <form onSubmit={handleSubmit} >
         <h1 className="text-3xl font-bold mb-4">Create Appointment</h1>

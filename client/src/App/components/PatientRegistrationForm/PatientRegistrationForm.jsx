@@ -1,11 +1,9 @@
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { submitPatientForm } from '../../redux/actions/patientActions'; // Adjust the path
+import { Upload } from 'lucide-react';
 
-
-import React, { useState } from 'react'
-import { Upload } from 'lucide-react'
-import Navbar from "../Navbar/Navbar"
-import Sidebar from "../SideBar/Sidebar"
-
-const PatientRegistrationForm = () =>{
+const PatientRegistrationForm = () => {
   const [formData, setFormData] = useState({
     patientName: '',
     age: '',
@@ -14,42 +12,48 @@ const PatientRegistrationForm = () =>{
     district: '',
     pinCode: '',
     mobileNo: '',
-    alternateMobileNo: '',
-    identityType: '',
-    identityNumber: '',
-    emergencyName: '',
-    emergencyMobile: '',
-    emergencyRelation: '',
-    emergencyAlternateMobile: '',
-    emergencyAddress: '',
-    insuranceIssuer: '',
-    insuranceNumber: '',
-    insuranceEndDate: '',
-    insuranceMaturityAmount: '',
-  })
+    gender: 'male',
+    blood_group:'a+',
+    email: 'v@gmail.com',
+    // alternateMobileNo: '',
+    // identityType: '',
+    // identityNumber: '',
+    // emergencyName: '',
+    // emergencyMobile: '',
+    // emergencyRelation: '',
+    // emergencyAlternateMobile: '',
+    // emergencyAddress: '',
+    // insuranceIssuer: '',
+    // insuranceNumber: '',
+    // insuranceEndDate: '',
+    // insuranceMaturityAmount: '',
 
-  const [file, setFile] = useState(null)
+  });
+
+  const [file, setFile] = useState(null);
+  const dispatch = useDispatch(); // Use dispatch from redux
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target
-    setFormData(prevData => ({
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
       ...prevData,
-      [name]: value
-    }))
-  }
+      [name]: value,
+    }));
+  };
 
   const handleFileChange = (e) => {
     if (e.target.files) {
-      setFile(e.target.files[0])
+      setFile(e.target.files[0]);
     }
-  }
+  };
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    console.log('Form Data:', formData)
-    console.log('File:', file)
-    
-    // Reset form after submission
+    e.preventDefault();
+
+    // Dispatch the action with form data and file
+    dispatch(submitPatientForm(formData, file));
+
+    // Reset form
     setFormData({
       patientName: '',
       age: '',
@@ -70,10 +74,10 @@ const PatientRegistrationForm = () =>{
       insuranceNumber: '',
       insuranceEndDate: '',
       insuranceMaturityAmount: '',
-    })
-    setFile(null)
-    alert('Form submitted successfully! Check console for details.')
-  }
+    });
+    setFile(null);
+    alert('Form submitted successfully!');
+  };
 
   return (
 
@@ -226,7 +230,7 @@ const PatientRegistrationForm = () =>{
                 </div>
               </div>
 
-              <div className="mb-6">
+              {/* <div className="mb-6">
                 <h2 className="text-lg font-semibold mb-4 bg-[#E4D7D7] p-2">Emergency contact:</h2>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
@@ -367,7 +371,7 @@ const PatientRegistrationForm = () =>{
                   {file && <p className="mt-2 text-sm text-gray-600">Selected file: {file.name}</p>}
 
                 </div>
-              </div>
+              </div> */}
 
               <div className="text-center">
                 <button 

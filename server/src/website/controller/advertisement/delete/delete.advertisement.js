@@ -1,3 +1,8 @@
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
+
+
 export const deleteAdvertisement = async (req, res) => {
     try {
       const { id } = req.params;

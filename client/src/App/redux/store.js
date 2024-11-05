@@ -3,10 +3,12 @@ import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
 import accountReducer from './reducers/accountReducer';
 import loginReducer from './reducers/loginReducer';
+import { patientReducer } from './reducers/patientReducer';
 
 const rootReducer = combineReducers({
-  account: accountReducer,
+
   login: loginReducer,
+  patient: patientReducer,
   // Add other reducers here
 });
 
