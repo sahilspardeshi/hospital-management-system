@@ -350,7 +350,7 @@ model OPDTreatments {
 
 model Petients {
   id                                               Int             @id @default(autoincrement())
-  fullName                                        String             @db.VarChar(100)
+  fullName                                         String             @db.VarChar(100)
   date_of_birth                                    String
   gender                                           String             @db.VarChar(10)
   blood_group                                      String?            @db.VarChar(5)
