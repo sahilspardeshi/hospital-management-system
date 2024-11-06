@@ -5,6 +5,7 @@ import { login } from "../redux/actions/loginActions"; // Adjust path accordingl
 import Logimg from "../assets/images/Logimg.png";
 import sailogo from "../assets/images/sailogo.png";
 import pass from "../assets/images/pass.png";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
   const [userId, setUserId] = useState("");
@@ -12,11 +13,25 @@ export default function Login() {
   const dispatch = useDispatch();
   const loginState = useSelector((state) => state.login);
   console.log("Login State:", loginState); // Add this for debugging
-
+  const navigate = useNavigate();
   const handleLogin = (e) => {
     e.preventDefault();
-    dispatch(login(userId, password));
+  
+    // Check for empty fields before dispatching
+    if (!userId || !password) {
+      alert('Please fill in all fields');
+      return;
+    }
+  
+    console.log('Attempting login with:', userId, password); // For debugging
+  
+    dispatch(login(userId, password, (data) => {
+      console.log('Callback data:', data);
+      alert('Login successful!');
+      navigate('/dashboard'); // Uncomment if ready to redirect
+    }));
   };
+  
 
   return (
     <>

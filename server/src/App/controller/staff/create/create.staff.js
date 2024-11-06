@@ -9,10 +9,6 @@ export const createStaff = async (req, res) => {
   const { fullName, specialization, user, password, type, contact_number, email, qualifications, department } = req.body;
 
   try {
-    // Check if SECRET_KEY is defined
-    if (!process.env.SECRET_KEY) {
-      return res.status(500).json({ error: "Secret key not defined" });
-    }
 
     // Check if email already exists
     const checkEmail = await prisma.staff.findFirst({

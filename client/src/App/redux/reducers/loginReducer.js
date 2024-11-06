@@ -1,23 +1,26 @@
-// src/app/redux/reducers/loginReducer.js
-import { LOGIN_REQUEST, LOGIN_SUCCESS, LOGIN_FAILURE } from '../loginActions';
+import {
+LOGIN_FAILURE,
+LOGIN_REQUEST,
+LOGIN_SUCCESS
+} from "../actions/loginActions";
 
 const initialState = {
   loading: false,
-  userData: null,
+  patient: null,
   error: null,
 };
-
-const loginReducer = (state = initialState, action) => {
+export const loginReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOGIN_REQUEST:
       return { ...state, loading: true, error: null };
+
     case LOGIN_SUCCESS:
-      return { ...state, loading: false, userData: action.payload };
+      return { ...state, loading: false, accountData: action.payload };
+
     case LOGIN_FAILURE:
       return { ...state, loading: false, error: action.payload };
+
     default:
       return state;
   }
 };
-
-export default loginReducer;

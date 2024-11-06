@@ -5,7 +5,6 @@ const prisma = new PrismaClient();
 
 // Create a new Patient 
 export const createPatient = async (req, res) => {
-    console.log(req.body);
     const {patientName, age, gender, blood_group, mobileNo, address, email} = req.body;
    
     try {

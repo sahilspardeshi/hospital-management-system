@@ -21,7 +21,6 @@ import medication_file from '../routes/medication-file.js';
 const AllRoutes = express();
 
 // Define the route
-AllRoutes.use('/auth', AuthRoutes);
 AllRoutes.route('/health').get(healthCheck);
 
 //setting routes
@@ -31,7 +30,7 @@ AllRoutes.use('/Billing',billing)
 AllRoutes.use('/AdvanceBilling',AdvancePayment)
 //staff routes
 AllRoutes.use('/staff',staffRoutes);
-
+AllRoutes.use('/auth',AuthRoutes);
 //patientMedication routes
 AllRoutes.use('/patientMedication', medicationRouter);
 
