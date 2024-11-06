@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { submitPatientForm } from '../../redux/actions/patientActions'; // Adjust the path
+import { registerPatient } from '../../redux/actions/patientActions'; // Adjust the path
 import { Upload } from 'lucide-react';
 
 const PatientRegistrationForm = () => {
@@ -51,7 +51,7 @@ const PatientRegistrationForm = () => {
     e.preventDefault();
 
     // Dispatch the action with form data and file
-    dispatch(submitPatientForm(formData, file));
+    dispatch(registerPatient(formData, file));
 
     // Reset form
     setFormData({
@@ -186,7 +186,7 @@ const PatientRegistrationForm = () => {
                       required
                     />
                   </div>
-                  <div>
+                  {/* <div>
                     <label htmlFor="alternateMobileNo" className="block mb-1 text-sm font-medium">Alternate mobile no</label>
                     <input
                       type="tel"
@@ -226,7 +226,7 @@ const PatientRegistrationForm = () => {
                       placeholder="Enter identity number"
                       required
                     />
-                  </div>
+                  </div> */}
                 </div>
               </div>
 
