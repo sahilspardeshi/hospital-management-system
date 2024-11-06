@@ -3,13 +3,13 @@ CREATE TYPE "Role" AS ENUM ('user', 'admin');
 
 -- CreateTable
 CREATE TABLE "Marketing" (
-    "id" BIGSERIAL NOT NULL,
+    "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "phone" TEXT NOT NULL,
     "email" TEXT,
     "password" TEXT NOT NULL,
     "address" TEXT NOT NULL,
-    "dob" TIMESTAMP(3) NOT NULL,
+    "dob" TEXT NOT NULL,
     "hospital" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
@@ -18,7 +18,7 @@ CREATE TABLE "Marketing" (
 
 -- CreateTable
 CREATE TABLE "Advertisement" (
-    "id" BIGINT NOT NULL,
+    "id" SERIAL NOT NULL,
     "title" TEXT NOT NULL,
     "description" TEXT,
     "imageUrl" TEXT NOT NULL,
@@ -29,7 +29,7 @@ CREATE TABLE "Advertisement" (
 
 -- CreateTable
 CREATE TABLE "Client" (
-    "id" BIGINT NOT NULL,
+    "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "phone" TEXT NOT NULL,
     "email" TEXT,
@@ -45,8 +45,8 @@ CREATE TABLE "Client" (
 
 -- CreateTable
 CREATE TABLE "ClientSubscription" (
-    "id" BIGINT NOT NULL,
-    "clientId" BIGINT,
+    "id" SERIAL NOT NULL,
+    "clientId" INTEGER,
     "startDate" TIMESTAMP(3) NOT NULL,
     "endDate" TIMESTAMP(3) NOT NULL,
     "paymentStatus" TEXT DEFAULT 'Pending',
@@ -58,11 +58,11 @@ CREATE TABLE "ClientSubscription" (
 
 -- CreateTable
 CREATE TABLE "Setting" (
-    "id" BIGINT NOT NULL,
+    "id" SERIAL NOT NULL,
     "imageUrl" TEXT NOT NULL,
     "hospital" TEXT NOT NULL,
     "domain" TEXT NOT NULL,
-    "client_id" BIGINT NOT NULL,
+    "client_id" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "Setting_pkey" PRIMARY KEY ("id")
@@ -70,25 +70,25 @@ CREATE TABLE "Setting" (
 
 -- CreateTable
 CREATE TABLE "SubscriptionPlan" (
-    "id" BIGINT NOT NULL,
+    "id" SERIAL NOT NULL,
     "planName" TEXT NOT NULL,
     "price" DECIMAL(10,2) NOT NULL,
     "duration" INTEGER NOT NULL,
     "features" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "clinet_subscription_id" BIGINT NOT NULL,
+    "clinet_subscription_id" INTEGER NOT NULL,
 
     CONSTRAINT "SubscriptionPlan_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "User" (
-    "id" BIGINT NOT NULL,
+    "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "username" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "email" TEXT,
-    "phoneNumber" BIGINT NOT NULL,
+    "phoneNumber" INTEGER NOT NULL,
     "role" "Role" NOT NULL DEFAULT 'admin',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
@@ -97,7 +97,7 @@ CREATE TABLE "User" (
 
 -- CreateTable
 CREATE TABLE "Review" (
-    "id" BIGINT NOT NULL,
+    "id" SERIAL NOT NULL,
     "image" TEXT,
     "rating" INTEGER NOT NULL,
     "reviewText" TEXT NOT NULL,
@@ -108,23 +108,23 @@ CREATE TABLE "Review" (
 
 -- CreateTable
 CREATE TABLE "PaymentMethod" (
-    "id" BIGINT NOT NULL,
+    "id" SERIAL NOT NULL,
     "methodName" TEXT NOT NULL,
     "paymentId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "plan_id" BIGINT NOT NULL,
+    "plan_id" INTEGER NOT NULL,
 
     CONSTRAINT "PaymentMethod_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "UserCredentials" (
-    "id" BIGINT NOT NULL,
+    "id" SERIAL NOT NULL,
     "username" TEXT NOT NULL,
     "password" TEXT NOT NULL,
-    "phone" BIGINT NOT NULL,
+    "phone" INTEGER NOT NULL,
     "role" "Role" NOT NULL DEFAULT 'admin',
-    "client_id" BIGINT NOT NULL,
+    "client_id" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "UserCredentials_pkey" PRIMARY KEY ("id")

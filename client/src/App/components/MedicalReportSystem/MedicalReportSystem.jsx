@@ -19,6 +19,7 @@ export default function MedicalReportSystem() {
                   <Route path="" element={<MainMedicalReport />} />
                   <Route path="new-report" element={<NewMedicalReport />} />
                   <Route path="report-result/:id" element={<ReportResult />} />
+                  <Route path="report-result/" element={<ReportResult />} />
                 </Routes>
                
               </ReportProvider>

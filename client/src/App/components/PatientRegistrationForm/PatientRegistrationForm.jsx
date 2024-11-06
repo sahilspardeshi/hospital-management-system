@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { submitPatientForm } from '../../redux/actions/patientActions'; // Adjust the path
+import { registerPatient } from '../../redux/actions/patientActions'; // Adjust the path
 import { Upload } from 'lucide-react';
 
 const PatientRegistrationForm = () => {
@@ -12,9 +12,9 @@ const PatientRegistrationForm = () => {
     district: '',
     pinCode: '',
     mobileNo: '',
-    gender: 'male',
-    blood_group:'a+',
-    email: 'v@gmail.com',
+    gender: '',
+    blood_group:'',
+    email: '',
     // alternateMobileNo: '',
     // identityType: '',
     // identityNumber: '',
@@ -49,36 +49,42 @@ const PatientRegistrationForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Dispatch the action with form data and file
-    dispatch(submitPatientForm(formData, file));
-
-    // Reset form
-    setFormData({
-      patientName: '',
-      age: '',
-      address: '',
-      state: '',
-      district: '',
-      pinCode: '',
-      mobileNo: '',
-      alternateMobileNo: '',
-      identityType: '',
-      identityNumber: '',
-      emergencyName: '',
-      emergencyMobile: '',
-      emergencyRelation: '',
-      emergencyAlternateMobile: '',
-      emergencyAddress: '',
-      insuranceIssuer: '',
-      insuranceNumber: '',
-      insuranceEndDate: '',
-      insuranceMaturityAmount: '',
-    });
-    setFile(null);
-    alert('Form submitted successfully!');
+  
+    // Dispatch the action with form data and a callback
+    dispatch(registerPatient(formData, (data) => {
+      // Show alert and log response data
+      alert('Form submitted successfully!');
+      console.log('Patient data:', data);
+  
+      // Reset form data if needed
+      setFormData({
+        patientName: '',
+        age: '',
+        address: '',
+        state: '',
+        district: '',
+        pinCode: '',
+        mobileNo: '',
+        gender: '',
+        blood_group:'',
+        email: '',
+        // alternateMobileNo: '',
+        // identityType: '',
+        // identityNumber: '',
+        // emergencyName: '',
+        // emergencyMobile: '',
+        // emergencyRelation: '',
+        // emergencyAlternateMobile: '',
+        // emergencyAddress: '',
+        // insuranceIssuer: '',
+        // insuranceNumber: '',
+        // insuranceEndDate: '',
+        // insuranceMaturityAmount: '',
+    
+      });
+    }));
   };
-
+  
   return (
 
           <div className="flex-1 overflow-y-auto px-20 mt-10 rounded-lg m-4">
@@ -186,7 +192,7 @@ const PatientRegistrationForm = () => {
                       required
                     />
                   </div>
-                  <div>
+                  {/* <div>
                     <label htmlFor="alternateMobileNo" className="block mb-1 text-sm font-medium">Alternate mobile no</label>
                     <input
                       type="tel"
@@ -197,37 +203,50 @@ const PatientRegistrationForm = () => {
                       className="w-full p-2 border rounded"
                       placeholder="Enter alternate mobile no"
                     />
-                  </div>
+                  </div> */}
                   <div>
-                    <label htmlFor="identityType" className="block mb-1 text-sm font-medium">Select Identity type</label>
+                    <label htmlFor="gender" className="block mb-1 text-sm font-medium">Select gender type</label>
                     <select
-                      id="identityType"
-                      name="identityType"
-                      value={formData.identityType}
+                      id="gender"
+                      name="gender"
+                      value={formData.gender}
                       onChange={handleInputChange}
                       className="w-full p-2 border rounded"
                       required
                     >
-                      <option value="">Select Identity</option>
-                      <option value="aadhar">Aadhar Card</option>
-                      <option value="pan">PAN Card</option>
-                      <option value="drivingLicense">Driving License</option>
+                      <option value="">Select gender</option>
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                      <option value="Other">Other</option>
                     </select>
                   </div>
                   <div>
-                    <label htmlFor="identityNumber" className="block mb-1 text-sm font-medium">Enter Identity number</label>
+                    <label htmlFor="email" className="block mb-1 text-sm font-medium">Enter email number</label>
                     <input
                       type="text"
-                      id="identityNumber"
-                      name="identityNumber"
-                      value={formData.identityNumber}
+                      id="email"
+                      name="email"
+                      value={formData.email}
                       onChange={handleInputChange}
                       className="w-full p-2 border rounded"
-                      placeholder="Enter identity number"
+                      placeholder="Enter email"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="blood_group" className="block mb-1 text-sm font-medium">Enter blood group</label>
+                    <input
+                      type="text"
+                      id="blood_group"
+                      name="blood_group"
+                      value={formData.blood_group}
+                      onChange={handleInputChange}
+                      className="w-full p-2 border rounded"
+                      placeholder="Enter blood_group "
                       required
                     />
                   </div>
                 </div>
+                
               </div>
 
               {/* <div className="mb-6">

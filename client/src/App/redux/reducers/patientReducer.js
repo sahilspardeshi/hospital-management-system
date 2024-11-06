@@ -9,20 +9,17 @@ const initialState = {
   patient: null,
   error: null,
 };
-
 export const patientReducer = (state = initialState, action) => {
   switch (action.type) {
     case PATIENT_REGISTER_REQUEST:
-      return { ...state, loading: true };
+      return { ...state, loading: true, error: null };
+
     case PATIENT_REGISTER_SUCCESS:
-      return { loading: false, patient: action.payload, error: null };
+      return { ...state, loading: false, accountData: action.payload };
+
     case PATIENT_REGISTER_FAIL:
-      return { loading: false, error: action.payload, patient: null };
-    case "SUBMIT_PATIENT_FORM":
-      return {
-        ...state,
-        patientData: action.payload,
-      };
+      return { ...state, loading: false, error: action.payload };
+
     default:
       return state;
   }

@@ -1,53 +1,27 @@
-import { PrismaClient } from '@prisma/client';
+import prisma from "../../../db/index.js";
 
-const prisma = new PrismaClient();
-
-// Get a MainMedication record by ID
-export const getMainMedication = async (req, res) => {
-  try {
-    const mainMedication = await prisma.mainMedication.findUnique({
-      where: { id: parseInt(req.params.id) },
-    });
-    if (!mainMedication) {
-      return res.status(404).json({ message: 'Main medication not found' });
-    }
-    res.json(mainMedication);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
-
-// Get all MainMedication records
-export const getAllMainMedications = async (req, res) => {
-  try {
-    const mainMedications = await prisma.mainMedication.findMany();
-    res.json(mainMedications);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
-
-// Get a Medication record by ID
-export const getMedication = async (req, res) => {
-  try {
-    const medication = await prisma.medications.findUnique({
-      where: { id: parseInt(req.params.id) },
-    });
-    if (!medication) {
-      return res.status(404).json({ message: 'Medication not found' });
-    }
-    res.json(medication);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-};
-
-// Get all Medication records
+// Get all medications
 export const getAllMedications = async (req, res) => {
   try {
-    const medications = await prisma.medications.findMany();
-    res.json(medications);
+    const medications = await prisma.medications.findMany(
+       {  where: { id: parseInt(req.params.id) },}
+    );
+    res.status(200).json({ data: medications });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ message: 'Error fetching medications', error: error.message });
+  }
+};
+
+// Get a single medication by ID
+export const getMedicationById = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const medication = await prisma.medications.findUnique({
+      where: { id: parseInt(id) },
+    });
+    res.status(200).json({ data: medication });
+  } catch (error) {
+    res.status(500).json({ message: 'Error fetching medication', error: error.message });
   }
 };
