@@ -57,8 +57,8 @@ export default function Testimonial() {
         <>
             <div className=' py-10 '>
                 <div>
-                    <h1 className='font-semibold lg:text-4xl text-2xl text-center mb-3'>Patients Testimonial</h1>
-                    <p className='text-center text-gray-500'>Let's see what our happy patients say</p>
+                    <h1 className='font-semibold lg:text-4xl text-2xl text-center mb-3'>Client Review</h1>
+                    <p className='text-center text-gray-500'>Let's see what our client say</p>
                 </div>
                 <div className='flex  flex-wrap justify-evenly m-auto my-5'>
 
