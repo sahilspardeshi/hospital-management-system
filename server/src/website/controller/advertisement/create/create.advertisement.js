@@ -6,22 +6,23 @@ const prisma = new PrismaClient();
 
 export const createAdvertisement = async (req, res) => {
   try {
-    const { title, description } = req.body;
+    const { title, description , section} = req.body;
 
     console.log("this is file", req.file)
 
     const imageUrl = await Uploadoncloudinary(req.file.path);
 console.log(imageUrl)
     // Validate required fields
-    if (!title || !imageUrl ) {
-      return res.status(400).json({ error: 'Missing required fields' });
-    }
+    // if (!title || !imageUrl ) {
+    //   return res.status(400).json({ error: 'Missing required fields' });
+    // }
 
     const newAdvertisement = await prisma.advertisement.create({
       data: {
         title,
         description,
         imageUrl,
+        section
       },
     });
     console.log(newAdvertisement)

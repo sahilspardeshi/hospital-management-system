@@ -3,7 +3,11 @@ import React from "react";
 import dashboard from '../../assets/images/Dashboard.png';
 
 
-const DynamicTalentHub = () => {
+const DynamicTalentHub = ({advertisements}) => {
+
+console.log(advertisements)
+
+  console.log()
   return (
     <>
       <div className="from-purple-100 to-pink-50 flex flex-col items-center justify-center h-full">
@@ -20,26 +24,15 @@ const DynamicTalentHub = () => {
         <div className="w-full md:w-1/2 px-4">
           {/* Services */}
           <div className="space-y-6 p-5">
-            <ServiceCard
-              title="Applicant Tracking System"
-              description="Ceipal’s AI-powered ATS automatically delivers high-quality talent to your dashboard while integrating."
-              icon="📊"
-            />
-            <ServiceCard
-              title="Procurewise VMS"
-              description="Ceipal Procurewise is a flexible, powerful, and user-friendly vendor management system."
-              icon="📋"
-            />
-            <ServiceCard
-              title="Workforce Management"
-              description="Ceipal’s Workforce Management helps organizations effectively oversee talent."
-              icon="💼"
-            />
-            <ServiceCard
-              title="Diversity Hiring"
-              description="Ceipal’s diversity hiring product uses our advanced AI capabilities to access and plan."
-              icon="🤝"
-            />
+
+            {advertisements.map((item) => (
+              <ServiceCard
+                title={item.title}
+                description={item.description}
+                icon={item.imageUrl}
+              />
+            )
+            )}
           </div>
         </div>
 
@@ -53,10 +46,10 @@ const DynamicTalentHub = () => {
                 className="w-full h-auto rounded-lg shadow-md mb-4 border border-gray-600"
               />
             </div>
-            <h1 className="font-bold text-center mb-4">
+            <h1 className="font-bold text-lg lg:text-3xl text-center mb-4">
               Dynamic Talent Hub
             </h1>
-            <p className="text-sm text-center text-gray-600 mb-6">
+            <p className="text-sm text-center lg:text-lg text-gray-600 mb-6">
               Welcome to our dynamic talent hub, where innovation and expertise
               converge to create a powerful ecosystem for connecting top-tier
               talent with unparalleled opportunities.
@@ -64,7 +57,7 @@ const DynamicTalentHub = () => {
           </div>
         </div>
       </section>
-      
+
       <div className="from-purple-100 to-pink-50 flex flex-col items-center justify-center h-full">
         <button className="mt-4 px-6 py-2 bg-green-500 text-white font-semibold rounded-lg m-10 hover:bg-green-600">
           See More
@@ -76,8 +69,12 @@ const DynamicTalentHub = () => {
 
 const ServiceCard = ({ title, description, icon }) => {
   return (
-    <div className="flex items-center space-x-4 p-10 rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 ">
-      <div className="text-4xl">{icon}</div>
+    <div className="flex items-center space-x-4 p-10 rounded-lg shadow-md hover:shadow-xl transition-shadow bg-purple-50 duration-300 ">
+      <img
+                src={icon}
+                alt="Dynamic Talent Hub"
+                className="w-12 h-12 rounded-lg shadow-md mb-4 border border-gray-600 items-center"
+              />
       <div>
         <h4 className="text-xl font-bold">{title}</h4>
         <p className="text-sm text-gray-600">{description}</p>
