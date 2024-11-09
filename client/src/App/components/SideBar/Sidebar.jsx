@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import Logo from "../../assets/images/Aarohilogo.png";
+import { useDispatch } from "react-redux";
 
 const Menu = ({ menuItems }) => {
   const navigate = useNavigate();
 
-
+  const dispatch = useDispatch();
   // Initialize activeIndex from localStorage or default to 0
   const [activeIndex, setActiveIndex] = useState(null);
   useEffect(() => {
@@ -20,6 +21,10 @@ const Menu = ({ menuItems }) => {
 
   const handleClick = (index, path) => {
     setActiveIndex(index);
+   if(menuItems[index].label==='Logout')
+   {
+    
+   }
     navigate(path);
   };
   return (
