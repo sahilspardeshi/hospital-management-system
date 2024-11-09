@@ -1,11 +1,9 @@
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { registerPatient } from '../../redux/actions/patientActions'; // Adjust the path
+import { Upload } from 'lucide-react';
 
-
-import React, { useState } from 'react'
-import { Upload } from 'lucide-react'
-import Navbar from "../Navbar/Navbar"
-import Sidebar from "../SideBar/Sidebar"
-
-const PatientRegistrationForm = () =>{
+const PatientRegistrationForm = () => {
   const [formData, setFormData] = useState({
     patientName: '',
     age: '',
@@ -14,67 +12,79 @@ const PatientRegistrationForm = () =>{
     district: '',
     pinCode: '',
     mobileNo: '',
-    alternateMobileNo: '',
-    identityType: '',
-    identityNumber: '',
-    emergencyName: '',
-    emergencyMobile: '',
-    emergencyRelation: '',
-    emergencyAlternateMobile: '',
-    emergencyAddress: '',
-    insuranceIssuer: '',
-    insuranceNumber: '',
-    insuranceEndDate: '',
-    insuranceMaturityAmount: '',
-  })
+    gender: '',
+    blood_group:'',
+    email: '',
+    // alternateMobileNo: '',
+    // identityType: '',
+    // identityNumber: '',
+    // emergencyName: '',
+    // emergencyMobile: '',
+    // emergencyRelation: '',
+    // emergencyAlternateMobile: '',
+    // emergencyAddress: '',
+    // insuranceIssuer: '',
+    // insuranceNumber: '',
+    // insuranceEndDate: '',
+    // insuranceMaturityAmount: '',
 
-  const [file, setFile] = useState(null)
+  });
+
+  const [file, setFile] = useState(null);
+  const dispatch = useDispatch(); // Use dispatch from redux
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target
-    setFormData(prevData => ({
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
       ...prevData,
-      [name]: value
-    }))
-  }
+      [name]: value,
+    }));
+  };
 
   const handleFileChange = (e) => {
     if (e.target.files) {
-      setFile(e.target.files[0])
+      setFile(e.target.files[0]);
     }
-  }
+  };
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    console.log('Form Data:', formData)
-    console.log('File:', file)
+    e.preventDefault();
+  
+    // Dispatch the action with form data and a callback
+    dispatch(registerPatient(formData, (data) => {
+      // Show alert and log response data
+      alert('Form submitted successfully!');
+      console.log('Patient data:', data);
+  
+      // Reset form data if needed
+      setFormData({
+        patientName: '',
+        age: '',
+        address: '',
+        state: '',
+        district: '',
+        pinCode: '',
+        mobileNo: '',
+        gender: '',
+        blood_group:'',
+        email: '',
+        // alternateMobileNo: '',
+        // identityType: '',
+        // identityNumber: '',
+        // emergencyName: '',
+        // emergencyMobile: '',
+        // emergencyRelation: '',
+        // emergencyAlternateMobile: '',
+        // emergencyAddress: '',
+        // insuranceIssuer: '',
+        // insuranceNumber: '',
+        // insuranceEndDate: '',
+        // insuranceMaturityAmount: '',
     
-    // Reset form after submission
-    setFormData({
-      patientName: '',
-      age: '',
-      address: '',
-      state: '',
-      district: '',
-      pinCode: '',
-      mobileNo: '',
-      alternateMobileNo: '',
-      identityType: '',
-      identityNumber: '',
-      emergencyName: '',
-      emergencyMobile: '',
-      emergencyRelation: '',
-      emergencyAlternateMobile: '',
-      emergencyAddress: '',
-      insuranceIssuer: '',
-      insuranceNumber: '',
-      insuranceEndDate: '',
-      insuranceMaturityAmount: '',
-    })
-    setFile(null)
-    alert('Form submitted successfully! Check console for details.')
-  }
-
+      });
+    }));
+  };
+  
   return (
 
           <div className="flex-1 overflow-y-auto px-20 mt-10 rounded-lg m-4">
@@ -182,7 +192,7 @@ const PatientRegistrationForm = () =>{
                       required
                     />
                   </div>
-                  <div>
+                  {/* <div>
                     <label htmlFor="alternateMobileNo" className="block mb-1 text-sm font-medium">Alternate mobile no</label>
                     <input
                       type="tel"
@@ -193,40 +203,53 @@ const PatientRegistrationForm = () =>{
                       className="w-full p-2 border rounded"
                       placeholder="Enter alternate mobile no"
                     />
-                  </div>
+                  </div> */}
                   <div>
-                    <label htmlFor="identityType" className="block mb-1 text-sm font-medium">Select Identity type</label>
+                    <label htmlFor="gender" className="block mb-1 text-sm font-medium">Select gender type</label>
                     <select
-                      id="identityType"
-                      name="identityType"
-                      value={formData.identityType}
+                      id="gender"
+                      name="gender"
+                      value={formData.gender}
                       onChange={handleInputChange}
                       className="w-full p-2 border rounded"
                       required
                     >
-                      <option value="">Select Identity</option>
-                      <option value="aadhar">Aadhar Card</option>
-                      <option value="pan">PAN Card</option>
-                      <option value="drivingLicense">Driving License</option>
+                      <option value="">Select gender</option>
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                      <option value="Other">Other</option>
                     </select>
                   </div>
                   <div>
-                    <label htmlFor="identityNumber" className="block mb-1 text-sm font-medium">Enter Identity number</label>
+                    <label htmlFor="email" className="block mb-1 text-sm font-medium">Enter email number</label>
                     <input
                       type="text"
-                      id="identityNumber"
-                      name="identityNumber"
-                      value={formData.identityNumber}
+                      id="email"
+                      name="email"
+                      value={formData.email}
                       onChange={handleInputChange}
                       className="w-full p-2 border rounded"
-                      placeholder="Enter identity number"
+                      placeholder="Enter email"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="blood_group" className="block mb-1 text-sm font-medium">Enter blood group</label>
+                    <input
+                      type="text"
+                      id="blood_group"
+                      name="blood_group"
+                      value={formData.blood_group}
+                      onChange={handleInputChange}
+                      className="w-full p-2 border rounded"
+                      placeholder="Enter blood_group "
                       required
                     />
                   </div>
                 </div>
+                
               </div>
 
-              <div className="mb-6">
+              {/* <div className="mb-6">
                 <h2 className="text-lg font-semibold mb-4 bg-[#E4D7D7] p-2">Emergency contact:</h2>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
@@ -367,7 +390,7 @@ const PatientRegistrationForm = () =>{
                   {file && <p className="mt-2 text-sm text-gray-600">Selected file: {file.name}</p>}
 
                 </div>
-              </div>
+              </div> */}
 
               <div className="text-center">
                 <button 

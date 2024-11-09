@@ -5,26 +5,30 @@ import {setTokens} from '../../../middleware/generateToken.js'
 
 export async function login (req, res) {
 
-  const { password, email } = req.body;
+  const { password, userId } = req.body;
+  console.log(req.body);
 
   try {
     // Retrieve the staff member from the database
-    const staffMember = await prisma.staff.findUnique({
-      where: { email },
+    const staffMember = await prisma.staff.findFirst({
+      where: {
+        OR: [
+          { email: userId },
+          { user: userId }
+        ],
+      },
     });
-
     if (!staffMember) {
       return res.status(404).json({ error: 'Staff member not found' });
     }
 
-   
     
 
     // Compare the hashed passwords
     const isMatch = await bcrypt.compare(password, staffMember.password);
     if (isMatch) {
-      const { accessToken, refreshToken } = setTokens(user, res);
-
+      const { accessToken, refreshToken } = setTokens(staffMember, res);
+     
       return res.status(200).json({ msg: 'Login successful',accessToken,refreshToken });
 
     } else {

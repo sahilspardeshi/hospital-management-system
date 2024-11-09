@@ -14,7 +14,7 @@ enum Role {
 }
 
 model Marketing {
-  id        BigInt   @id @default(autoincrement())
+  id        Int   @id @default(autoincrement())
   name      String
   phone     String   @unique
   email     String?  @unique
@@ -35,7 +35,7 @@ enum Section {
   Section_4
 }
 model Advertisement {
-  id          BigInt   @id @default(autoincrement())
+  id          Int   @id @default(autoincrement())
   title       String
   description String?
   imageUrl    String
@@ -46,7 +46,7 @@ model Advertisement {
 }
 
 model Client {
-  id                 BigInt              @id @default(autoincrement())
+  id                 Int              @id @default(autoincrement())
   name               String
   phone              String              @unique
   email              String?             @unique
@@ -64,8 +64,8 @@ model Client {
 }
 
 model ClientSubscription {
-  id                 BigInt             @id @default(autoincrement())
-  clientId           BigInt?            @unique
+  id                 Int             @id @default(autoincrement())
+  clientId           Int?            @unique
   startDate          DateTime
   endDate            DateTime
   paymentStatus      String?            @default("Pending")
@@ -78,11 +78,11 @@ model ClientSubscription {
 }
 
 model Setting {
-  id        BigInt   @id @default(autoincrement())
+  id        Int   @id @default(autoincrement())
   imageUrl  String
   hospital  String
   domain    String
-  client_id BigInt   @unique
+  client_id Int   @unique
   createdAt DateTime @default(now())
   client    Client   @relation(fields: [client_id], references: [id])
 
@@ -90,13 +90,13 @@ model Setting {
 }
 
 model SubscriptionPlan {
-  id                     BigInt             @id @default(autoincrement())
+  id                     Int             @id @default(autoincrement())
   planName               String
   price                  Decimal            @db.Decimal(10, 2)
   duration               Int
   features               String?
   createdAt              DateTime           @default(now())
-  clinet_subscription_id BigInt
+  clinet_subscription_id Int
   paymentMethods         PaymentMethod[] 
   clientSubscription     ClientSubscription @relation(fields: [clinet_subscription_id], references: [id])
 
@@ -104,12 +104,12 @@ model SubscriptionPlan {
 }
 
 model User {
-  id          BigInt   @id @default(autoincrement())
+  id          Int   @id @default(autoincrement())
   name        String
   username    String
   password    String
   email       String?  @unique
-  phoneNumber BigInt   @unique
+  phoneNumber Int   @unique
   role        Role     @default(admin) // Assuming 'admin' is represented by 1
   createdAt   DateTime @default(now())
 
@@ -117,7 +117,7 @@ model User {
 }
 
 model Review {
-  id         BigInt   @id @default(autoincrement())
+  id         Int   @id @default(autoincrement())
   image      String?
   rating     Int
   reviewText String
@@ -127,23 +127,23 @@ model Review {
 }
 
 model PaymentMethod {
-  id               BigInt           @id @default(autoincrement())
+  id               Int           @id @default(autoincrement())
   methodName       String
   paymentId        String
   createdAt        DateTime         @default(now())
-  plan_id          BigInt
+  plan_id          Int
   subscriptionPlan SubscriptionPlan @relation(fields: [plan_id], references: [id])
 
   @@map("PaymentMethod")
 }
 
 model UserCredentials {
-  id        BigInt   @id @default(autoincrement())
+  id        Int   @id @default(autoincrement())
   username  String
   password  String
-  phone     BigInt   @unique
+  phone     Int   @unique
   role      Role     @default(admin) // Assuming 'admin' is represented by 1
-  client_id BigInt   @unique
+  client_id Int   @unique
   createdAt DateTime @default(now())
   client    Client   @relation(fields: [client_id], references: [id])
 

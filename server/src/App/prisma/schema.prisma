@@ -127,15 +127,16 @@ model IPDTreatments {
   IPDAdmissions      IPDAdmissions?      @relation(fields: [ipd_admission_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "ipdtreatments_ipd_admission_id_foreign")
   Petients           Petients            @relation(fields: [petient_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "ipdtreatments_petient_id_foreign")
   MainIntakeOutput   MainIntakeOutput[]
-  MainMedicalReports MainMedicalReports?
-  PatientMedication  PatientMedication?
+  MainMedicalReports MainMedicalReports[]
   SurgeryRecords     SurgeryRecords[]
-  MainLabReports     MainLabReports?
+  MainLabReports     MainLabReports[]
   MainVitalSigns     MainVitalSigns[]
   MainNotes          MainNotes[]
   Ward               Ward?
 
   Billing Billing[]
+
+  PatientMedication PatientMedication[] @relation(map: "PatientMedication_IPDtreatment_id_foreign")
 }
 
 model MainIntakeOutput {
@@ -173,9 +174,9 @@ model IntakeOutput {
 
 model MainLabReports {
   id              Int         @id @default(autoincrement())
-  ODPtreatment_id Int?        @unique
-  IPDtreatment_id Int?        @unique
-  ANCtreatment_id Int?        @unique
+  ODPtreatment_id Int?       
+  IPDtreatment_id Int?       
+  ANCtreatment_id Int?       
   status          String?        @db.VarChar(20)
   labReport_count Int
   cost            Float          @default(0.0)
@@ -226,9 +227,9 @@ model LabTestDetails {
 
 model MainMedicalReports {
   id              Int           @id @default(autoincrement())
-  ODPtreatment_id Int?          @unique
-  IPDtreatment_id Int?          @unique
-  ANCtreatment_id Int?          @unique
+  ODPtreatment_id Int?        
+  IPDtreatment_id Int?    
+  ANCtreatment_id Int?        
   Medical_count   Int
   cost            Float            @default(0.0)
   paid            Float            @default(0.0)
@@ -244,6 +245,7 @@ model MainMedicalReports {
 
 model MedicalReports {
   report_id          Int              @id @default(autoincrement())
+  patient_id         Int?
   doctor_id          Int?
   MainReports_id     Int?
   report_type        String?             @db.VarChar(255)
@@ -256,6 +258,8 @@ model MedicalReports {
   status             String?             @db.VarChar(20)
   created_at         DateTime?           @default(now()) @db.Timestamp(0)
   updated_at         DateTime?           @default(now()) @db.Timestamp(0)
+      Patients          Petients?           @relation(fields: [patient_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "labreports_patient_id_foreign")
+
   Staff              Staff?              @relation(fields: [doctor_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "medicalreports_doctor_id_foreign")
   MainMedicalReports MainMedicalReports? @relation(fields: [MainReports_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "medicalreports_MainMedicalReports_id_foreign")
   ReportResults      ReportResults[]
@@ -281,6 +285,7 @@ model Medications {
 
 model MainMedication {
   id                   Int            @id @default(autoincrement())
+    patient_id        Int?
   PatientMedication_id Int
   SurgeryRecords_id    Int?
   treatment_type       String            @db.VarChar(10)
@@ -289,12 +294,14 @@ model MainMedication {
   description          String?           @db.VarChar(255)
   test_file            String?
   cost                 Float             @default(0.0)
-  paid                 Float             @default(0.0)
+  paid                 Float             @default(0.0) 
   total_quantity       Int
-  start_date           String
+  start_date           String 
   end_date             String
   created_at           DateTime?         @default(now()) @db.Timestamp(0)
   updated_at           DateTime?         @default(now()) @db.Timestamp(0)
+    Patients          Petients?           @relation(fields: [patient_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "labreports_patient_id_foreign")
+
   SurgeryRecords       SurgeryRecords?   @relation(fields: [SurgeryRecords_id], references: [surgery_id], onDelete: NoAction, onUpdate: NoAction, map: "MainMedication_SurgeryRecords_id_foreign")
   Staff                Staff?            @relation(fields: [doctor_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "MainMedication_doctor_id_foreign")
   PatientMedication    PatientMedication @relation(fields: [PatientMedication_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "MainMedication_PatientMedication_id_foreign")
@@ -303,9 +310,9 @@ model MainMedication {
 
 model PatientMedication {
   id               Int           @id @default(autoincrement())
-  ODPtreatment_id  Int?          @unique
-  IPDtreatment_id  Int?          @unique
-  ANCtreatment_id  Int?          @unique
+  ODPtreatment_id  Int?           
+  IPDtreatment_id  Int?         
+  ANCtreatment_id  Int?          
   doctor_id        Int?
   Medication_count Int
   cost             Float            @default(0.0)
@@ -315,8 +322,9 @@ model PatientMedication {
   start_date       String
   end_date         String
   MainMedication   MainMedication[]
-  OPDTreatments    OPDTreatments?   @relation(fields: [ODPtreatment_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  IPDTreatments    IPDTreatments?   @relation(fields: [IPDtreatment_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+   OPDTreatments       OPDTreatments?   @relation(fields: [ODPtreatment_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "PatientMedication_ODPtreatment_id_foreign")
+
+  IPDTreatments    IPDTreatments?    @relation(fields: [IPDtreatment_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "PatientMedication_IPDtreatment_id_foreign")
 }
 
 model OPDTreatments {
@@ -330,18 +338,19 @@ model OPDTreatments {
   follow_up_date     String
   created_at         DateTime?           @default(now()) @db.Timestamp(0)
   updated_at         DateTime?           @default(now()) @db.Timestamp(0)
-  MainMedicalReports MainMedicalReports?
-  PatientMedication  PatientMedication?
-  MainLabReports     MainLabReports?
+  PatientMedication  PatientMedication[]
+  MainLabReports     MainLabReports[]
   Appointments_OPD   Appointments_OPD?   @relation(fields: [appointment_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "opdtreatments_appointment_id_foreign")
   Staff              Staff?              @relation(fields: [doctor_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "opdtreatments_doctor_id_foreign")
 
   Billing Billing[]
+
+  MainMedicalReports MainMedicalReports[]
 }
 
 model Petients {
   id                                               Int             @id @default(autoincrement())
-  fullName                                        String             @db.VarChar(100)
+  fullName                                         String             @db.VarChar(100)
   date_of_birth                                    String
   gender                                           String             @db.VarChar(10)
   blood_group                                      String?            @db.VarChar(5)
@@ -359,6 +368,10 @@ model Petients {
   SurgeryRecords                                   SurgeryRecords[]
 
   PetientReportData PetientReportData[] @relation(map: "PetientReportData_petinet_id_foreign")
+
+  MainMedication MainMedication[] @relation(map: "labreports_patient_id_foreign")
+
+  MedicalReports MedicalReports[] @relation(map: "labreports_patient_id_foreign")
 }
 model PetientReportData {
   id         Int          @id @default(autoincrement())

@@ -23,7 +23,10 @@ if (cluster.isPrimary || cluster.isMaster) {  // For compatibility with older ve
 } else {
 
   const app = express();
+
   const allowedOrigins = ['http://a.localhost:5173', 'http://localhost:5173'];
+
+
 
 
   const corsOptions = {

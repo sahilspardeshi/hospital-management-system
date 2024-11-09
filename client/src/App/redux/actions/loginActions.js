@@ -1,35 +1,29 @@
 // src/app/redux/loginActions.js
-import axios from 'axios';
+
+import axiosInstanceApp from '../../axiosConfig';
+import { CookieSet } from '../../utils/setCookie';
 
 // Action Types
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 
-// Action Creators
-export const loginRequest = () => ({
-  type: LOGIN_REQUEST,
-});
 
-export const loginSuccess = (userData) => ({
-  type: LOGIN_SUCCESS,
-  payload: userData,
-});
 
-export const loginFailure = (error) => ({
-  type: LOGIN_FAILURE,
-  payload: error,
-});
-
-// Thunk Action for login
-export const login = (userId, password) => {
+export const login = (userId, password, onSuccess) => {
   return async (dispatch) => {
-    dispatch(loginRequest());
+    dispatch({ type: LOGIN_REQUEST });
     try {
-      const response = await axiosInstanceApp.post('staff/staffLogin', { userId, password });
-      dispatch(loginSuccess(response.data));
+      const response = await axiosInstanceApp.post('auth/login', { userId, password });
+      dispatch({ type: LOGIN_SUCCESS, payload: response.data });
+ 
+      if (onSuccess) {
+        CookieSet(response.data.accessToken,response.data.refreshToken)
+        onSuccess(response.data);
+      }
     } catch (error) {
-      dispatch(loginFailure(error.response ? error.response.data : error.message));
+      const errorMsg = error.response?.data?.message || error.message;
+      dispatch({ type: LOGIN_FAILURE, payload: errorMsg });
     }
   };
 };
