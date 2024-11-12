@@ -25,7 +25,7 @@ console.log(imageUrl)
         section
       },
     });
-    console.log(newAdvertisement)
+    // console.log(newAdvertisement)
     
     //converting bigint into string
     const newadd = {
