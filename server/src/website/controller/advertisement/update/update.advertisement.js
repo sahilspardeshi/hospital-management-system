@@ -40,7 +40,7 @@ export const updateAdvertisement = async (req, res) => {
       id: updatedAdvertisement.id.toString(),
     };
 
-    res.status(200).json(updatedAdd);
+    res.status(200).json({message:"Advertise Updated succesfully"});
   } catch (error) {
     console.error("Update error:", error);
     if (error.code === 'P2025') {

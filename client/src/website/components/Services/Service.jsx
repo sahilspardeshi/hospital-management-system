@@ -25,7 +25,7 @@ console.log(advertisements)
           {/* Services */}
           <div className="space-y-6 p-5">
 
-            {advertisements.map((item) => (
+            {advertisements.slice(0, 4).map((item) => (
               <ServiceCard
                 title={item.title}
                 description={item.description}
@@ -41,18 +41,16 @@ console.log(advertisements)
           <div className="p-5 max-w-xxl md:max-w-xxl flex flex-col items-center">
             <div className="relative w-full max-w-xl">
               <img
-                src={dashboard}
+                src={advertisements[4]?.imageUrl}
                 alt="Dynamic Talent Hub"
                 className="w-full h-auto rounded-lg shadow-md mb-4 border border-gray-600"
               />
             </div>
             <h1 className="font-bold text-lg lg:text-3xl text-center mb-4">
-              Dynamic Talent Hub
+            {advertisements[4]?.title}
             </h1>
             <p className="text-sm text-center lg:text-lg text-gray-600 mb-6">
-              Welcome to our dynamic talent hub, where innovation and expertise
-              converge to create a powerful ecosystem for connecting top-tier
-              talent with unparalleled opportunities.
+              {advertisements[4]?.description}
             </p>
           </div>
         </div>
@@ -73,7 +71,7 @@ const ServiceCard = ({ title, description, icon }) => {
       <img
                 src={icon}
                 alt="Dynamic Talent Hub"
-                className="w-12 h-12 rounded-lg shadow-md mb-4 border border-gray-600 items-center"
+                className="w-12 h-12 rounded-lg  mb-4 items-center"
               />
       <div>
         <h4 className="text-xl font-bold">{title}</h4>
