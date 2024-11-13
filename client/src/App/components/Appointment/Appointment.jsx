@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { patientSearch } from '../../redux/actions/PatientSearching';
 
 const Appointment = () => {
   const [patientName, setPatientName] = useState('');
@@ -18,37 +20,31 @@ const Appointment = () => {
   const [showPatientSuggestions, setShowPatientSuggestions] = useState(false);
   const [showDoctorSuggestions, setShowDoctorSuggestions] = useState(false);
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
   const fetchPatientSuggestions = async (query) => {
     if (!query) {
       setPatientSuggestions([]);
       setShowPatientSuggestions(false);
       return;
     }
-
+  
     setLoading(true);
     try {
-      const response = await fetch(`http://localhost:4000/software/api/patient/getByName/${query}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ name: query }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-
-      const data = await response.json();
-      setPatientSuggestions(data.map(patient => patient.fullName));
-      setShowPatientSuggestions(true);
+      // Dispatch the action with form data and a callback
+      dispatch(
+        patientSearch(query, (result) => {
+          console.log('Patient data:', result);
+          setPatientSuggestions(result.map((patient) => patient.fullName));
+          setShowPatientSuggestions(true);
+        })
+      );
     } catch (error) {
       console.error('Error fetching patient suggestions:', error);
     } finally {
       setLoading(false);
     }
   };
+  
 
   const fetchDoctorSuggestions = async (query) => {
     if (!query) {
