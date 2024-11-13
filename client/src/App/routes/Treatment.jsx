@@ -10,7 +10,7 @@ import MedicalReportSystem from '../components/MedicalReportSystem/MedicalReport
 export default function TreatmentRoute() {
   return (
 
-        
+    
         
         
               <ReportProvider>
@@ -18,6 +18,7 @@ export default function TreatmentRoute() {
                   <Route path="" element={<Treatment/>} />
                   <Route path="medical-report/*" element={<MedicalReportSystem/>} />
                   <Route path="medication-file/*" element={<Medication/>} />
+                  <Route path="lab-report/*" element={<Medication/>} />
                 </Routes>
               </ReportProvider>
     
