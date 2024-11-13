@@ -12,7 +12,7 @@ const Dashboard = () => {
     { icon: 'fa-solid fa-clipboard', label: 'Appointment Request',path:'' },
     { icon: 'fa-solid fa-chart-simple', label: 'Tables',path:'' },
     { icon: 'fa-brands fa-slack', label: 'Articles' ,path:''},
-    { icon: 'fa-solid fa-user', label: 'Profile',path:'' },
+    { icon: 'fa-solid fa-user', label: 'Profile',path:'Profile' },
     { icon: 'fa-solid fa-lock', label: 'Logout',path:'/' },
   ];
   return (
