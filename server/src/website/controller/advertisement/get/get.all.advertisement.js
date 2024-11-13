@@ -13,7 +13,7 @@ export const getAllAdvertisements = async (req, res) => {
       id: ad.id.toString()
     }));
     
-    console.log(newAds);
+    // console.log(newAds);
     res.status(200).json(newAds);
   } catch (error) {
     console.log(error);
