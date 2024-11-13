@@ -1,14 +1,27 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch , useSelector } from "react-redux";
 import Dr from '../../assets/images/Aarohilogo.png';
 import video from '../../assets/images/Videologo.png';
 import { useNavigate } from 'react-router-dom';
+import { fetchAdvertisement } from "../../redux/actions/adActions";
 import PaymentModal from "../Registation/PaymentPage";
 import CreateAccount from "../Registation/CreateAccount";
 
-const HealthCareSection = () => {
+const HealthCareSection = ({section0 , advertisements}) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [registration, setRegistration] = useState(false); // Renamed state
   const [IsPay, setPay] = useState(false); 
+
+  // const {loading , ad , error} =useSelector((state)=>state.advertisement);
+
+
+console.log(advertisements)
+  // useEffect(()=>{
+  //   dispatch(fetchAdvertisement(1));
+  // },[dispatch]);
+
+
   const openRegistration = () => {
     setRegistration(true);
     // Removed console.log here
@@ -35,21 +48,28 @@ const HealthCareSection = () => {
   }, [registration]);
 
   return (
-    <>
+    <>  
+      {/* {loading ? (
+            <p>Loading advertisement...</p>
+          ) : error ? (
+            <p>Error: {error}</p>
+          ) : ( */}
       <div className="h-auto w-11/12 flex flex-col justify-center font-poppins py-16">
         <div className="flex flex-col lg:flex-row items-center justify-between w-full max-w-screen-2xl mx-auto px-8 pt-0 pb-16">
           
           {/* ----------------------- Left Section ------------------*/}
           <div className="w-full lg:text-left pr-5">
             <div className="font-bold text-3xl md:text-4xl lg:text-5xl mb-6">
-              <h1>
-                <span className="text-green-600">We care</span> <br />
-                about your health
+              <h1 className="w-1/2">
+                {/* <span className="text-green-600">We care</span> <br />
+                about your health */}
+                {advertisements[0]?.title}
               </h1>
             </div>
-            <p className="text-gray-500 text-base md:text-lg lg:text-xl mb-8">
-              Good health is the state of mental, physical, and social<br />
-              well-being and it does not just mean the absence of diseases.
+            <p className="text-gray-500 text-base md:text-lg lg:text-xl mb-8 w-2/3">
+              {/* Good health is the state of mental, physical, and social<br />
+              well-being and it does not just mean the absence of diseases. */}
+              {advertisements[0]?.description}
             </p>
 
             {/* ------------------------- Sign-in/up Buttons --------------------- */}
@@ -62,7 +82,7 @@ const HealthCareSection = () => {
               </button>
               <button className="flex items-center justify-center px-6 py-3 rounded-lg text-lg lg:text-xl">
                 <span className="mr-3 border rounded-full border-gray-400">
-                  <img src={video} alt="Watch Videos" className="h-9 w-auto m-[6px] hover:translate-y-1"/>
+                  <img src={video} alt="Watch Videos" className="h-9 w-auto m-[6px] hover:transf"/>
                 </span> 
                 <span className="font-semibold">Watch videos</span>
               </button>
@@ -85,7 +105,7 @@ const HealthCareSection = () => {
             <div className=" p-5 relative flex justify-center items-center bg-red-50 rounded-full">
               <div className="w-full lg:w-72 relative flex justify-center items-center bg-red-200 rounded-full">
                 <img
-                  src={Dr} // Main Dr Img 
+                  src={advertisements[0]?.imageUrl} // Main Dr Img 
                   alt="Doctors"
                   className="lg:w-72 lg:h-72"
                 />
@@ -115,6 +135,7 @@ const HealthCareSection = () => {
           </div>
         </div>
       </div>
+      {/* )} */}
       <CreateAccount isOpen={registration} close={closeRegistration} onSuccess={openPay}/>
       <PaymentModal closeModal={closePay} isOpen={IsPay}/>
     </>

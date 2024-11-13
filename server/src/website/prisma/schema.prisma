@@ -27,11 +27,19 @@ model Marketing {
   @@map("Marketing")
 }
 
+enum Section {
+  Section_0
+  Section_1
+  Section_2
+  Section_3
+  Section_4
+}
 model Advertisement {
   id          Int   @id @default(autoincrement())
   title       String
   description String?
   imageUrl    String
+  section     Section
   createdAt   DateTime @default(now())
 
   @@map("Advertisement")
