@@ -8,7 +8,7 @@ const textClasses = ' font-bold text-card-foreground';
 const valueClasses = ' font-bold text-card-foreground';
 
 
-const CardComponent = ({ isActive, onClick, title, value, content, iconBgColor }) => {
+const CardComponent = ({ isActive, onClick, title, value, content }) => {
     return (
         <div className={isActive ? activecardClasses : cardClasses} onClick={onClick}>
             <div className="flex items-center space-x-2 mb-2 ">
@@ -103,12 +103,11 @@ export default function AdvertisePortal() {
         formData.append('section', section);
         if (advertise_img) formData.append('advertise_img', advertise_img);
     
-        // If in edit mode, make sure the id is passed correctly
-        const advertisementId = id;  // Fetch the id from state
+      
+        const advertisementId = id; 
     
         if (edit && advertisementId) {
             console.log("Updating ad with id:", advertisementId);
-            // Dispatch the update action with the advertisement ID
             dispatch(updateAdvertisement({ id: advertisementId, title, description, advertise_img }));
         } else {
             console.log("Creating new ad");
@@ -120,8 +119,8 @@ export default function AdvertisePortal() {
         setDescription('');
         setSection('');
         setImage(null);
-        setEdit(false);  // Reset edit mode
-        setId(null);     // Clear ID after submission
+        setEdit(false);  
+        setId(null);    
     };
     
     
