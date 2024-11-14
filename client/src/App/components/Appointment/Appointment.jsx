@@ -101,22 +101,29 @@ const Appointment = () => {
     setShowDoctorSuggestions(false);
   };
   // render Suggestions function
-  const renderSuggestions = (suggestions, handleSelect) => {
-    return (
-      <ul className="absolute bg-white border border-gray-300 mt-1 rounded-lg shadow-lg z-10">
-        {suggestions.map((suggestion, index) => (
-          <li
-            key={index}
-            className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
-            onMouseDown={() => handleSelect(suggestion)} // Use onMouseDown here
-          >
-            {suggestion}
-          </li>
-        ))}
-      </ul>
-    );
-  };
-
+  // render Suggestions function
+// render Suggestions function
+const renderSuggestions = (suggestions, handleSelect) => {
+  return (
+    <ul
+      className="absolute bg-white border border-gray-300 mt-1 rounded-lg shadow-lg z-10"
+      style={{
+        maxHeight: '200px', // Limit the height of the suggestion box
+        overflowY: 'auto',  // Enable scrolling
+      }}
+    >
+      {suggestions.map((suggestion, index) => (
+        <li
+          key={index}
+          className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
+          onMouseDown={() => handleSelect(suggestion)} // Use onMouseDown here
+        >
+          {suggestion}
+        </li>
+      ))}
+    </ul>
+  );
+};
 
   //Handel Submit function
   const handleSubmit = async (e) => {
