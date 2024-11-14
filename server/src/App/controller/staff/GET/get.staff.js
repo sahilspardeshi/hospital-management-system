@@ -69,7 +69,6 @@ export const getStaffByName =async (req,res)=>{
             mode: 'insensitive',
           },
         },
-        take: 5,
       });
       
       // Filter unique names

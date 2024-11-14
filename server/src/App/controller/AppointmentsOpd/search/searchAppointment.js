@@ -17,8 +17,8 @@ export const searchAppointments = async (req, res) => {
             }
           },
           include: {
-            Petients: true, // Include related patient details
-            
+            Petients: true,
+            Staff:true
           }
         });
         res.json({ msg: "success", data: appointments });

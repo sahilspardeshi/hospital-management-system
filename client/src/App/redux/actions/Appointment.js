@@ -9,13 +9,13 @@ export const AppointmentSearch = (query, onSuccess) => {
     return async (dispatch) => {
       dispatch({ type: APPOINTMENT_SEARCH_REQUEST });
       try {
-        const response = await axiosInstanceApp.post(`patient/getByName/${query}`);
+        const response = await axiosInstanceApp.post('opdAppointment/search',{searchTerm,filterBy});
        
         dispatch({ type: APPOINTMENT_SEARCH_SUCCESS, payload: response.data });
    
         if (onSuccess) {
           onSuccess(response.data);
-        }
+        } 
       } catch (error) {
         const errorMsg = error.response?.data?.message || error.message;
         dispatch({ type: APPOINTMENT_FAILURE, payload: errorMsg });
