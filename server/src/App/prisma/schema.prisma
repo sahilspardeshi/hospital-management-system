@@ -25,6 +25,8 @@ model Appointments_OPD {
   updated_at       DateTime?       @default(now()) @db.Timestamp(0)
   PetientReportData PetientReportData  @relation(fields: [PetientReportData_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "appointments_PetientReportData_id_foreign")
   Petients         Petients       @relation(fields: [patient_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "appointments_opd_patient_id_foreign")
+   Staff             Staff?              @relation(fields: [doctor_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "appointments_doctor_id_foreign")
+
   OPDTreatments    OPDTreatments[]
 }
 
@@ -431,6 +433,8 @@ model Staff {
   OPDTreatments   OPDTreatments[]
   SurgeryRecords  SurgeryRecords[]
   MainNotes       MainNotes[]
+
+  Appointments_OPD Appointments_OPD[] @relation(map: "appointments_doctor_id_foreign")
 }
 
 model SurgeryRecords {
