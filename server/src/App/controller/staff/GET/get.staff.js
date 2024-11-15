@@ -75,7 +75,9 @@ export const getStaffByName =async (req,res)=>{
       const uniqueStaff = Array.from(
         new Set(staff.map((staff) => staff.fullName))
       ).map((fullName) => {
-        return staff.find((staff) => staff.fullName === fullName);
+        const result = staff.find((staff) => staff.fullName === fullName);
+        console.log(result);
+        return result;
       });
       
       res.json(uniqueStaff);
