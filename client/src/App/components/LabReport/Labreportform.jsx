@@ -36,7 +36,7 @@ const LabreportForm = () => {
   const handleSave = () => {
     console.log("Saved lab report:", labData);
     alert("Lab report saved!");
-    navigate("/technician-report", { state: { labData } }); // Navigate with data
+    navigate("/opd/Treatment/lab-report/technician-report", { state: { labData } }); // Navigate with data
   };
 
   return (

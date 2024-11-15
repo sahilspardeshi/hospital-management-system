@@ -6,6 +6,7 @@ import { ReportProvider } from '../components/MedicalReportSystem/ReportContext.
 import MainMedicalReport from '../components/MedicalReportSystem/MainMedicalReport.jsx'
 import Medication from '../components/Medication/Medication.jsx'
 import MedicalReportSystem from '../components/MedicalReportSystem/MedicalReportSystem.jsx'
+import AllReports from '../components/LabReport/LabReport.jsx'
 
 export default function TreatmentRoute() {
   return (
@@ -18,7 +19,7 @@ export default function TreatmentRoute() {
                   <Route path="" element={<Treatment/>} />
                   <Route path="medical-report/*" element={<MedicalReportSystem/>} />
                   <Route path="medication-file/*" element={<Medication/>} />
-                  <Route path="lab-report/*" element={<Medication/>} />
+                  <Route path="lab-report/*" element={<AllReports/>} />
                 </Routes>
               </ReportProvider>
     
