@@ -17,6 +17,8 @@ import medication_file from '../routes/medication-file.js';
 
 
 import LabReport from '../routes/routes.LabReport.js'
+import mainMedication from '../routes/routes.MainMedication.js';
+import medicationList from '../routes/routes.medicationList.js';
 
 
 
@@ -55,6 +57,12 @@ AllRoutes.use('/patient',PatientRoute);
 
 //LabReport routes
 AllRoutes.use('/labReport',LabReport);
+
+//main medication routes
+AllRoutes.use('/mainmedication',mainMedication);
+
+//medication list routes
+AllRoutes.use('/medicationlist',medicationList)
 
 // Export the router
 export default AllRoutes;
