@@ -1,5 +1,21 @@
+// Medication 2nd page code
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+//2
+// Mock data to simulate backend response
+const mockBackendData = {
+  id: 'FLFL-81265',
+  patientMedicationId: 'LGAH28PGJ',
+  surgeryRecordsId: 'W34P6FYTHBUO',
+  doctorId: 'lgmrman',
+  startDate: '2023-10-25',
+  endDate: '2023-10-25',
+  treatmentType: 'type1',
+  totalQuantity: '2',
+  reportDescription: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl nec ultricies lacinia, nisl nisl aliquam nisl, nec aliquam nisl nisl sit amet nisl.',
+  cost: '549684',
+  paid: '21541'
+};
 
 export default function NewMedicationForm() {
   const navigate = useNavigate();
@@ -7,7 +23,7 @@ export default function NewMedicationForm() {
     id: '',
     patientMedicationId: '',
     surgeryRecordsId: '',
-    doctorName: '',
+    doctorId: '',
     startDate: '',
     endDate: '',
     treatmentType: '',
@@ -16,64 +32,18 @@ export default function NewMedicationForm() {
     cost: '',
     paid: ''
   });
-  const [doctorSuggestions, setDoctorSuggestions] = useState([]);
-  const [showDoctorSuggestions, setShowDoctorSuggestions] = useState(false);
 
-  // Fetch doctor suggestions
-  const fetchDoctorSuggestions = async (query) => {
-    if (!query) {
-      setDoctorSuggestions([]);
-      setShowDoctorSuggestions(false);
-      return;
-    }
+  // Simulate fetching data from backend
+  useEffect(() => {
+    // In a real application, this would be an API call
+    const fetchData = async () => {
+      // Simulate API delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      setFormData(mockBackendData);
+    };
 
-    try {
-      const response = await fetch(`http://localhost:4000/software/api/staff/getByName/${query}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ name: query }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      
-      const data = await response.json();
-      console.log(data);
-      setDoctorSuggestions(data.map(doctor => doctor.fullName));
-      setShowDoctorSuggestions(true);
-    } catch (error) {
-      console.error('Error fetching doctor suggestions:', error);
-    }
-  };
-
-  const handleDoctorChange = (e) => {
-    const { value } = e.target;
-    setFormData(prevData => ({ ...prevData, doctorName: value }));
-    fetchDoctorSuggestions(value);
-  };
-
-  const handleSelectDoctor = (doctor) => {
-    setFormData(prevData => ({ ...prevData, doctorName: doctor }));
-    setDoctorSuggestions([]);
-    setShowDoctorSuggestions(false);
-  };
-
-  const renderDoctorSuggestions = () => (
-    <ul className="absolute bg-white border border-gray-300 mt-1 rounded-lg shadow-lg z-10">
-      {doctorSuggestions.map((suggestion, index) => (
-        <li
-          key={index}
-          className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
-          onMouseDown={() => handleSelectDoctor(suggestion)}
-        >
-          {suggestion}
-        </li>
-      ))}
-    </ul>
-  );
+    fetchData();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -81,38 +51,13 @@ export default function NewMedicationForm() {
   };
 
   const handleSubmit = async (e) => {
-    console.log("working");
     e.preventDefault();
+    const pathSegments = window.location.pathname.split('/');
+    pathSegments[pathSegments.length - 1] = `medication-details`;
+    const newPath = pathSegments.join('/');
+   console.log(newPath);
+   navigate(newPath);
 
-    // Make the POST request to save the form data
-    try {
-        const response = await fetch(`http://localhost:4000/software/api/mainmedication/create`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData),
-        });
-
-        const data = await response.json();
-
-        console.log(data);
-
-        if (!response.ok) {
-            throw new Error('Failed to save medication data');
-        }
-
-        console.log(response);
-
-        // Navigate to the medication-details page on success
-        const pathSegments = window.location.pathname.split('/');
-        pathSegments[pathSegments.length - 1] = `medication-details`;
-        const newPath = pathSegments.join('/');
-        console.log("came here")
-        navigate(newPath,{state:{medicationData:data}});
-    } catch (error) {
-        console.error('Error submitting medication data:', error);
-    }
   };
 
   return (
@@ -123,79 +68,92 @@ export default function NewMedicationForm() {
       <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md max-w-screen-2xl mx-auto">
         <div className="grid grid-cols-3 gap-4">
           <div className="col-span-1">
-            <label htmlFor="PatientMedication_id" className="block text-gray-700 mb-2 font-bold">
+            <label htmlFor="id" className="block text-gray-700 mb-2 font-bold">
+              Id
+            </label>
+            <input
+              type="text"
+              name="id"
+              id="id"
+              placeholder="Id"
+              value={formData.id}
+              onChange={handleChange}
+              className="p-3 border border-gray-300 rounded-md w-full"
+            />
+          </div>
+          <div className="col-span-1">
+            <label htmlFor="patientMedicationId" className="block text-gray-700 mb-2 font-bold">
               Patient Medication Id
             </label>
             <input
               type="text"
-              name="PatientMedication_id"
-              id="PatientMedication_id"
-              placeholder="Patient Medication Id"
+              name="patientMedicationId"
+              id="patientMedicationId"
+              value={formData.patientMedicationId}
               onChange={handleChange}
               className="p-3 border border-gray-300 rounded-md w-full"
             />
           </div>
           <div className="col-span-1">
-            <label htmlFor="SurgeryRecords_id" className="block text-gray-700 mb-2 font-bold">
+            <label htmlFor="surgeryRecordsId" className="block text-gray-700 mb-2 font-bold">
               Surgery Records Id
             </label>
             <input
               type="text"
-              name="SurgeryRecords_id"
-              id="SurgeryRecords_id"
-              placeholder="Surgery Record Id"
+              name="surgeryRecordsId"
+              id="surgeryRecordsId"
+              value={formData.surgeryRecordsId}
               onChange={handleChange}
               className="p-3 border border-gray-300 rounded-md w-full"
             />
           </div>
-          <div className="col-span-1 relative">
-            <label htmlFor="doctorName" className="block text-gray-700 mb-2 font-bold">
-              Doctor Name
+          <div className="col-span-1">
+            <label htmlFor="doctorId" className="block text-gray-700 mb-2 font-bold">
+              Doctor Id
             </label>
             <input
               type="text"
-              name="doctorName"
-              id="doctorName"
-              placeholder="Doctor Name"
-              value={formData.doctorName}
-              onChange={handleDoctorChange}
-              onFocus={() => setShowDoctorSuggestions(true)}
-              onBlur={() => setShowDoctorSuggestions(false)}
+              name="doctorId"
+              id="doctorId"
+              value={formData.doctorId}
+              onChange={handleChange}
               className="p-3 border border-gray-300 rounded-md w-full"
             />
-            {showDoctorSuggestions && renderDoctorSuggestions()}
           </div>
           <div className="col-span-1">
-            <label htmlFor="start_date" className="block text-gray-700 mb-2 font-bold">
+            <label htmlFor="startDate" className="block text-gray-700 mb-2 font-bold">
               Start Date
             </label>
             <input
               type="date"
-              name="start_date"
-              id="start_date"
+              name="startDate"
+              id="startDate"
+              value={formData.startDate}
               onChange={handleChange}
               className="p-3 border border-gray-300 rounded-md w-full"
             />
           </div>
           <div className="col-span-1">
-            <label htmlFor="end_date" className="block text-gray-700 mb-2 font-bold">
+            <label htmlFor="endDate" className="block text-gray-700 mb-2 font-bold">
               End Date
             </label>
             <input
               type="date"
-              name="end_date"
-              id="end_date"
+              name="endDate"
+              id="endDate"
+              value={formData.endDate}
               onChange={handleChange}
               className="p-3 border border-gray-300 rounded-md w-full"
             />
           </div>
           <div className="col-span-1">
-            <label htmlFor="treatment_type" className="block text-gray-700 mb-2 font-bold">
+            <label htmlFor="treatmentType" className="block text-gray-700 mb-2 font-bold">
               Treatment Type
             </label>
             <select
-              name="treatment_type"
-              id="treatment_type"
+              name="treatmentType"
+              id="treatmentType"
+              value={formData.treatmentType}
               onChange={handleChange}
               className="p-3 border border-gray-300 rounded-md w-full"
             >
@@ -205,12 +163,13 @@ export default function NewMedicationForm() {
             </select>
           </div>
           <div className="col-span-1">
-            <label htmlFor="total_quantity" className="block text-gray-700 mb-2 font-bold">
+            <label htmlFor="totalQuantity" className="block text-gray-700 mb-2 font-bold">
               Total Quantity
             </label>
             <select
-              name="total_quantity"
-              id="total_quantity"
+              name="totalQuantity"
+              id="totalQuantity"
+              value={formData.totalQuantity}
               onChange={handleChange}
               className="p-3 border border-gray-300 rounded-md w-full"
             >
@@ -221,13 +180,14 @@ export default function NewMedicationForm() {
             </select>
           </div>
           <div className="col-span-3">
-            <label htmlFor="description" className="block text-gray-700 mb-2 font-bold">
+            <label htmlFor="reportDescription" className="block text-gray-700 mb-2 font-bold">
               Report Description
             </label>
             <textarea
-              name="description"
-              id="description"
+              name="reportDescription"
+              id="reportDescription"
               placeholder="Report description"
+              value={formData.reportDescription}
               onChange={handleChange}
               className="p-3 border border-gray-300 rounded-md w-full"
               rows={4}
@@ -242,6 +202,7 @@ export default function NewMedicationForm() {
               name="cost"
               id="cost"
               placeholder="Cost"
+              value={formData.cost}
               onChange={handleChange}
               className="p-3 border border-gray-300 rounded-md w-full"
             />
@@ -255,18 +216,18 @@ export default function NewMedicationForm() {
               name="paid"
               id="paid"
               placeholder="Paid"
+              value={formData.paid}
               onChange={handleChange}
               className="p-3 border border-gray-300 rounded-md w-full"
             />
           </div>
         </div>
         <div className="col-span-3 flex justify-center">
-          <button type="submit" className="mt-4 bg-green-600 text-white px-6 py-3 rounded-md ">
-            Submit
+          <button type="submit" className="mt-4 bg-green-600 text-white px-6 py-3 rounded-md">
+            Next
           </button>
         </div>
       </form>
     </>
   );
 }
-
