@@ -1,0 +1,21 @@
+# Docker compose files
+docker-compose.yml
+
+# Client-side files
+/client/node_modules/
+
+# Server-side files
+/server/node_modules/
+/server/.env.sample
+
+# Docker volumes
+docker-data/
+
+# pgAdmin config
+pgadmin-data/
+
+# Other sensitive files
+.DS_Store
+.env
+config.json
+secret.key
