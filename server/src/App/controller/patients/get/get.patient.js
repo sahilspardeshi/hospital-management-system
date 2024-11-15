@@ -59,29 +59,3 @@ export const getAllPatients = async (req, res) => {
 
 
 //get patient by name 
-export const getPatientByName =async (req,res)=>{
-    const { name } = req.body;
-  try {
-    const patients = await prisma.petients.findMany({
-        where: {
-          fullName: {
-            contains: name,
-            mode: 'insensitive',
-          },
-        },
-        take: 5,
-      });
-      
-      // Filter unique names
-      const uniquePatients = Array.from(
-        new Set(patients.map((patient) => patient.fullName))
-      ).map((fullName) => {
-        return patients.find((patient) => patient.fullName === fullName);
-      });
-      
-      res.json(uniquePatients);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Error retrieving patient suggestions' });
-  }
-}

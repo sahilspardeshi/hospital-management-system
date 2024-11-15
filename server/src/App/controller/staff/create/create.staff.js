@@ -6,7 +6,7 @@ const SALT_ROUNDS = 10; // Number of salt rounds for hashing
 
 // Create a new Staff member
 export const createStaff = async (req, res) => {
-  const { fullName, specialization, user, password, type, contact_number, email, qualifications, department } = req.body;
+  const { fullName, specialization, user, password, type, contact_number, email, qualifications, department , role } = req.body;
 
   try {
 
@@ -35,11 +35,14 @@ export const createStaff = async (req, res) => {
         email,
         qualifications,
         department,
+        role
       },
     });
 
     console.log(newStaff);
-    return res.status(201).json({ msg: "success" });
+    return res.status(201).json({ msg: "success" ,
+      data:newStaff
+    });
   } catch (error) {
     console.error('Error creating staff:', error.message);
     return res.status(500).json({ error: `Error creating staff: ${error.message}` });

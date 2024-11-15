@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 
 export const createPaymentMethod = async (req, res) => {
   const { methodName, paymentId, plan_id } = req.body;
-a
+
   try {
       // Check if the subscription plan exists
       const subscriptionPlan = await prisma.subscriptionPlan.findUnique({

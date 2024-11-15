@@ -4,11 +4,13 @@ import { combineReducers } from 'redux';
 
 import { patientReducer } from './reducers/patientReducer';
 import { loginReducer } from './reducers/loginReducer';
+import { ProfileReducer } from './reducers/StaffProfileReducer';
 
 const rootReducer = combineReducers({
 
   login:loginReducer ,
   patient: patientReducer,
+  profile: ProfileReducer
   // Add other reducers here
 });
 

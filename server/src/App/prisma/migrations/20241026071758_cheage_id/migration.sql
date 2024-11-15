@@ -1,3 +1,0 @@
--- AlterTable
-ALTER TABLE "Appointments_OPD" ALTER COLUMN "appointment_date" SET DEFAULT CURRENT_TIMESTAMP,
-ALTER COLUMN "appointment_time" SET DEFAULT CURRENT_TIMESTAMP;
