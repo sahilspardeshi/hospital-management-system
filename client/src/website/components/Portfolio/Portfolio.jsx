@@ -36,7 +36,7 @@ export default function Portfolio({ advertisements }) {
                     </ol>
                 </div>
 
-                <div className='w-11/12 flex flex-wrap mt-12 lg:max-w-screen-2xl m-auto'>
+                <div className='w-11/12 flex flex-wrap mt-12 lg:max-w-screen-2xl m-auto '>
                     {
                         imagesToShow.map(
                             (data) => {

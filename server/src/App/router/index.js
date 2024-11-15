@@ -16,9 +16,10 @@ import PatientRoute from '../routes/patient.route.js';
 import medication_file from '../routes/medication-file.js';
 
 
-import LabReport from '../routes/routes.LabReport.js'
+import LabReport from '../routes/routes.LabReport.js';
 import mainMedication from '../routes/routes.MainMedication.js';
 import medicationList from '../routes/routes.medicationList.js';
+import TestRoutes from '../routes/test.routes.js'
 
 
 
@@ -35,6 +36,7 @@ AllRoutes.use('/opdtreatment',Opdtreatment)
 AllRoutes.use('/Billing',billing)
 AllRoutes.use('/AdvanceBilling',AdvancePayment)
 //staff routes
+AllRoutes.use('/test',TestRoutes)
 AllRoutes.use('/staff',staffRoutes);
 AllRoutes.use('/auth',AuthRoutes);
 //patientMedication routes

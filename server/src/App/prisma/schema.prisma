@@ -25,6 +25,8 @@ model Appointments_OPD {
   updated_at       DateTime?       @default(now()) @db.Timestamp(0)
   PetientReportData PetientReportData  @relation(fields: [PetientReportData_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "appointments_PetientReportData_id_foreign")
   Petients         Petients       @relation(fields: [patient_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "appointments_opd_patient_id_foreign")
+   Staff             Staff?              @relation(fields: [doctor_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "appointments_doctor_id_foreign")
+
   OPDTreatments    OPDTreatments[]
 }
 
@@ -354,7 +356,7 @@ model Petients {
   date_of_birth                                    String
   gender                                           String             @db.VarChar(10)
   blood_group                                      String?            @db.VarChar(5)
-  mobile_number                                    String             @unique @db.VarChar(15)
+  mobile_number                                    String             @unique @db.VarChar(10)
   address                                          String?
   email                                            String?            @unique @db.VarChar(100)
   created_at                                       DateTime?          @default(now()) @db.Timestamp(0)
@@ -431,6 +433,8 @@ model Staff {
   OPDTreatments   OPDTreatments[]
   SurgeryRecords  SurgeryRecords[]
   MainNotes       MainNotes[]
+
+  Appointments_OPD Appointments_OPD[] @relation(map: "appointments_doctor_id_foreign")
 }
 
 model SurgeryRecords {
@@ -441,7 +445,7 @@ model SurgeryRecords {
   doctor_id                Int
   surgery_type             String           @db.VarChar(255)
   surgery_date             String
-  start_time              String
+  start_time               String
   end_time                 String
   operating_room           String?          @db.VarChar(50)
   team_members             Int
