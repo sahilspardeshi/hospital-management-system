@@ -30,7 +30,7 @@ const TechnicianReport = () => {
   const handleSave = () => {
     alert("Technician report saved!");
     // Navigate back to AllReports with all data
-    navigate("/opd/Treatment/lab-report", { state: { labData, reportData } });
+    navigate("lab-report", { state: { labData, reportData } });
   };
 
   return (
