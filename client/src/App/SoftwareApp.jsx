@@ -17,6 +17,7 @@ import BillingReport from "./components/OPD Billing/BillingReport";
 import TreatmentRoute from "./routes/treatment";
 import AppointmentList from "./components/Appointment/AppointmentList";
 import Profile from "./components/Profile/Profile";
+import Staff from "./components/Profile/Staff";
 
 function SoftwareApp() {
   return (
@@ -25,6 +26,7 @@ function SoftwareApp() {
       <Route path="/dashboard" element={<Dashboard />}>
         <Route path="" element={<Graphs />} />
         <Route path="Profile" element={<Profile/>}/>
+        <Route path="staff" element={<Staff/>}/>
       </Route>
       <Route path="/opd" element={<OPD />}>
         <Route path="" element={<PatientRegistrationForm />} />

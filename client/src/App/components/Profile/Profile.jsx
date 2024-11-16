@@ -95,6 +95,19 @@ const Profile = () => {
                     />
                   </div>
                   <div >
+                    <label htmlFor="email" className="block mb-1 text-sm font-medium">Email</label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleInputChange} 
+                      className="w-full p-2 border rounded"
+                      placeholder="Enter Email Id"
+                      required
+                    />
+                  </div>
+                  <div >
                     <label htmlFor="user" className="block mb-1 text-sm font-medium">User Name</label>
                     <input
                       type="text"
@@ -146,19 +159,7 @@ const Profile = () => {
                       required
                     />
                   </div>
-                  <div >
-                    <label htmlFor="email" className="block mb-1 text-sm font-medium">Email</label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleInputChange} 
-                      className="w-full p-2 border rounded"
-                      placeholder="Enter Email Id"
-                      required
-                    />
-                  </div>
+               
                   <div >
                     <label htmlFor="qualifications" className="block mb-1 text-sm font-medium">Qualification</label>
                     <input
