@@ -1,28 +1,24 @@
-import axiosInstanceApp from '../../axiosConfig';
+import axiosInstanceApp from "../../axiosConfig";
 
+export const APPOINTMENT_SEARCH_REQUEST = 'APPOINTMENT_SEARCH_REQUEST';
+export const APPOINTMENT_SEARCH_SUCCESS = 'APPOINTMENT_SEARCH_SUCCESS';
+export const APPOINTMENT_SEARCH_FAILURE = 'APPOINTMENT_SEARCH_FAILURE';
 
-// Action Types
-export const LOGIN_REQUEST = 'LOGIN_REQUEST';
-export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
-export const LOGIN_FAILURE = 'LOGIN_FAILURE';
-
-
-
-export const login = (userId, password, onSuccess) => {
-  return async (dispatch) => {
-    dispatch({ type: LOGIN_REQUEST });
-    try {
-      const response = await axiosInstanceApp.post('auth/login', { userId, password });
-      dispatch({ type: LOGIN_SUCCESS, payload: response.data });
- 
-      if (onSuccess) {
-        CookieSet(response.data.accessToken,response.data.refreshToken)
-        onSuccess(response.data);
+export const AppointmentSearch = (query, onSuccess) => {
+    console.log(query)
+    return async (dispatch) => {
+      dispatch({ type: APPOINTMENT_SEARCH_REQUEST });
+      try {
+        const response = await axiosInstanceApp.post('opdAppointment/search',{searchTerm,filterBy});
+       
+        dispatch({ type: APPOINTMENT_SEARCH_SUCCESS, payload: response.data });
+   
+        if (onSuccess) {
+          onSuccess(response.data);
+        } 
+      } catch (error) {
+        const errorMsg = error.response?.data?.message || error.message;
+        dispatch({ type: APPOINTMENT_FAILURE, payload: errorMsg });
       }
-    } catch (error) {
-      const errorMsg = error.response?.data?.message || error.message;
-      dispatch({ type: LOGIN_FAILURE, payload: errorMsg });
-    }
+    };
   };
-};
-
