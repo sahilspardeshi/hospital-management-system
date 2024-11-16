@@ -1,7 +1,8 @@
-import prisma from "../../db/index.js";
+import prisma from "../../../db/index.js";
+
 
 export const getAllAppointments = async (req, res) => {
-
+console.log('yes');
         try {
           // Fetch all appointments
           const appointments = await prisma.appointments_OPD.findMany({

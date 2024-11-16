@@ -50,7 +50,6 @@ export const getAllStaff = async (req, res) => {
         };
 
         const serializedStaffMembers = serializeStaff(staffMembers);
-        console.log(serializedStaffMembers);
         return res.json(serializedStaffMembers);
     } catch (error) {
         console.error('Error fetching staff members:', error.message);
