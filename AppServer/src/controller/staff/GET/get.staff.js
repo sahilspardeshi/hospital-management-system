@@ -52,13 +52,12 @@ export const getAllStaff = async (req, res) => {
     //   }));
     // };
 
-    // const serializedStaffMembers = serializeStaff(staffMembers);
-    // console.log("serializedStaffMembers", serializedStaffMembers);
-    return res.json(staffMembers);
-  } catch (error) {
-    console.log('Error fetching staff members:', error);
-    return res.status(500).json(error);
-  }
+        // const serializedStaffMembers = serializeStaff(staffMembers);
+        return res.json(staffMembers);
+    } catch (error) {
+        console.error('Error fetching staff members:', error.message);
+        return res.status(500).json({ error: 'Error fetching staff members' });
+    }
 };
 
 //Get staff by name
