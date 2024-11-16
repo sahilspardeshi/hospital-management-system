@@ -11,11 +11,11 @@ const AllReports = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleAddReport = () => {
-    navigate("/opd/Treatment/lab-report/labreport-form");
+    navigate("labreport-form");
   };
   
   const handleEditReport = (reportId) => {
-    navigate(`/opd/Treatment/lab-report/edit-report/${reportId}`, {
+    navigate(`edit-report/${reportId}`, {
       state: { reportId },
     });
   };
