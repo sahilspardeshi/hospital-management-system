@@ -18,5 +18,4 @@ export const getAllAppointments = async (req, res) => {
           return res.status(500).json({ msg: "Failed to fetch appointments", error: err.message });
         }
 
-    
-};
+}
