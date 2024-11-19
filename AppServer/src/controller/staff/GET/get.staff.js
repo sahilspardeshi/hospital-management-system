@@ -60,6 +60,7 @@ export const getAllStaff = async (req, res) => {
 //Get staff by name
 export const getStaffByName =async (req,res)=>{
     const { name } = req.body;
+    console.log(req);
   try {
     const staff = await prisma.staff.findMany({
         where: {
@@ -70,14 +71,9 @@ export const getStaffByName =async (req,res)=>{
         },
       });
       
-      // Filter unique names
-      const uniqueStaff = Array.from(
-        new Set(staff.map((staff) => staff.fullName))
-      ).map((fullName) => {
-        return staff.find((staff) => staff.fullName === fullName);
-      });
+      // Filter unique nam
       
-      res.json(uniqueStaff);
+      res.json(staff);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Error retrieving staff suggestions' });
