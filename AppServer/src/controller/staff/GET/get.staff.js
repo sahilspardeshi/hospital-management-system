@@ -60,8 +60,10 @@ export const getAllStaff = async (req, res) => {
 };
 
 //Get staff by name
+
 export const getStaffByName = async (req, res) => {
   const { name } = req.body;
+
   try {
     const staff = await prisma.staff.findMany({
       where: {
@@ -69,6 +71,7 @@ export const getStaffByName = async (req, res) => {
           contains: name,
           mode: 'insensitive',
         },
+
       },
       take: 5,
     });
@@ -81,6 +84,7 @@ export const getStaffByName = async (req, res) => {
     });
 
     res.json(uniqueStaff);
+
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Error retrieving staff suggestions' });

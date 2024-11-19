@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Upload } from 'lucide-react';
 import { createProfile } from '../../redux/actions/StaffProfileAction';
+import { toast } from 'react-toastify';
 
 const Profile = () => {
 
@@ -43,7 +44,8 @@ const Profile = () => {
   
     dispatch(createProfile(formData, (data) => {
 
-      alert('Form submitted successfully!');
+      // Show alert and log response data
+      toast(`${formData.fullName} Form submitted successfully!`);
 
       console.log('Staff data:', data);
   

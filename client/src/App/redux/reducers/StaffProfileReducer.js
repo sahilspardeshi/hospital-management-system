@@ -3,6 +3,7 @@ import {
     CREATE_PROFILE_SUCCESS,
     CREATE_PROFILE_FAILURE,
 
+
     GET_PROFILE_REQUEST,
     GET_PROFILE_SUCCESS,
     GET_PROFILE_FAILURE,
@@ -16,7 +17,12 @@ import {
     UPDATE_PROFILE_FAILURE,
 
 
-} from "../actions/StaffProfileAction.js";
+
+    STAFF_SEARCH_REQUEST,
+    STAFF_SEARCH_SUCCESS,
+    STAFF_SEARCH_FAILURE
+} from "../actions/StaffProfileAction";
+
 
 
 const initialState = {
@@ -97,6 +103,21 @@ export const ProfileReducer = (state = initialState, action) => {
             return { ...state, loading: false, profile: null }; // Clear the profile after deletion
 
         case DELETE_PROFILE_FAILURE:
+            return { ...state, loading: false, error: action.payload };
+
+        default:
+            return state;
+    }
+}
+export const SearchReducer = (state = initialState, action) => {
+    switch (action.type) {
+        case STAFF_SEARCH_REQUEST:
+            return { ...state, loading: false, error: null };
+
+        case STAFF_SEARCH_SUCCESS:
+            return { ...state, loading: false, profiledata: action.payload };
+
+        case STAFF_SEARCH_FAILURE:
             return { ...state, loading: false, error: action.payload };
 
         default:
