@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Upload } from 'lucide-react';
 import { createProfile } from '../../redux/actions/StaffProfileAction';
 
 const Profile = () => {
+
+  const state = useSelector(state => state);
+  // console.log("allstates", state);  
   const [formData, setFormData] = useState({
     fullName: '',
     specialization: '',
@@ -19,7 +22,7 @@ const Profile = () => {
   });
 
   const [file, setFile] = useState(null);
-  const dispatch = useDispatch(); // Use dispatch from redux
+  const dispatch = useDispatch();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -38,13 +41,13 @@ const Profile = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
   
-    // Dispatch the action with form data and a callback
     dispatch(createProfile(formData, (data) => {
-      // Show alert and log response data
+
       alert('Form submitted successfully!');
+
       console.log('Staff data:', data);
   
-      // Reset form data if needed
+
       setFormData({
         fullName: '',
         specialization: '',

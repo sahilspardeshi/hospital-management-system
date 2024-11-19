@@ -5,15 +5,108 @@ export const CREATE_PROFILE_REQUEST = 'CREATE_PROFILE_REQUEST';
 export const CREATE_PROFILE_SUCCESS = 'CREATE_PROFILE_SUCCESS';
 export const CREATE_PROFILE_FAILURE = 'CREATE_PROFILE_FAILURE';
 
+export const GET_PROFILE_REQUEST = 'GET_PROFILE_REQUEST';
+export const GET_PROFILE_SUCCESS = 'GET_PROFILE_SUCCESS';
+export const GET_PROFILE_FAILURE = 'GET_PROFILE_FAILURE';
 
-export const createProfile = (formData , onSuccess) => async (dispatch)=> {
-    dispatch({type: CREATE_PROFILE_REQUEST});
+export const UPDATE_PROFILE_REQUEST = 'UPDATE_PROFILE_REQUEST';
+export const UPDATE_PROFILE_SUCCESS = 'UPDATE_PROFILE_SUCCESS';
+export const UPDATE_PROFILE_FAILURE = 'UPDATE_PROFILE_FAILURE';
 
-    try{
+export const DELETE_PROFILE_REQUEST = 'DELETE_PROFILE_REQUEST';
+export const DELETE_PROFILE_SUCCESS = 'DELETE_PROFILE_SUCCESS';
+export const DELETE_PROFILE_FAILURE = 'DELETE_PROFILE_FAILURE';
+
+
+export const createProfile = (formData, onSuccess) => async (dispatch) => {
+    dispatch({ type: CREATE_PROFILE_REQUEST });
+
+    try {
         const response = await axiosInstanceApp.post('/staff/create', formData);
-        dispatch({type: CREATE_PROFILE_SUCCESS , payload: response.data});
+        dispatch({ type: CREATE_PROFILE_SUCCESS, payload: response.data });
         onSuccess(response.data);
-    }catch(error){
-        dispatch({type: CREATE_PROFILE_FAILURE , payload: error.message});
+    } catch (error) {
+        dispatch({ type: CREATE_PROFILE_FAILURE, payload: error.message });
     }
 }
+
+
+
+export const  getstaffdata = () => async (dispatch) => {
+    dispatch({ type: GET_PROFILE_REQUEST });
+
+    try {
+
+        const response = await axiosInstanceApp.get(`/staff/getAll`);
+
+        console.log("getstaff data", response)
+
+        dispatch({ type: GET_PROFILE_SUCCESS, payload: response.data });
+    } catch (error) {
+
+        dispatch({
+            type: GET_PROFILE_FAILURE,
+            payload: error.message || 'Something went wrong!',
+        });
+    }
+};
+
+
+export const deleteProfile = (id) => async (dispatch) => {
+    dispatch({ type: DELETE_PROFILE_REQUEST });
+  
+    try {
+      const response = await axiosInstanceApp.delete(`/staff/delete/${id}`);
+      dispatch({ type: DELETE_PROFILE_SUCCESS, payload:id }); 
+    } catch (error) {
+      dispatch({
+        type: DELETE_PROFILE_FAILURE,
+        payload: error.message || 'Something went wrong!',
+      });
+    }
+  };
+
+
+export const updateProfile = ( formData, onSuccess) => async (dispatch) => {
+    dispatch({ type: UPDATE_PROFILE_REQUEST });
+
+    try {
+        const response = await axiosInstanceApp.put(`/staff/update/${formData.id}`, formData);
+        console.log('Updated Profile Data:', response.data);
+        dispatch({ type: UPDATE_PROFILE_SUCCESS, payload: response.data });
+        onSuccess(response.data);
+    } catch (error) {
+        dispatch({
+            type: UPDATE_PROFILE_FAILURE,
+            payload: error.message || 'Something went wrong!',
+        });
+    }
+};
+
+
+
+
+// export const updateProfile = (updatedProfile) => {
+//     return async (dispatch) => {
+//       try {
+//         const response = await put(`/staff/update/${updatedProfile.id}`, {
+//           method: 'PUT',
+//           headers: {
+//             'Content-Type': 'application/json',
+//           },
+//           body: JSON.stringify(updatedProfile),
+//         });
+//         const data = await response.json();
+//         dispatch({
+//           type: 'UPDATE_PROFILE_SUCCESS',
+//           payload: data,
+//         });
+//       } catch (error) {
+//         dispatch({
+//           type: 'UPDATE_PROFILE_FAILURE',
+//           payload: error,
+//         });
+//       }
+//     };
+//   };
+  

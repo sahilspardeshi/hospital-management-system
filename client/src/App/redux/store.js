@@ -6,6 +6,7 @@ import { patientReducer } from './reducers/patientReducer';
 import { loginReducer } from './reducers/loginReducer';
 import { ProfileReducer } from './reducers/StaffProfileReducer';
 
+
 const rootReducer = combineReducers({
 
   login:loginReducer ,

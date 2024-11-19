@@ -245,6 +245,7 @@ model MainMedicalReports {
   IPDTreatments   IPDTreatments?   @relation(fields: [IPDtreatment_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
+
 model MedicalReports {
   report_id          Int              @id @default(autoincrement())
   patient_id         Int?
