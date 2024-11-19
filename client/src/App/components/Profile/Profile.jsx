@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Upload } from 'lucide-react';
 import { createProfile } from '../../redux/actions/StaffProfileAction';
+import { toast } from 'react-toastify';
 
 const Profile = () => {
   const [formData, setFormData] = useState({
@@ -41,7 +42,7 @@ const Profile = () => {
     // Dispatch the action with form data and a callback
     dispatch(createProfile(formData, (data) => {
       // Show alert and log response data
-      alert('Form submitted successfully!');
+      toast(`${formData.fullName} Form submitted successfully!`);
       console.log('Staff data:', data);
   
       // Reset form data if needed

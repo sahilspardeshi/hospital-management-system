@@ -12,6 +12,7 @@ const Treatment = () => {
     patient_id: '',
     doctor_id: '',
     Doctor: '',
+    slot:'',
     diagnosis: 'yes',
     treatment_plan: 'No',
     report_file: null,
@@ -42,14 +43,14 @@ const Treatment = () => {
     setShowPatientSuggestions(false);
     setShowMobileSuggestions(false);
   };
-  useEffect(() => {
-    // Set the default date to today's date (YYYY-MM-DD format)
-    const today = new Date().toISOString().split('T')[0];
-    setFormData((prevData) => ({
-      ...prevData,
-      follow_up_date : today,
-    }));
-  }, []);
+  // useEffect(() => {
+  //   // Set the default date to today's date (YYYY-MM-DD format)
+  //   const today = new Date().toISOString().split('T')[0];
+  //   setFormData((prevData) => ({
+  //     ...prevData,
+  //     follow_up_date : today,
+  //   }));
+  // }, []);
   const fetchPatientSuggestions = async (query, type) => {
     if (!query.trim()) {
       type === 'name' ? setPatientSuggestions([]) : setMobileSuggestions([]);
@@ -134,8 +135,16 @@ const Treatment = () => {
   };
 
   const handleSubmit = (path) => {
-    const { appointment_id,follow_up_date,diagnosis,doctor_id,patient_id,treatment_plan } = formData;
-    if (!appointment_id || !follow_up_date || !diagnosis || !doctor_id || !patient_id || !treatment_plan ) {
+    const { appointment_id,follow_up_date,diagnosis,doctor_id,patient_id,treatment_plan,slot } = formData;
+    if(slot)
+    {
+  const [hours, minutes] = slot.split(":");
+  const period = hours >= 12 ? "PM" : "AM";
+  const formattedHours = hours % 12 || 12; // Convert "0" or "12+" hours to 12-hour format
+  const formattedValue = `${formattedHours}:${minutes} ${period}`;
+  formData.slot=formattedValue
+    }
+    if (!appointment_id|| !diagnosis || !doctor_id || !patient_id || !treatment_plan ) {
       toast.warning("Please fill in all required fields.");
       return;
     }
@@ -266,7 +275,16 @@ const Treatment = () => {
               onChange={handleChange}
             />
           </div>
-
+          <div>
+            <label className="block text-gray-700 text-sm font-bold mb-1">Follow-up Date</label>
+            <input
+              type="time"
+              name="slot"
+              className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
+              value={formData.slot}
+              onChange={handleChange}
+            />
+          </div>
           <div>
             <label className="block text-gray-700 text-sm font-bold mb-2 ">Fill reports</label>
             <div className='flex space-x-3 justify-start'>
