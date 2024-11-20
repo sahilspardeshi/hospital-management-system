@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Upload } from 'lucide-react';
 import { createProfile } from '../../redux/actions/StaffProfileAction';
 import { toast } from 'react-toastify';
 
 const Profile = () => {
+
+  const state = useSelector(state => state);
+  // console.log("allstates", state);  
   const [formData, setFormData] = useState({
     fullName: '',
     specialization: '',
@@ -20,7 +23,7 @@ const Profile = () => {
   });
 
   const [file, setFile] = useState(null);
-  const dispatch = useDispatch(); // Use dispatch from redux
+  const dispatch = useDispatch();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -39,13 +42,14 @@ const Profile = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
   
-    // Dispatch the action with form data and a callback
     dispatch(createProfile(formData, (data) => {
+
       // Show alert and log response data
       toast(`${formData.fullName} Form submitted successfully!`);
+
       console.log('Staff data:', data);
   
-      // Reset form data if needed
+
       setFormData({
         fullName: '',
         specialization: '',
@@ -93,6 +97,19 @@ const Profile = () => {
                       className="w-full p-2 border rounded"
                       placeholder="Enter Specialization"
                      
+                    />
+                  </div>
+                  <div >
+                    <label htmlFor="email" className="block mb-1 text-sm font-medium">Email</label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleInputChange} 
+                      className="w-full p-2 border rounded"
+                      placeholder="Enter Email Id"
+                      required
                     />
                   </div>
                   <div >
@@ -147,19 +164,7 @@ const Profile = () => {
                       required
                     />
                   </div>
-                  <div >
-                    <label htmlFor="email" className="block mb-1 text-sm font-medium">Email</label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleInputChange} 
-                      className="w-full p-2 border rounded"
-                      placeholder="Enter Email Id"
-                      required
-                    />
-                  </div>
+               
                   <div >
                     <label htmlFor="qualifications" className="block mb-1 text-sm font-medium">Qualification</label>
                     <input

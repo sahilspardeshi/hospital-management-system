@@ -7,6 +7,7 @@ import { adReducer } from './reducers/adReducer';
 const rootReducer = combineReducers({
   account: accountReducer,
   advertisement: adReducer,
+  
   // other reducers can be added here
 });
 
