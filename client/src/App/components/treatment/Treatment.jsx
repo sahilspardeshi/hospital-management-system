@@ -57,7 +57,7 @@ const Treatment = () => {
       type === 'name' ? setShowPatientSuggestions(false) : setShowMobileSuggestions(false);
       return;
     }
-    
+
     try {
       // Dispatch search based on the type (name or mobile)
       dispatch(
@@ -66,8 +66,10 @@ const Treatment = () => {
           setPatientSuggestions(result);
           if (type === 'name') {
             setShowPatientSuggestions(true);
+            setShowMobileSuggestions(false);
           } else if (type === 'mobile') {
             setShowMobileSuggestions(true);
+            setPatientSuggestions(false);
           }
         })
       );

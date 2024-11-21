@@ -1,20 +1,29 @@
 import { useState, useEffect } from 'react';
 import axiosInstanceApp from "../../axiosConfig";
+import { GetAllAppointment } from '../../redux/actions/Appointment';
+import { useDispatch } from 'react-redux';
 
 export default function AppointmentList() {
   const [appointments, setAppointments] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredAppointments, setFilteredAppointments] = useState([]);
-
+  const dispatch = useDispatch();
   useEffect(() => {
-    axiosInstanceApp.get('/opdAppointment/AllAppointment')
-      .then(response => {
-        setAppointments(response.data.data);
-        setFilteredAppointments(response.data.data);
+    // axiosInstanceApp.get('/opdAppointment/AllAppointment')
+    //   .then(response => {
+    //     setAppointments(response.data.data);
+    //     setFilteredAppointments(response.data.data);
+    //   })
+    //   .catch(error => {
+    //     console.error('Error fetching appointments:', error);
+    //   });
+    dispatch(
+      GetAllAppointment((result) => {
+        console.log(result)
+    setAppointments(result);
+   setFilteredAppointments(result);
       })
-      .catch(error => {
-        console.error('Error fetching appointments:', error);
-      });
+    );
   }, []);
 
   useEffect(() => {

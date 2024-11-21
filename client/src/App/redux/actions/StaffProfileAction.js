@@ -113,8 +113,7 @@ export const updateProfile = ( formData, onSuccess) => async (dispatch) => {
 //       }
 //     };
 //   };
-// }
-
+  
 
 
 export const StaffSearch = (name, onSuccess) => {
