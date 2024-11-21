@@ -13,7 +13,7 @@ const Ipd = () => {
     { icon: 'fa-brands fa-slack', label: 'Billing',path:'' },
     { icon: 'fa-solid fa-user', label: 'All Appointment' ,path:''},
     { icon: 'fa-solid fa-home', label: 'Dashboard' ,path:''},
-    { icon: 'fa-solid fa-lock', label: 'Logout',path:'' },
+    { icon: 'fa-solid fa-lock', label: 'Logout',path:'/' },
   ];
   return (
     <div className="max-h-screen min-h-screen bg-custom-gradient flex">
