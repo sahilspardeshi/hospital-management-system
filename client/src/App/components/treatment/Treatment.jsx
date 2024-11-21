@@ -57,7 +57,7 @@ const Treatment = () => {
       type === 'name' ? setShowPatientSuggestions(false) : setShowMobileSuggestions(false);
       return;
     }
-
+    
     try {
       // Dispatch search based on the type (name or mobile)
       dispatch(
@@ -224,7 +224,7 @@ const Treatment = () => {
             <label className="block text-gray-700 text-sm font-bold mb-1">Doctor ID</label>
             <input
               type="text"
-              name="doctorId"
+              name="fullName"
               className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
               value={selectedPatient?.Staff.fullName}
               onChange={handleChange}
@@ -239,6 +239,7 @@ const Treatment = () => {
               name="diagnosis"
               className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
               value={formData.diagnosis}
+              onChange={handleChange}
               placeholder="Enter Diagnosis"
             />
           </div>
@@ -246,7 +247,7 @@ const Treatment = () => {
           <div>
             <label className="block text-gray-700 text-sm font-bold mb-1">Treatment Plan</label>
             <textarea
-              name="treatmentPlan"
+              name="treatment_plan"
               className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
               rows="4"
               value={formData.treatment_plan}
