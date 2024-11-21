@@ -42,42 +42,47 @@ const handleUpdate = (data) => {
   return (
     <>
       <h1 className="font-bold text-3xl max-w-44 m-auto my-5">All Staff </h1>
-    <div>
-    {/* <input type='search' placeholder='Search ' className='w-[320px] h-10 mx-8 p-3'/> */}
-    </div>
-    <div className=' overscroll-x-auto w-[1000px]'>
-    <table border={1} className='border border-slate-500 bg-white overflow-x-auto'>
-      <thead >
+<div className='bg-white opacity-70 p-5 rounded-lg w-full'>
+<div className="mb-4 flex justify-center space-x-2">
+          <input
+            type="text"
+            placeholder="Search Member ID or Name"
+            className="w-2/5 p-2 border rounded-xl"
+          />
+        </div>
+    <div className='w-[1110px] overflow-x-auto'>
+    <table className="min-w-full bg-white">
+      <thead className="bg-gray-100">
         <tr>
-          <th className='border border-slate-500 px-3 py-3'>Sr.No</th>
-          <th className='border border-slate-500 px-3 py-1'>Name</th>
-          <th className='border border-slate-500 px-3'>User</th>
-          <th className='border border-slate-500 px-3'>Email</th>
-          <th className='border border-slate-500 px-3'>Contact No</th>
-          <th className='border border-slate-500 px-3'>Specialization</th>
-          <th className='border border-slate-500 px-3'>Profession</th>
-          <th className='border border-slate-500 px-3'>Qualification</th>
-          <th className='border border-slate-500 px-3'>Department</th>
-          <th className='border border-slate-500 px-3'>Role</th>
-          <th className='border border-slate-500 px-3'>Action</th>
+          <th className='py-2 px-4 border-b text-left'>Sr.No</th>
+          <th className='py-2 px-4 border-b text-left'>Name</th>
+          <th className='py-2 px-4 border-b text-left'>User</th>
+          <th className='py-2 px-4 border-b text-left'>Email</th>
+          <th className='py-2 px-4 border-b text-left'>Contact No</th>
+          <th className='py-2 px-4 border-b text-left'>Specialization</th>
+          <th className='py-2 px-4 border-b text-left'>Profession</th>
+          <th className='py-2 px-4 border-b text-left'>Qualification</th>
+          <th className='py-2 px-4 border-b text-left'>Department</th>
+          <th className='py-2 px-4 border-b text-left'>Role</th>
+          <th className='py-2 px-4 border-b text-left'>Action</th>
         </tr>
       </thead>
       <tbody>
       {profile && profile.length > 0 ? (
         profile.map((data, index) => (
           <tr key={index}>
-            <td className="text-center border border-slate-500 px-3 py-1">{index + 1}</td>
-            <td className="border border-slate-500 px-3 py-1">{data.fullName}</td>
-            <td className="border border-slate-500 px-3 py-1">{data.user}</td>
-            <td className="border border-slate-500 px-3 py-1">{data.email}</td>
-            <td className="border border-slate-500 px-3 py-1">{data.contact_number}</td>
-            <td className="border border-slate-500 px-3 py-1">{data.specialization}</td>
-            <td className="border border-slate-500 px-3 py-1">{data.type}</td>
-            <td className="border border-slate-500 px-3 py-1">{data.qualifications}</td>
-            <td className="border border-slate-500 px-3 py-1">{data.department}</td>
-            <td className="border border-slate-500 px-3 py-1">{data.role}</td>
+            <td className="py-2 px-4 border-b">{index + 1}</td>
+            <td className="py-2 px-4 border-b">{data.fullName}</td>
+            <td className="py-2 px-4 border-b">{data.user}</td>
+            <td className="py-2 px-4 border-b">{data.email}</td>
+            <td className="py-2 px-4 border-b">{data.contact_number}</td>
+            <td className="py-2 px-4 border-b">{data.specialization}</td>
+            <td className="py-2 px-4 border-b">{data.type}</td>
+            <td className="py-2 px-4 border-b">{data.qualifications}</td>
+            <td className="py-2 px-4 border-b">{data.department}</td>
+            <td className="py-2 px-4 border-b">{data.role}</td>
             {/* <td className="border border-slate-500 px-3 py-1 cursor-pointer " onClick={() => handleUpdate(data)}>EDIT</td> */}
-            <td className="border border-slate-500 px-3 py-1 cursor-pointer ">  <button 
+            <td className="py-2 px-4 border-b">  <button 
             className="px-4 py-2 bg-green-400 text-white font- rounded-md hover:bg-green-600"
             onClick={() => handleUpdate(data)}>EDIT </button></td>
             {/* <td className="border border-slate-500 px-3 py-1 cursor-pointer" onClick={() => handleDelete(data)}>delete</td> */}
@@ -91,6 +96,7 @@ const handleUpdate = (data) => {
     </tbody>
     </table>
     </div>
+</div>
       {/* <div className="flex flex-wrap">
         {profile && profile.length > 0 ? (
           profile.map((data) => (
