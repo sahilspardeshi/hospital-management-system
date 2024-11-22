@@ -9,7 +9,7 @@ export default function Staff() {
   const dispatch = useDispatch();
 
   const state = useSelector(state => state);
-  // console.log("allstates", state); 
+  console.log("allstates", state); 
 
 
   const { profile } = useSelector((state) => state.profile);
@@ -31,13 +31,6 @@ const handleUpdate = (data) => {
     dispatch(getstaffdata());
   }, [dispatch]);
 
-  // if (loading) {
-  //   return <div>Loading...</div>;
-  // }
-
-  // if (error) {
-  //   return <div>Error: {error}</div>;
-  // }
 
   return (
     <>
@@ -97,61 +90,7 @@ const handleUpdate = (data) => {
     </table>
     </div>
 </div>
-      {/* <div className="flex flex-wrap">
-        {profile && profile.length > 0 ? (
-          profile.map((data) => (
-            <div key={data.id} className="h-auto w-[350px] rounded-lg bg-white flex m-4 relative group" >
-              <div className='w-[350px] '>
-                
-                  <h1 className="font-bold text-center p-3 text-red-400 text-xl">{data.fullName}</h1>
-              
-                <h1 className="font-bold p-2">
-                  User : <span className="font-medium text-green-600">{data.user}</span>
-                </h1>
-                <h1 className="font-bold p-2">
-                  Email : <span className="font-medium text-green-600">{data.email}</span>
-                </h1>
-                <h1 className="font-bold p-2">
-                  Contact No : <span className="font-medium text-green-600">{data.contact_number}</span>
-                </h1>
-                <h1 className="font-bold p-2">
-                  Specialization : <span className="font-medium text-green-600">{data.specialization}</span>
-                </h1>
-             
-                <h1 className="font-bold p-2">
-                  Profession : <span className="font-medium text-green-600">{data.type}</span>
-                </h1>
-                <h1 className="font-bold p-2">
-                  Qualification : <span className="font-medium text-green-600">{data.qualifications}</span>
-                </h1>
-                <h1 className="font-bold p-2">
-                  Department : <span className="font-medium text-green-600">{data.department}</span>
-                </h1>
-                <h1 className="font-bold p-2">
-                  Role : <span className="font-medium text-green-600">{data.role}</span>
-                </h1>
-                <div className="absolute bottom-1 p-6 rounded-lg flex justify-evenly opacity-0 group-hover:opacity-100 m-1 bg-purple-50 transition-opacity duration-300 w-[340px]">
-          <button 
-            className="px-4 py-2 bg-blue-500 text-white font-bold rounded-md hover:bg-blue-600"
-            onClick={() => handleUpdate(data)}
-          >
-            Update
-          </button>
-          <button 
-            className="px-4 py-2 bg-red-500 text-white font-bold rounded-md hover:bg-red-600"
-            onClick={() => handleDelete(data)}
-          >
-            Delete
-          </button>
-        </div>
-              </div>
-            </div>
-            
-          ))
-        ) : (
-          <p>No staff data available</p>
-        )}
-      </div> */}
+    
 
       {showModal && selectedProfile && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">

@@ -6,6 +6,7 @@ export default function AppointmentList() {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredAppointments, setFilteredAppointments] = useState([]);
 
+  
   useEffect(() => {
     axiosInstanceApp.get('/opdAppointment/AllAppointment')
       .then(response => {
