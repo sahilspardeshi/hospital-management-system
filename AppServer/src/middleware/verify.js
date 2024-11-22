@@ -1,8 +1,15 @@
 import jwt from 'jsonwebtoken';
-
+import Cookies from 'js-cookie';
 
 export async function authenticateToken  (req, res, next) {
-    const token = req.cookies.accessToken;
+
+    console.log("authenticateToken", req.headers, req.cookies);
+
+    let token = req.cookies.accessToken;
+
+    if (!token) {
+        token = req.headers["authorization"]?.split(" ")[1]; 
+    }
     if (!token) {
         return res.status(401).json({ error: "No access token provided" });
     }

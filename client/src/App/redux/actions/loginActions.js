@@ -18,7 +18,8 @@ export const login = (userId, password, onSuccess) => {
     try {
       const response = await axiosInstanceApp.post('auth/login', { userId, password });
       dispatch({ type: LOGIN_SUCCESS, payload: response.data });
- 
+      console.log("Login response" , response)
+  localStorage.setItem("accessToken" , response.data.accessToken)
       if (onSuccess) {
         CookieSet(response.data.accessToken,response.data.refreshToken)
         onSuccess(response.data);

@@ -5,6 +5,8 @@ const prisma = new PrismaClient();
 
 export const getUserProfile = async (req, res) => {
   const {id} = req.user;
+
+  
 console.log(req.user)
   try {
     const staff = await prisma.staff.findUnique({

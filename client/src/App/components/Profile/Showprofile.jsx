@@ -5,6 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import axiosInstanceApp from '../../axiosConfig';
 import { FaUserCheck, FaUserEdit } from 'react-icons/fa';
+import { getprofile } from '../../redux/actions/StaffProfileAction';
 
 const inputClasses = "border border-gray-300 font-bold text-gray-500 rounded-lg p-2";
 const buttonClasses = "text-primary hover:underline hover:text-blue-600";
@@ -16,38 +17,39 @@ const Showprofile = () => {
   const navigate = useNavigate()
 
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.profile);
-
+  const userdata = useSelector((state) => state.profile);
+const user =userdata.profile;
+  console.log("userdata" , userdata)
 
   useEffect(() => {
-    console.log("getstaffdata called")
-    dispatch(getstaffdata());
+    console.log("get profile called ")
+    dispatch(getprofile());
   }, [dispatch]);
 
   // console.log("currentUser", user)
 
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
-    firstName: user.firstName || '',
-    lastName: user.lastName || '',
-    email: user.email || '',
-    mobile: user.mobile || '',
-    gender: user.gender || '',
-    dob: user.dob ? new Date(user.dob).toISOString().split('T')[0] : '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    mobile: '',
+    department: '',
   });
 
+  const [loading, setLoading] = useState(true);
 
 
   useEffect(() => {
     if (user) {
       setFormData({
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
-        mobile: user.mobile,
-        gender: user.gender || '',
-        dob: user.dob ? new Date(user.dob).toISOString().split('T')[0] : '',
+        firstName: user.fullName || '',
+        lastName: user.specialization || '',
+        email: user.email || '',
+        mobile: user.contact_number || '',
+        department: user.department || '',
       });
+      setLoading(false);  // Set loading to false once data is fetched
     }
   }, [user]);
 
@@ -100,7 +102,9 @@ const Showprofile = () => {
       toast.error('Failed to delete account!');
     };
   }
-
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
 
   return (
@@ -129,35 +133,15 @@ const Showprofile = () => {
           readOnly={!isEditing}
         />
       </div>
-      <div className="mb-6">
-        <label className={labelClasses}>Gender</label>
-        <div className="flex items-center space-x-4">
-          <label className={radioClasses}>
-            <input
-              type="radio"
-              name="gender"
-              value="Male"
-              checked={formData.gender === 'Male'}
-              onChange={handleInputChange}
-              className="mr-2"
-              disabled={!isEditing}
-            />
-            Male
-          </label>
-          <label className={radioClasses}>
-            <input
-              type="radio"
-              name="gender"
-              value="Female"
-              checked={formData.gender === 'Female'}
-              onChange={handleInputChange}
-              className="mr-2"
-              disabled={!isEditing}
-            />
-            Female
-          </label>
-        </div>
-      </div>
+      <input
+        type="text"
+        name="department"
+        value={formData.department}
+        onChange={handleInputChange}
+        className={`${inputClasses} w-1/2 mb-6`}
+        readOnly={!isEditing}
+      />
+      
       <div className={flexClasses}>
         <h2 className="text-xl font-semibold">Email Address</h2>
       </div>
@@ -180,38 +164,8 @@ const Showprofile = () => {
         className={`${inputClasses} w-full mb-6`}
         readOnly={!isEditing}
       />
-      <div className="mb-6">
-        <label className={labelClasses}>Date of Birth</label>
-        <input
-          type="date"
-          name="dob"
-          value={formData.dob}
-          onChange={handleInputChange}
-          className={inputClasses}
-          readOnly={!isEditing}
-        />
-      </div>
-      <div className="mt-8">
-        <h2 className="text-xl font-semibold mb-4">FAQs</h2>
-        <div className="space-y-4">
-          <div>
-            <h3 className="font-semibold">What happens when I update my email address (or mobile number)?</h3>
-            <p className="text-muted-foreground">Your login email id (or mobile number) changes, likewise. You'll receive all your account related communication on your updated email address (or mobile number).</p>
-          </div>
-          <div>
-            <h3 className="font-semibold">When will my account be updated with the new email address (or mobile number)?</h3>
-            <p className="text-muted-foreground">It happens as soon as you confirm the verification code sent to your email (or mobile) and save the changes.</p>
-          </div>
-          <div>
-            <h3 className="font-semibold">What happens to my existing account when I update my email address (or mobile number)?</h3>
-            <p className="text-muted-foreground">Updating your email address (or mobile number) doesn't invalidate your account. Your account remains fully functional. You'll continue seeing your Order history, saved information and personal details.</p>
-          </div>
-          <div>
-            <h3 className="font-semibold">Does my Seller account get affected when I update my email address?</h3>
-            <p className="text-muted-foreground">Any changes will reflect in your Seller account also.</p>
-          </div>
-        </div>
-      </div>
+    
+   
       <div className="mt-8 flex space-x-4">
         <button className={buttonClasses} onClick={() => toast.info('Account deactivated!')}>Deactivate Account</button>
         <button
@@ -221,9 +175,7 @@ const Showprofile = () => {
           Delete Account
         </button>
       </div>
-      <div className="mt-8">
-        <img src="https://mindstacktechnologies.com/wordpress/wp-content/uploads/2018/01/ecommerce-banner.jpg" alt="Profile Illustration" className="w-full h-auto" />
-      </div>
+     
     </div>
   );
 };

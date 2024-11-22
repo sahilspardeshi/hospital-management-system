@@ -28,7 +28,7 @@ function SoftwareApp() {
         <Route path="" element={<Graphs />} />
         <Route path="Profile" element={<Profile/>}/>
         <Route path="staff" element={<Staff/>}/>
-        <Route path="prof" element={<Showprofile/>}/>
+        <Route path="Myprofile" element={<Showprofile/>}/>
       </Route>
       <Route path="/opd" element={<OPD />}>
         <Route path="" element={<PatientRegistrationForm />} />
