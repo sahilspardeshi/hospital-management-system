@@ -8,12 +8,11 @@ import { ProfileReducer } from './reducers/StaffProfileReducer';
 
 
 const rootReducer = combineReducers({
-
-  login:loginReducer ,
+  login: loginReducer,
   patient: patientReducer,
   profile: ProfileReducer
-  // Add other reducers here
 });
+
 
 // Create the Redux store
 const store = configureStore({
