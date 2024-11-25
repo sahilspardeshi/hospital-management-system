@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch , useSelector } from "react-redux";
+import PayOption from "../Payment/PayOption"
 import Dr from '../../assets/images/Aarohilogo.png';
 import video from '../../assets/images/Videologo.png';
 import { useNavigate } from 'react-router-dom';
 import { fetchAdvertisement } from "../../redux/actions/adActions";
 import PaymentModal from "../Registation/PaymentPage";
 import CreateAccount from "../Registation/CreateAccount";
-
 const HealthCareSection = ({section0 , advertisements}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -138,6 +138,7 @@ console.log(advertisements)
       {/* )} */}
       <CreateAccount isOpen={registration} close={closeRegistration} onSuccess={openPay}/>
       <PaymentModal closeModal={closePay} isOpen={IsPay}/>
+      <PayOption/>
     </>
   );
 };
