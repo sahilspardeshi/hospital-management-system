@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import notification from "../../assets/images/notifications_none.png";
 import darkmode from "../../assets/images/moon-solid_1.png";
 import about from "../../assets/images/info_outline.png";
@@ -89,7 +90,9 @@ const Navbar = () => {
         />
         <img src={about} alt="Information" className="w-6 h-6 cursor-pointer" />
         <div className="w-10 h-10 rounded-full overflow-hidden">
-          <img src={Doctor} alt="Doctor Avatar" className="w-full h-full" />
+         <Link to='/dashboard/Myprofile'>
+         <img src={Doctor} alt="Doctor Avatar" className="w-full h-full" />
+         </Link>
         </div>
       </div>
     </header>

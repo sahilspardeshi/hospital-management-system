@@ -1,9 +1,12 @@
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
-// Get a Staff member by ID
+
+
 export const getUserProfile = async (req, res) => {
   const {id} = req.user;
+
+  
 console.log(req.user)
   try {
     const staff = await prisma.staff.findUnique({

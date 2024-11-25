@@ -12,6 +12,10 @@ export const GET_PROFILE_REQUEST = 'GET_PROFILE_REQUEST';
 export const GET_PROFILE_SUCCESS = 'GET_PROFILE_SUCCESS';
 export const GET_PROFILE_FAILURE = 'GET_PROFILE_FAILURE';
 
+export const GET_PROFILEID_REQUEST = 'GET_PROFILEID_REQUEST';
+export const GET_PROFILEID_SUCCESS = 'GET_PROFILEID_SUCCESS';
+export const GET_PROFILEID_FAILURE = 'GET_PROFILEID_FAILURE';
+
 export const UPDATE_PROFILE_REQUEST = 'UPDATE_PROFILE_REQUEST';
 export const UPDATE_PROFILE_SUCCESS = 'UPDATE_PROFILE_SUCCESS';
 export const UPDATE_PROFILE_FAILURE = 'UPDATE_PROFILE_FAILURE';
@@ -22,68 +26,98 @@ export const DELETE_PROFILE_FAILURE = 'DELETE_PROFILE_FAILURE';
 
 
 export const createProfile = (formData, onSuccess) => async (dispatch) => {
-    dispatch({ type: CREATE_PROFILE_REQUEST });
+  dispatch({ type: CREATE_PROFILE_REQUEST });
 
-    try {
-        const response = await axiosInstanceApp.post('/staff/create', formData);
-        dispatch({ type: CREATE_PROFILE_SUCCESS, payload: response.data });
-        onSuccess(response.data);
-    } catch (error) {
-        dispatch({ type: CREATE_PROFILE_FAILURE, payload: error.message });
-    }
+  try {
+    const response = await axiosInstanceApp.post('/staff/create', formData);
+    dispatch({ type: CREATE_PROFILE_SUCCESS, payload: response.data });
+    onSuccess(response.data);
+  } catch (error) {
+    dispatch({ type: CREATE_PROFILE_FAILURE, payload: error.message });
+  }
 }
 
 
 
-export const  getstaffdata = () => async (dispatch) => {
-    dispatch({ type: GET_PROFILE_REQUEST });
+export const getstaffdata = () => async (dispatch) => {
+  dispatch({ type: GET_PROFILE_REQUEST });
 
-    try {
+  try {
 
-        const response = await axiosInstanceApp.get(`/staff/getAll`);
+    const response = await axiosInstanceApp.get(`/staff/getAll`);
 
-        console.log("getstaff data", response)
+    console.log("getstaff data", response)
 
-        dispatch({ type: GET_PROFILE_SUCCESS, payload: response.data });
-    } catch (error) {
+    dispatch({ type: GET_PROFILE_SUCCESS, payload: response.data });
+  } catch (error) {
 
-        dispatch({
-            type: GET_PROFILE_FAILURE,
-            payload: error.message || 'Something went wrong!',
-        });
+    dispatch({
+      type: GET_PROFILE_FAILURE,
+      payload: error.message || 'Something went wrong!',
+    });
+  }
+};
+
+export const getprofile = () => async (dispatch) => {
+  dispatch({ type: GET_PROFILEID_REQUEST });
+
+  try {
+    const token = localStorage.getItem('accessToken');
+    console.log("token", token)
+    if (!token) {
+      throw new Error('No token found');
     }
+
+    const response = await axiosInstanceApp.get(`/staff/profile`, {
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+
+    });
+
+
+    console.log("get profile", response.data)
+
+    dispatch({ type: GET_PROFILEID_SUCCESS, payload: response.data });
+  } catch (error) {
+
+    dispatch({
+      type: GET_PROFILEID_FAILURE,
+      payload: error.message || 'Something went wrong!',
+    });
+  }
 };
 
 
 export const deleteProfile = (id) => async (dispatch) => {
-    dispatch({ type: DELETE_PROFILE_REQUEST });
-  
-    try {
-      const response = await axiosInstanceApp.delete(`/staff/delete/${id}`);
-      dispatch({ type: DELETE_PROFILE_SUCCESS, payload:id }); 
-    } catch (error) {
-      dispatch({
-        type: DELETE_PROFILE_FAILURE,
-        payload: error.message || 'Something went wrong!',
-      });
-    }
-  };
+  dispatch({ type: DELETE_PROFILE_REQUEST });
+
+  try {
+    const response = await axiosInstanceApp.delete(`/staff/delete/${id}`);
+    dispatch({ type: DELETE_PROFILE_SUCCESS, payload: id });
+  } catch (error) {
+    dispatch({
+      type: DELETE_PROFILE_FAILURE,
+      payload: error.message || 'Something went wrong!',
+    });
+  }
+};
 
 
-export const updateProfile = ( formData, onSuccess) => async (dispatch) => {
-    dispatch({ type: UPDATE_PROFILE_REQUEST });
+export const updateProfile = (formData, onSuccess) => async (dispatch) => {
+  dispatch({ type: UPDATE_PROFILE_REQUEST });
 
-    try {
-        const response = await axiosInstanceApp.put(`/staff/update/${formData.id}`, formData);
-        console.log('Updated Profile Data:', response.data);
-        dispatch({ type: UPDATE_PROFILE_SUCCESS, payload: response.data });
-        onSuccess(response.data);
-    } catch (error) {
-        dispatch({
-            type: UPDATE_PROFILE_FAILURE,
-            payload: error.message || 'Something went wrong!',
-        });
-    }
+  try {
+    const response = await axiosInstanceApp.put(`/staff/update/${formData.id}`, formData);
+    console.log('Updated Profile Data:', response.data);
+    dispatch({ type: UPDATE_PROFILE_SUCCESS, payload: response.data });
+    onSuccess(response.data);
+  } catch (error) {
+    dispatch({
+      type: UPDATE_PROFILE_FAILURE,
+      payload: error.message || 'Something went wrong!',
+    });
+  }
 
 };
 
@@ -113,27 +147,27 @@ export const updateProfile = ( formData, onSuccess) => async (dispatch) => {
 //       }
 //     };
 //   };
-  
+
 
 
 export const StaffSearch = (name, onSuccess) => {
-    console.log(name); // Corrected log
-    return async (dispatch) => {
-      dispatch({ type: STAFF_SEARCH_REQUEST });
-      try {
-        const response = await axiosInstanceApp.post('/staff/getByName', { name });
-  
-        dispatch({ type: STAFF_SEARCH_SUCCESS, payload: response.data });
-  
-        if (typeof onSuccess === 'function') {
-          onSuccess(response.data);
-        }
-      } catch (error) {
-        const errorMsg = error.response?.data?.message || "Something went wrong. Please try again.";
-        dispatch({ type: STAFF_SEARCH_FAILURE, payload: errorMsg });
-        // Optionally log the error
-        console.error("Error in StaffSearch:", errorMsg);
+  console.log(name); // Corrected log
+  return async (dispatch) => {
+    dispatch({ type: STAFF_SEARCH_REQUEST });
+    try {
+      const response = await axiosInstanceApp.post('/staff/getByName', { name });
+
+      dispatch({ type: STAFF_SEARCH_SUCCESS, payload: response.data });
+
+      if (typeof onSuccess === 'function') {
+        onSuccess(response.data);
       }
-    };
+    } catch (error) {
+      const errorMsg = error.response?.data?.message || "Something went wrong. Please try again.";
+      dispatch({ type: STAFF_SEARCH_FAILURE, payload: errorMsg });
+      // Optionally log the error
+      console.error("Error in StaffSearch:", errorMsg);
+    }
   };
+};
 

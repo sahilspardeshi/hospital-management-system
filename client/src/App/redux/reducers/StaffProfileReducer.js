@@ -8,6 +8,10 @@ import {
     GET_PROFILE_SUCCESS,
     GET_PROFILE_FAILURE,
 
+    GET_PROFILEID_REQUEST,
+    GET_PROFILEID_SUCCESS,
+    GET_PROFILEID_FAILURE,
+
     DELETE_PROFILE_REQUEST,
     DELETE_PROFILE_SUCCESS,
     DELETE_PROFILE_FAILURE,
@@ -56,25 +60,35 @@ export const ProfileReducer = (state = initialState, action) => {
         case GET_PROFILE_FAILURE:
             return { ...state, loading: false, error: action.payload };
 
+        case GET_PROFILEID_REQUEST:
+            return { ...state, loading: true };
+
+        case GET_PROFILEID_SUCCESS:
+            // console.log("GET_PROFILE_SUCCESS", action.payload)
+            return { ...state, loading: false, profile: action.payload };
+
+        case GET_PROFILEID_FAILURE:
+            return { ...state, loading: false, error: action.payload };
 
 
-//   case 'UPDATE_PROFILE_SUCCESS':
-//         return {
-//           ...state,
-//           profile: state.profile.map((profile) =>
-//             profile.id === action.payload.id ? action.payload : profile
-//           ),
-//         };
-//       case 'UPDATE_PROFILE_FAILURE':
-//         return {
-//           ...state,
-//           error: action.payload,
-//         };
-//       default:
-//         return state;
-//     }
-//   };
-  
+
+        //   case 'UPDATE_PROFILE_SUCCESS':
+        //         return {
+        //           ...state,
+        //           profile: state.profile.map((profile) =>
+        //             profile.id === action.payload.id ? action.payload : profile
+        //           ),
+        //         };
+        //       case 'UPDATE_PROFILE_FAILURE':
+        //         return {
+        //           ...state,
+        //           error: action.payload,
+        //         };
+        //       default:
+        //         return state;
+        //     }
+        //   };
+
 
 
         case UPDATE_PROFILE_REQUEST:
