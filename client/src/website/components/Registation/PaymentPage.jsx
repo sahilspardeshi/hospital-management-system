@@ -45,14 +45,13 @@ const PaymentModal = ({ isOpen, closeModal, OnSuccess }) => {
 
     try {
       const paymentdata = {
-        // amount: items[1].totalDiscountedPrice,
+        // amount: ,
         amount: 40000,
         currency: "INR",
         // planId: planId,
       }
 
       const order = await axiosInstanceWeb.post(`/marketing/createpay`, paymentdata);
-      // createPaymentOrder(paymentdata)
 
       console.log("orderdata", order)
 
@@ -80,7 +79,6 @@ const PaymentModal = ({ isOpen, closeModal, OnSuccess }) => {
 
             alert("Payment verified successfully");
 
-
             // Prepare order data
             const orderData = {
               // shippingAddress: selectedAddress,
@@ -94,25 +92,18 @@ const PaymentModal = ({ isOpen, closeModal, OnSuccess }) => {
             };
 
             // Place the order client subscription
-            // await dispatch(placeOrder(orderData));  
+            // await dispatch(placeOrder(  ));  
 
 
 
             alert("Order placed successfully");
-            // navigate("/paymentsuccess");
+            // navigate("/");
           } catch (error) {
             console.log("Failed to place order:", error);
             alert("Failed to place order");
           }
         },
-        // prefill: {
-        //   name: formData.fullName,
-        //   email: "your-email@example.com",
-        //   contact: formData.mobile,
-        // },
-        // notes: {
-        //   address: `${formData.houseNumber}, ${formData.area}, ${formData.streetAddress}, ${formData.state} - ${formData.zipCode}`,
-        // },
+
         theme: {
           color: "#FFAC1C",
         },
@@ -120,11 +111,7 @@ const PaymentModal = ({ isOpen, closeModal, OnSuccess }) => {
 
       const paymentObject = new window.Razorpay(options);
       paymentObject.open();
-      // dispatch(updateCartPriceSummary({
-      //   totalDiscountedPrice: 0,
-      //   discount: 0,
-      //   totalActualPrice: 0 // Add this line if you want to include totalActualPrice
-      // }));
+    
     } catch (error) {
       console.log("Error creating order:", error);
       // alert("Error creating order. Please try again.");
