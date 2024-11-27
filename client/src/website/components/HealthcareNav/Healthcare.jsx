@@ -29,7 +29,8 @@ console.log(advertisements)
 
   const closeRegistration = () => {
     setRegistration(false);
-    // Removed console.log here
+    reset();
+    
   };
   const openPay = () => {
     setRegistration(false);
@@ -136,9 +137,9 @@ console.log(advertisements)
         </div>
       </div>
       {/* )} */}
-      <CreateAccount isOpen={registration} close={closeRegistration} onSuccess={openPay}/>
+      <CreateAccount isOpen={registration} close={closeRegistration} onSuccess={openPay}  />
       <PaymentModal closeModal={closePay} isOpen={IsPay}/>
-      <PayOption/>
+      {/* <PayOption/> */}
     </>
   );
 };
