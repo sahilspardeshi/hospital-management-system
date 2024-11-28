@@ -2,32 +2,41 @@
 import React, { useState } from "react";
 import Logo from "../../assets/images/AarohiLogo.png";
 import CreateAccount from "../Registation/CreateAccount";
+import Login from "../Registation/Login";
 import PaymentModal from "../Registation/PaymentPage";
 import PayOption from "../Payment/PayOption";
 
 const CustomNavbar = () => {
   const [registration, setRegistration] = useState(false); // Renamed state
+  const [login, setLogin] = useState(false); // Renamed state
   const [IsPay, setPay] = useState(false);
+
+  const openLogin = () => {
+    setLogin(true);
+  };
+
+  const closeLogin = () => {
+    setLogin(false);
+    reset();
+  };
 
   const openRegistration = () => {
     setRegistration(true);
   };
-
   const closeRegistration = () => {
     setRegistration(false);
     reset();
-    
   };
+
   const openPay = () => {
     setRegistration(false);
+    setLogin(false);
     setPay(true);
   };
 
   const closePay = () => {
     setPay(false);
   };
-
-
 
   return (
     <>
@@ -145,7 +154,7 @@ const CustomNavbar = () => {
         <div className="hidden lg:flex lg:items-center lg:space-x-2">
           <button
             className="bg-green-600 text-white px-6 py-2 rounded-md hover:bg-green-200 text-xl"
-            onClick={openRegistration}
+            onClick={openLogin}
           >
             Sign in
           </button>
@@ -162,6 +171,7 @@ const CustomNavbar = () => {
         close={closeRegistration}
         onSuccess={openPay}
       />
+     {  login && <Login isOpen={login} close={closeLogin} onSuccess={openPay} />}
       <PaymentModal closeModal={closePay} isOpen={IsPay} />
       {/* <PayOption /> */}
     </>
