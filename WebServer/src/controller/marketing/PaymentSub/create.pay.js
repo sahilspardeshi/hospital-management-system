@@ -21,6 +21,8 @@ const generateReceiptId = () => {
 export const createPaymentMethod = async (req, res) => {
     const { methodName, paymentId, plan_id, amount } = req.body;
 
+console.log("req user",    req.user)
+
     console.log("createPaymentMethod amount",amount)
 
     try {

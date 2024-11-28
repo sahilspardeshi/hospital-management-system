@@ -1,15 +1,35 @@
 // PaymentModal.jsx
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import back from "../../assets/images/back.jpg";
 import tick from "../../assets/images/tick.png";
 import axiosInstanceWeb from "../../axiosConfig";
 import arohilogo from "./ArohiLogo.png"
+import { useDispatch, useSelector } from 'react-redux';
+import { createPaymentMethod, verifyPayment } from "../../redux/actions/PaymentAction";
 
 const PaymentModal = ({ isOpen, closeModal, OnSuccess }) => {
   const [isMonthly, setIsMonthly] = useState(true);
 
   const handleMonthlyClick = () => setIsMonthly(true);
   const handleYearlyClick = () => setIsMonthly(false);
+
+  const dispatch = useDispatch()
+  const { loading, order, paymentVerificationStatus, error } = useSelector(state => state.payment);
+  console.log("Loading state:", loading); // Check the value of loading
+
+  const [allplans, setallplans] = useState([])
+
+  const getallplans = async () => {
+    const response = await axiosInstanceWeb.get(`/subplans/getall`)
+
+    console.log("getall plans", response)
+    setallplans(response.data)
+  }
+
+  useEffect(() => {
+    getallplans()
+  }, [isOpen])
+
 
   const pricingPlans = isMonthly
     ? [
@@ -35,7 +55,7 @@ const PaymentModal = ({ isOpen, closeModal, OnSuccess }) => {
   };
 
 
-  const handlePayment = async () => {
+  const handlePayment = async (plan) => {
     const res = await loadRazorpayScript();
 
     if (!res) {
@@ -46,27 +66,27 @@ const PaymentModal = ({ isOpen, closeModal, OnSuccess }) => {
     try {
       const paymentdata = {
         // amount: ,
-        amount: 40000,
+        amount: plan.price,
         currency: "INR",
         // planId: planId,
       }
 
-      const order = await axiosInstanceWeb.post(`/marketing/createpay`, paymentdata);
+      dispatch(createPaymentMethod(paymentdata))
 
-      console.log("orderdata", order)
+      console.log("orderdata",order)
 
       const options = {
         key: "rzp_test_41ZFhXfBCmUM1o",
-        image:arohilogo, // company logo
-        amount: order.data.amount,
-        currency: order.data.currency,
-        order_id: order.data.id,
+        image: arohilogo, // company logo
+        amount: order.amount,
+        currency: order.currency,
+        order_id: order.id,
         name: "HMS",
         description: "Checkout",
         handler: async function (response) {
 
           console.log("handler response", response)
-          
+
           try {
             const verificationData = {
               order_id: response.razorpay_order_id,
@@ -75,7 +95,9 @@ const PaymentModal = ({ isOpen, closeModal, OnSuccess }) => {
             };
 
             // Verify the payment
-            const order = await axiosInstanceWeb.post(`/marketing/verifyPayment`, verificationData);
+            dispatch(verifyPayment(verificationData))
+
+            console.log("paymentVerificationStatus", paymentVerificationStatus)
 
             alert("Payment verified successfully");
 
@@ -111,7 +133,7 @@ const PaymentModal = ({ isOpen, closeModal, OnSuccess }) => {
 
       const paymentObject = new window.Razorpay(options);
       paymentObject.open();
-    
+
     } catch (error) {
       console.log("Error creating order:", error);
       // alert("Error creating order. Please try again.");
@@ -154,31 +176,35 @@ const PaymentModal = ({ isOpen, closeModal, OnSuccess }) => {
 
             {/* Pricing Plans */}
             <div className="grid grid-cols-1 gap-4 mt-4 sm:grid-cols-2 lg:grid-cols-3">
-              {pricingPlans.map((plan, index) => (
+              {allplans.map((plan, index) => (
                 <div
                   key={index}
                   className={`bg-white shadow-md rounded-lg p-3 sm:p-4 lg:p-6 text-center transition-transform duration-300 hover:border-blue-700 hover:border-4 hover:scale-110`}
                 >
-                  {plan.popular && <p className="text-xs text-yellow-600 font-semibold mb-2">Most Popular</p>}
+                  {plan && <p className="text-xs text-yellow-600 font-semibold mb-2">Most Popular</p>}
                   <h3 className="text-md sm:text-lg md:text-xl font-semibold mb-2">{plan.name}</h3>
                   <p className="text-xl sm:text-2xl md:text-3xl font-bold mb-2">
                     {plan.price}
-                    <span className="text-xs sm:text-sm md:text-base">{plan.period}</span>
+                    <span className="text-xs sm:text-sm md:text-base">{plan.duration}</span>
                   </p>
                   <ul className="mb-4 bg-gray-100 p-2 rounded-lg text-xs sm:text-sm">
-                    {plan.features.map((feature, featureIndex) => (
-                      <li key={featureIndex} className="mb-1 flex items-center">
-                        <img src={tick} alt="Tick" className="w-4 h-4 mr-2" />
-                        {feature}
-                      </li>
-                    ))}
+
+                    <li className="mb-1 flex items-center">
+                      <img src={tick} alt="Tick" className="w-4 h-4 mr-2" />
+                      {plan.features}
+                    </li>
+
                   </ul>
-                  <button className="border-2 bg-blue-100 border-blue-500 text-blue-500 py-1 px-2 sm:py-2 sm:px-3 md:py-2 md:px-4 rounded hover:bg-blue-500 hover:text-white w-full transition-colors duration-300 text-xs sm:text-sm" onClick={OnSuccess}>
+                  <button className="border-2 bg-blue-100 border-blue-500 text-blue-500 py-1 px-2 sm:py-2 sm:px-3 md:py-2 md:px-4 rounded hover:bg-blue-500 hover:text-white w-full transition-colors duration-300 text-xs sm:text-sm" onClick={() => {
+                    console.log("Plan clicked:", plan);  // Check if the plan data is correct
+                    handlePayment(plan);  // Pass the plan to handlePayment
+                  }}
+                  >
                     Get started
                   </button>
-                  <button className="border-2 bg-blue-100 border-blue-500 text-blue-500 py-1 px-2 sm:py-2 sm:px-3 md:py-2 md:px-4 rounded hover:bg-blue-500 hover:text-white w-full transition-colors duration-300 text-xs sm:text-sm" onClick={handlePayment}>
+                  {/* <button className="border-2 bg-blue-100 border-blue-500 text-blue-500 py-1 px-2 sm:py-2 sm:px-3 md:py-2 md:px-4 rounded hover:bg-blue-500 hover:text-white w-full transition-colors duration-300 text-xs sm:text-sm" onClick={handlePayment}>
                     buy 100
-                  </button>
+                  </button> */}
                 </div>
               ))}
             </div>
