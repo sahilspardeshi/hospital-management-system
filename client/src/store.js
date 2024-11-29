@@ -20,6 +20,7 @@ const rootReducer = combineReducers({
     profile: ProfileReducer,
     account: accountReducer,
     advertisement: adReducer,
+    payment:paymentReducer
     
   });
   

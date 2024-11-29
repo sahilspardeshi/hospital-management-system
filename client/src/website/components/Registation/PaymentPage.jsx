@@ -73,7 +73,7 @@ const PaymentModal = ({ isOpen, closeModal, OnSuccess }) => {
 
       dispatch(createPaymentMethod(paymentdata))
 
-      console.log("orderdata",order)
+      console.log("orderdata", order)
 
       const options = {
         key: "rzp_test_41ZFhXfBCmUM1o",
@@ -92,6 +92,7 @@ const PaymentModal = ({ isOpen, closeModal, OnSuccess }) => {
               order_id: response.razorpay_order_id,
               payment_id: response.razorpay_payment_id,
               signature: response.razorpay_signature,
+              plan_id: plan.id,
             };
 
             // Verify the payment
@@ -102,23 +103,29 @@ const PaymentModal = ({ isOpen, closeModal, OnSuccess }) => {
             alert("Payment verified successfully");
 
             // Prepare order data
-            const orderData = {
-              // shippingAddress: selectedAddress,
-              paymentDetails: {
-                paymentMethod: "Online Payment",
-                razorpay_order_id: response.razorpay_order_id,
-                razorpay_payment_id: response.razorpay_payment_id,
-                razorpay_signature: response.razorpay_signature,
 
-              },
-            };
+            const token = localStorage.getItem('token');
+            console.log("token", token)
+            if (!token) {
+              throw new Error('No token found');
+            }
 
-            // Place the order client subscription
-            // await dispatch(placeOrder(  ));  
+            const data = { PaymentMethodId: paymentVerificationStatus.paymentMethod.id, 
+              subscriptionPlanId:paymentVerificationStatus.paymentMethod.plan_id,paymentStatus:paymentVerificationStatus.paymentstatus,
+              duration:plan.duration
+            }
+
+            const createclientsub = await axiosInstanceWeb.post(`/marketing/clientsub`, data, {
+              headers: {
+                "Authorization": `Bearer ${token}`
+              }
+
+            });
+
+            // create client subscription
+            console.log("createclientsub", createclientsub)
 
 
-
-            alert("Order placed successfully");
             // navigate("/");
           } catch (error) {
             console.log("Failed to place order:", error);

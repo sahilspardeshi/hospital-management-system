@@ -18,7 +18,18 @@ console.log("createPaymentMethod paymentDetails",paymentDetails)
   dispatch({ type: CREATE_PAYMENT_METHOD_REQUEST });
 
   try {
-    const response = await axiosInstanceWeb.post(`/marketing/createpay`, paymentDetails);
+    const token = localStorage.getItem('token');
+    console.log("token", token)
+    if (!token) {
+      throw new Error('No token found');
+    }
+
+    const response = await axiosInstanceWeb.post(`/marketing/createpay`, paymentDetails, {
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+
+    });
     console.log("createPaymentMethod",response)
     dispatch({
       type: CREATE_PAYMENT_METHOD_SUCCESS,

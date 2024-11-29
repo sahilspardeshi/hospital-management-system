@@ -26,8 +26,9 @@ import {
       case CREATE_PAYMENT_METHOD_SUCCESS:
         return {
           ...state,
-          loading: false,
+          
           order: action.payload, // the created order data
+          loading: false,
           error: null,
         };
   
@@ -47,8 +48,8 @@ import {
       case VERIFY_PAYMENT_SUCCESS:
         return {
           ...state,
-          loading: false,
           paymentVerificationStatus: action.payload, // success message from server
+          loading: false,
           error: null,
         };
   

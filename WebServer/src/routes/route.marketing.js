@@ -17,10 +17,10 @@ marketing.route('/marketingBy/:id').get(getMarketingById)
 
 // marketing.route('/clientsub').post(createClientSubscription)
 
-marketing.route('/clientsub').post(createClientSub)
+marketing.route('/clientsub').post(authenticateToken, createClientSub)
 marketing.route('/updateclientsub').put(updateSubscriptionStatus)
 marketing.route('/subplan').post(createPlan)
-marketing.route('/createpay',authenticateToken).post(createPaymentMethod)
+marketing.route('/createpay').post(authenticateToken,createPaymentMethod)
 marketing.route('/verifyPayment').post(verifyPayment)
 marketing.route('/getallsubplans').get(getPlans)
 
