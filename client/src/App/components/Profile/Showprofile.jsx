@@ -18,7 +18,7 @@ const Showprofile = () => {
 
   const dispatch = useDispatch();
   const userdata = useSelector((state) => state.profile);
-const user =userdata.profile;
+const user =userdata.userprofile;
   console.log("userdata" , userdata)
 
   useEffect(() => {
