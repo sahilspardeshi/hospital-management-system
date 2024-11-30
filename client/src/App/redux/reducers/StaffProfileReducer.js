@@ -32,6 +32,7 @@ import {
 const initialState = {
     loading: false,
     profile: null,
+    userprofile:null,
     error: null,
 };
 
@@ -60,12 +61,14 @@ export const ProfileReducer = (state = initialState, action) => {
         case GET_PROFILE_FAILURE:
             return { ...state, loading: false, error: action.payload };
 
+            
+
         case GET_PROFILEID_REQUEST:
             return { ...state, loading: true };
 
         case GET_PROFILEID_SUCCESS:
             // console.log("GET_PROFILE_SUCCESS", action.payload)
-            return { ...state, loading: false, profile: action.payload };
+            return { ...state, loading: false, userprofile: action.payload };
 
         case GET_PROFILEID_FAILURE:
             return { ...state, loading: false, error: action.payload };
