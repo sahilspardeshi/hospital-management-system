@@ -35,10 +35,10 @@ export const createPaymentMethod = async (req, res) => {
     //     return res.status(404).json({ error: "Subscription Plan not found." });
     // }
 
-    const amountinpaise = amount ;
+    const amountinrupee = amount * 100 ;
 
     const options = {
-      amount: amountinpaise, // Amount in paise (e.g., 100 * 100 = 10000 paise = INR 100)
+      amount: amountinrupee, 
       currency: 'INR',
       receipt: generateReceiptId(), // Generate unique receipt ID
       payment_capture: 1, // Automatically capture payment
@@ -47,18 +47,6 @@ export const createPaymentMethod = async (req, res) => {
 
     const order = await razorpayInstance.orders.create(options);
 
-
-
-
-
-
-    // console.log(paymentMethod)
-
-    //converting bigint into string
-    // const paymenthod = {
-    //     ...paymentMethod,
-    //     id: paymentMethod.id.toString()
-    // };
     res.status(201).json(order);
   } catch (err) {
     res.status(500).json({ error: err.message });

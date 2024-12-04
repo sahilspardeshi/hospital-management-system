@@ -3,11 +3,17 @@ import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { PlusIcon, MinusIcon } from 'lucide-react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useReportContext } from './ReportContext';
 
 export default function ReportResult() {
   const { id } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
+
+  console.log("location", location)
+  console.log("report data", reportData)
+
+  const { reportData } = useReportContext();
 
   const [currentReport, setCurrentReport] = useState(null);
   const [observations, setObservations] = useState([]);
@@ -24,7 +30,13 @@ export default function ReportResult() {
           const reportFromState = location.state.report;
           setCurrentReport(reportFromState);
           setObservations(reportFromState.observations || []);
-        } else {
+        } else if (reportData) {
+          // Use report data from context if available
+          setCurrentReport(reportData);
+          setObservations(reportData.observations || []);
+        }
+
+        else {
           // Fallback to fetching from API if no context data
           await new Promise(resolve => setTimeout(resolve, 1000));
           const fetchedReport = {
@@ -53,7 +65,7 @@ export default function ReportResult() {
     };
 
     fetchReport();
-  }, [id, location.state]);
+  }, [id]);
 
   const handleAddObservation = () => {
     setShowPopup(true);
@@ -120,7 +132,7 @@ export default function ReportResult() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
             <label className="block text-sm font-normal text-gray-700">Report ID</label>
-            <input type="text" className ="mt-1 pl-2 h-8 block w-full border rounded-md shadow-sm bg-gray-100" value={currentReport.report_id} readOnly />
+            <input type="text" className="mt-1 pl-2 h-8 block w-full border rounded-md shadow-sm bg-gray-100" value={currentReport.report_id} readOnly />
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700">Doctor ID</label>
@@ -193,7 +205,7 @@ export default function ReportResult() {
           </tbody>
         </table>
         <hr className="border-t-1 border-gray-400 my-4" />
-         <div className="flex justify-end mt-4">
+        <div className="flex justify-end mt-4">
           <button onClick={handleSubmit} className="bg-blue-500 text-white px-4 py-2 rounded">
             Submit Observations
           </button>
