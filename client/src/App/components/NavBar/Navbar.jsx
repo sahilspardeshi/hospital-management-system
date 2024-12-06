@@ -68,8 +68,8 @@ const user =userdata.userprofile;
         <button
           className={`px-5 py-2 font-semibold text-sm rounded-full transition-all duration-200 ${
             selectedSection === "OPD"
-              ? "bg-green-300 text-white"
-              : "bg-white hover:bg-green-300 hover:text-white"
+              ? "bg-green-500 text-white"
+              : "bg-white hover:bg-green-400 hover:text-white"
           }`}
           onClick={() => handleClick("OPD")}
         >
@@ -78,8 +78,8 @@ const user =userdata.userprofile;
         <button
           className={`px-5 py-2 font-semibold text-sm rounded-full transition-all duration-200 ${
             selectedSection === "IPD"
-              ? "bg-green-300 text-white"
-              : "bg-white hover:bg-green-300 hover:text-white"
+              ? "bg-green-500 text-white"
+              : "bg-white hover:bg-green-400 hover:text-white"
           }`}
           onClick={() => handleClick("IPD")}
         >
@@ -88,8 +88,8 @@ const user =userdata.userprofile;
         <button
           className={`px-5 py-2 font-semibold text-sm rounded-full transition-all duration-200 ${
             selectedSection === "DASHBOARD"
-              ? "bg-green-300 text-white"
-              : "bg-white hover:bg-green-300 hover:text-white"
+              ? "bg-green-500 text-white"
+              : "bg-white hover:bg-green-400 hover:text-white"
           }`}
           onClick={() => handleClick("DASHBOARD")}
         >
@@ -118,14 +118,14 @@ const user =userdata.userprofile;
 
 
 
-        <div className="w-10 h-10 px-[10px] py-2 font-bold text-white rounded-full  bg-red-400 overflow-hidden">
+        <div className="w-10 h-10 px-[10px] py-2 font-bold text-white rounded-full  bg-red-600 overflow-hidden">
          <Link to='/dashboard/Myprofile'>
          {user ? (
-              <h1 className=" mx-auto rounded-full bg-red-400">
+              <h1 className=" mx-auto rounded-full ">
                 {Userprofile ? `${Userprofile[0].toUpperCase()}${firstCharAfterSpace}` : "?"}
               </h1>
             ) : (
-              <div className="w-6 h-6 rounded-full bg-red-400"></div>
+              <div className="w-6 h-6 rounded-full"></div>
             )}
           {/* <img src={Doctor} alt="Doctor Avatar" className="w-full h-full" /> */}
          </Link>

@@ -196,7 +196,7 @@ const renderSuggestions = (suggestions, handleSelect) => {
 
     <div className="flex-1 overflow-y-auto px-20 mt-10 rounded-lg m-4">
       <form onSubmit={handleSubmit} >
-        <h1 className="text-3xl font-bold mb-4">Create Appointment</h1>
+        <h1 className="text-2xl font-bold mb-4">Create Appointment</h1>
 
         <div className="flex flex-wrap -mx-3 mb-6">
           <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0 relative">
@@ -306,12 +306,14 @@ const renderSuggestions = (suggestions, handleSelect) => {
           </div>
         </div>
 
-        <button
+      <div className='w-56 m-auto'>
+      <button
           type="submit"
-          className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+          className="w-56  bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
         >
           Create Appointment
         </button>
+      </div>
       </form>
     </div>
   );
