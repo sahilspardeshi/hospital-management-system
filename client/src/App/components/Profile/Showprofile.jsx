@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import axiosInstanceApp from '../../axiosConfig';
 import { FaUserCheck, FaUserEdit } from 'react-icons/fa';
-import { getprofile } from '../../redux/actions/StaffProfileAction';
+import { getprofile , updateProfile} from '../../redux/actions/StaffProfileAction';
 
 const inputClasses = "border border-gray-300 font-bold text-gray-500 rounded-lg p-2";
 const buttonClasses = "text-primary hover:underline hover:text-blue-600";
@@ -18,7 +18,7 @@ const Showprofile = () => {
 
   const dispatch = useDispatch();
   const userdata = useSelector((state) => state.profile);
-const user =userdata.profile;
+const user =userdata.userprofile;
   console.log("userdata" , userdata)
 
   useEffect(() => {
@@ -43,6 +43,7 @@ const user =userdata.profile;
   useEffect(() => {
     if (user) {
       setFormData({
+        id:user.id|| '',
         firstName: user.fullName || '',
         lastName: user.specialization || '',
         email: user.email || '',
@@ -61,25 +62,19 @@ const user =userdata.profile;
     }));
   };
 
-  const handleSave = async () => {
+  const handleSave = () => {
     const token = localStorage.getItem('authToken');
-    const userId = user._id;
+    const userId = user.id;
 
-    try {
-      const response = await axiosInstanceApp.put(`staff/update/${userId}`, formData, {
-        headers: {
-          Authorization: Bearer` ${token}`,
-        },
-      });
-      console.log("updater user", response)
+    const onSuccess = (updatedProfile) => {
       toast.success('Profile updated successfully!');
       setIsEditing(false);
-      setFormData(response.data);
-    }catch(error) {
-      toast.error('Failed to update profile!');
-      console.error('Error updating profile:', error);
-    }
+      setFormData(updatedProfile); // Update form data after successful save
+    };
+
+    dispatch(updateProfile(formData, onSuccess)); // Dispatch the updateProfile action
   };
+
 
   const toggleEdit = () => setIsEditing((prev) => !prev);
 
@@ -169,7 +164,7 @@ const user =userdata.profile;
       <div className="mt-8 flex space-x-4">
         <button className={buttonClasses} onClick={() => toast.info('Account deactivated!')}>Deactivate Account</button>
         <button
-          className="text-destructive text-white bg-red-500 p-1 rounded-md hover:text-black"
+          className="text-destructive text-white font-bold bg-red-500 px-3 py-1 rounded-md hover:text-black"
           onClick={handleDeleteAccount}
         >
           Delete Account

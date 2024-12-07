@@ -59,7 +59,7 @@ const BillingReport = () => {
       {/* Right side (content) taking 80% width */}
       <div className="w-[85%] max-w-7xl mx-auto">
         <div className=" p-4 rounded-t-md ">
-          <h1 className="text-3xl font-bold">Billing </h1>
+          <h1 className="text-2xl font-bold">Billing </h1>
           <div className="flex justify-between mt-2">
             <div className="text-sm">
               <p>

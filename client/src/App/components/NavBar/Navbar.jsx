@@ -3,15 +3,39 @@ import { Link } from "react-router-dom";
 import notification from "../../assets/images/notifications_none.png";
 import darkmode from "../../assets/images/moon-solid_1.png";
 import about from "../../assets/images/info_outline.png";
-import Doctor from "../../assets/images/dr.png";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getprofile } from "../../redux/actions/StaffProfileAction";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const [selectedSection, setSelectedSection] = useState(null);
 
   // Check the path on initial render and set the selected section accordingly
+  const dispatch = useDispatch();
+  const userdata = useSelector((state) => state.profile);
+const user =userdata.userprofile;
+  console.log("userdata" , userdata)
 
+  useEffect(() => {
+    console.log("get profile called ")
+    dispatch(getprofile());
+  }, [dispatch]);
+  
+ // Safe checks for user data
+ let Userprofile = "";
+ let firstCharAfterSpace = "";
+
+ // Check if the profile is available
+ if (user && user.fullName) {
+   Userprofile = user.fullName;
+   const spaceIndex = Userprofile.indexOf(' ');
+
+   if (spaceIndex !== -1) {
+     firstCharAfterSpace = Userprofile.charAt(spaceIndex + 1);
+   }
+ }
+  
   useEffect(() => {
     const pathSegments = location.pathname.split('/').filter(Boolean); // Get non-empty path segments
 
@@ -32,18 +56,20 @@ const Navbar = () => {
   };
 
   return (
-    <header className="flex justify-between items-center py-2 px-10 mx-2 w-full rounded-t-lg">
-      <h1 className="text-xl font-bold mx-8">
-        Welcome, <span className="text-red-500">Dr. Robert Harry</span>
+    <header className="flex justify-between items-center py-2 px-10  w-full  rounded-t-lg">
+
+
+      <h1 className="text-xl font-bold  ">
+        Welcome, <span className="text-red-500">Dr.{Userprofile} </span>
       </h1>
 
       {/* OPD and IPD Section */}
-      <div className="flex items-center space-x-4">
+      <div className="flex items-center space-x-2 mx-1">
         <button
           className={`px-5 py-2 font-semibold text-sm rounded-full transition-all duration-200 ${
             selectedSection === "OPD"
-              ? "bg-green-300 text-white"
-              : "bg-white hover:bg-green-300 hover:text-white"
+              ? "bg-green-500 text-white"
+              : "bg-white hover:bg-green-400 hover:text-white"
           }`}
           onClick={() => handleClick("OPD")}
         >
@@ -52,8 +78,8 @@ const Navbar = () => {
         <button
           className={`px-5 py-2 font-semibold text-sm rounded-full transition-all duration-200 ${
             selectedSection === "IPD"
-              ? "bg-green-300 text-white"
-              : "bg-white hover:bg-green-300 hover:text-white"
+              ? "bg-green-500 text-white"
+              : "bg-white hover:bg-green-400 hover:text-white"
           }`}
           onClick={() => handleClick("IPD")}
         >
@@ -62,8 +88,8 @@ const Navbar = () => {
         <button
           className={`px-5 py-2 font-semibold text-sm rounded-full transition-all duration-200 ${
             selectedSection === "DASHBOARD"
-              ? "bg-green-300 text-white"
-              : "bg-white hover:bg-green-300 hover:text-white"
+              ? "bg-green-500 text-white"
+              : "bg-white hover:bg-green-400 hover:text-white"
           }`}
           onClick={() => handleClick("DASHBOARD")}
         >
@@ -72,11 +98,11 @@ const Navbar = () => {
       </div>
 
       {/* Search and Icons */}
-      <div className="flex items-center space-x-4 bg-white p-2 rounded-full">
+      <div className="flex items-center space-x-2 px-[5px] w-fit bg-white p-1 rounded-full ">
         <input
           type="text"
           placeholder="Search"
-          className="px-3 py-2 bg-gray-200 rounded-full hidden md:block"
+          className="px-3 py-2 bg-gray-200 w-40 rounded-full  md:block"
         />
         <img
           src={notification}
@@ -89,11 +115,23 @@ const Navbar = () => {
           className="w-5 h-5 cursor-pointer"
         />
         <img src={about} alt="Information" className="w-6 h-6 cursor-pointer" />
-        <div className="w-10 h-10 rounded-full overflow-hidden">
+
+
+
+        <div className="w-10 h-10 px-[10px] py-2 font-bold text-white rounded-full  bg-red-600 overflow-hidden">
          <Link to='/dashboard/Myprofile'>
-         <img src={Doctor} alt="Doctor Avatar" className="w-full h-full" />
+         {user ? (
+              <h1 className=" mx-auto rounded-full ">
+                {Userprofile ? `${Userprofile[0].toUpperCase()}${firstCharAfterSpace}` : "?"}
+              </h1>
+            ) : (
+              <div className="w-6 h-6 rounded-full"></div>
+            )}
+          {/* <img src={Doctor} alt="Doctor Avatar" className="w-full h-full" /> */}
          </Link>
         </div>
+
+
       </div>
     </header>
   );
