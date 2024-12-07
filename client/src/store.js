@@ -10,6 +10,7 @@ import { ProfileReducer } from './App/redux/reducers/StaffProfileReducer';
 //web
 import { accountReducer } from './website/redux/reducers/accountReducer'; // Ensure this path is correct
 import { adReducer } from './website/redux/reducers/adReducer';
+import paymentReducer from './website/redux/reducers/PaymentReducer';
 import { loginUserAccount } from './website/redux/reducers/loginReducer';
 
 
@@ -19,7 +20,7 @@ const rootReducer = combineReducers({
     profile: ProfileReducer,
     account: accountReducer,
     advertisement: adReducer,
-    loginUser: loginUserAccount, 
+    payment:paymentReducer
     
   });
   

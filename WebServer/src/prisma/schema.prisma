@@ -74,9 +74,9 @@ model ClientSubscription {
   subscriptionStatus String?            @default("Active")
   createdAt          DateTime           @default(now())
   client             Client           @relation(fields: [clientId], references: [id])
-   PaymentMethod     PaymentMethod @relation(fields: [PaymentMethodId], references: [id])
+  PaymentMethod     PaymentMethod @relation(fields: [PaymentMethodId], references: [id])
 
-   SubscriptionPlan     SubscriptionPlan @relation(fields: [subscriptionPlanId], references: [id])
+  SubscriptionPlan     SubscriptionPlan @relation(fields: [subscriptionPlanId], references: [id])
   @@map("ClientSubscription")
 }
 

@@ -18,10 +18,10 @@ export const login = (userId, password, onSuccess) => {
     try {
       const response = await axiosInstanceApp.post('auth/login', { userId, password });
       dispatch({ type: LOGIN_SUCCESS, payload: response.data });
-      console.log("Login response" , response)
-  localStorage.setItem("accessToken" , response.data.accessToken)
+      console.log("Login response", response)
+      localStorage.setItem("accessToken", response.data.accessToken)
       if (onSuccess) {
-        CookieSet(response.data.accessToken,response.data.refreshToken)
+        CookieSet(response.data.accessToken, response.data.refreshToken)
         onSuccess(response.data);
       }
     } catch (error) {
@@ -37,12 +37,12 @@ export const getLoginProfile = (onSuccess) => {
     dispatch({ type: GET_LOGIN_REQUEST });
 
     try {
-      
+
       const response = await axiosInstanceApp.get('auth/profile');
-      
+
       dispatch({ type: GET_LOGIN_SUCCESS, payload: response.data });
 
-      
+
       if (onSuccess) {
         onSuccess(response.data);
       }

@@ -23,8 +23,6 @@ export async function authenticateToken  (req, res, next) {
     }
 };
 
-
-
 export async function checkAdmin(req, res, next) {
     const token = req.user;
 
